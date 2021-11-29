@@ -1,5 +1,5 @@
 package lc500_599
-//Black list
+//Black list, wrong solution
 //https://leetcode.com/problems/perfect-number/
 
 class Task507 {
