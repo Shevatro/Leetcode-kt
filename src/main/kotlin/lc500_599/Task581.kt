@@ -41,3 +41,16 @@ class Task581 {
         return null
     }
 }
+
+fun main() {
+    println(Task581().findUnsortedSubarray(intArrayOf(2, 6, 4, 8, 10, 9, 15)))
+    println("---------------------------------")
+    println(Task581().findUnsortedSubarray(intArrayOf(1, 2, 3, 4)))
+    println("---------------------------------")
+    println(Task581().findUnsortedSubarray(intArrayOf(1, 3, 2, 2, 2)))
+    println("---------------------------------")
+    println(Task581().findUnsortedSubarray(intArrayOf(1)))
+    println("---------------------------------")
+    println(Task581().findUnsortedSubarray(intArrayOf(8, 2, 4, 6, 7, 9, 10)))
+    println("---------------------------------")
+}
