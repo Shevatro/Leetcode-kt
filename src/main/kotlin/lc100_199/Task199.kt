@@ -1,4 +1,4 @@
-package ic100_199
+package lc100_199
 
 //Solved, but repeat
 //https://leetcode.com/problems/binary-tree-right-side-view/
