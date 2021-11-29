@@ -1,5 +1,7 @@
 package ic100_199
 
+//Solved, but repeat
+//https://leetcode.com/problems/binary-tree-right-side-view/
 class TreeNode(var `val`: Int) {
     var left: TreeNode? = null
     var right: TreeNode? = null
