@@ -26,12 +26,12 @@ class Task280 {
         if (nums.size == 1) return
         for (i in 1 until nums.size) {
             if (i % 2 == 0) {
-                if (nums[i - 1] < nums[i] && canSwapOddItems(nums, i - 2, i - 1, i)) {
-                    swapItems(nums, i - 1, i)
+                if (nums[i - 1] < nums[i] && canSwapOddItems(nums, i)) {
+                    swapItems(nums, i)
                 }
             } else {
-                if (nums[i - 1] > nums[i] && canSwapEvenItems(nums, i - 2, i - 1, i)) {
-                    swapItems(nums, i - 1, i)
+                if (nums[i - 1] > nums[i] && canSwapEvenItems(nums, i)) {
+                    swapItems(nums, i)
                 }
             }
 
@@ -39,22 +39,15 @@ class Task280 {
         println(nums.toString2())
     }
 
-    private fun canSwapOddItems(nums: IntArray, pos1: Int, pos2: Int, pos3: Int): Boolean {
-        val newPos2 = pos3
-        val newPos3 = pos2
-        return nums[pos1] <= nums[newPos2] && nums[newPos2] >= nums[newPos3]
-    }
+    private fun canSwapOddItems(nums: IntArray, i: Int) = nums[i - 1] in nums[i - 2]..nums[i]
 
-    private fun canSwapEvenItems(nums: IntArray, pos1: Int, pos2: Int, pos3: Int): Boolean {
-        val newPos2 = pos3
-        val newPos3 = pos2
-        return nums.getOrNull(pos1) == null || nums[pos1] >= nums[newPos2] && nums[newPos2] <= nums[newPos3]
-    }
+    //or nums[i - 2] <= nums[i-1] && nums[i-1] >= nums[i]
+    private fun canSwapEvenItems(nums: IntArray, i: Int) = i - 2 < 0 || nums[i - 1] in nums[i]..nums[i - 2]
 
-    private fun swapItems(nums: IntArray, pos2: Int, pos3: Int) {
-        val temp = nums[pos3]
-        nums[pos3] = nums[pos2]
-        nums[pos2] = temp
+    private fun swapItems(nums: IntArray, i: Int) {
+        val temp = nums[i]
+        nums[i] = nums[i - 1]
+        nums[i - 1] = temp
     }
 }
 
