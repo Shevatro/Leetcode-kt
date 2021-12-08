@@ -2,6 +2,8 @@ package lc200_299
 
 import toString2
 
+//Solved, but repeat
+//https://leetcode.com/problems/wiggle-sort/
 class Task280 {
     fun wiggleSortSimple(nums: IntArray): Unit {
         if (nums.size == 1) return
@@ -25,24 +27,12 @@ class Task280 {
     fun wiggleSort(nums: IntArray): Unit {
         if (nums.size == 1) return
         for (i in 1 until nums.size) {
-            if (i % 2 == 0) {
-                if (nums[i - 1] < nums[i] && canSwapOddItems(nums, i)) {
-                    swapItems(nums, i)
-                }
-            } else {
-                if (nums[i - 1] > nums[i] && canSwapEvenItems(nums, i)) {
-                    swapItems(nums, i)
-                }
+            if ((i % 2 == 0) == (nums[i - 1] < nums[i])) {
+                swapItems(nums, i)
             }
-
         }
         println(nums.toString2())
     }
-
-    private fun canSwapOddItems(nums: IntArray, i: Int) = nums[i - 1] in nums[i - 2]..nums[i]
-
-    //or nums[i - 2] <= nums[i-1] && nums[i-1] >= nums[i]
-    private fun canSwapEvenItems(nums: IntArray, i: Int) = i - 2 < 0 || nums[i - 1] in nums[i]..nums[i - 2]
 
     private fun swapItems(nums: IntArray, i: Int) {
         val temp = nums[i]
