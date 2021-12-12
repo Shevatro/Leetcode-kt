@@ -3,6 +3,7 @@ package common
 class UnionFind(size: Int) {
     private val arr = IntArray(size)
     private val rankArr = IntArray(size)
+    private var rootCount = size
 
     init {
         for (i in arr.indices) {
@@ -29,16 +30,19 @@ class UnionFind(size: Int) {
                 arr[rootItem] = rootRoot
                 rankArr[rootRoot]++
             }
+            rootCount--
         }
     }
 
-    fun countRoots(): Int {
+    fun getCountRoots(): Int {
         var count = 0
         for (i in arr.indices) {
             if (i == arr[i]) count++
         }
         return count
     }
+
+    fun getCountRootsOptimize() = rootCount
 
     fun connected(item1: Int, item2: Int): Boolean {
         return find(item1) == find(item2)
