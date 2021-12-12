@@ -1,20 +1,32 @@
 package lc200_299
 
-//From a learning section, wrong!!!
+import toString2
+
+//From a learning section, Wrong!!!
 //https://leetcode.com/problems/graph-valid-tree/
 class Task261 {
     fun validTree(n: Int, edges: Array<IntArray>): Boolean {
-        val map = mutableMapOf<Int, Int>()
+        val arr = createAndFill(n)
         for (edge in edges) {
+            val start = edge[0]
             val end = edge[1]
-            if (map[end] == null) {
-                map[end] = 1
-                continue
+            if (arr[end] == end) {
+                arr[end] = start
+            } else if (arr[start] == start) {
+                arr[start] = end
+            } else {
+                return false
             }
-            if (map[end]!! > 0) return false
-            map[end] = map[end]!! + 1
         }
-        return map.size + 1 == n
+        return true
+    }
+
+    private fun createAndFill(size: Int): IntArray {
+        val arr = IntArray(size)
+        for (i in arr.indices) {
+            arr[i] = i
+        }
+        return arr
     }
 }
 
