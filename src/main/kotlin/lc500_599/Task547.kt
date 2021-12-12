@@ -1,5 +1,5 @@
 package lc500_599
-//From leaning section, repeat
+//From a leaning section, repeat
 //https://leetcode.com/problems/number-of-provinces/
 import common.UnionFind
 
