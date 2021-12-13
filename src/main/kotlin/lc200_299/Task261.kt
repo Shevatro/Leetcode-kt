@@ -1,9 +1,8 @@
 package lc200_299
-
-import common.UnionFind
-
 //From a learning section, repeat
 //https://leetcode.com/problems/graph-valid-tree/
+import common.UnionFind
+
 class Task261 {
     fun validTree(n: Int, edges: Array<IntArray>): Boolean {
         val uf = UnionFind(n)
