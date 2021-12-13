@@ -1,9 +1,8 @@
 package lc200_299
-
-import toString2
-
 //Solved, but repeat
 //https://leetcode.com/problems/wiggle-sort/
+import toString2
+
 class Task280 {
     fun wiggleSortSimple(nums: IntArray): Unit {
         if (nums.size == 1) return
