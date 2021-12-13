@@ -22,19 +22,17 @@ class UnionFind(size: Int) {
         val rootRoot = find(root)
         val rootItem = find(item)
         if (rootRoot != rootItem) {
-            if (rankArr[rootRoot] > rankArr[rootItem]) {
+            if (rankArr[rootRoot] >= rankArr[rootItem]) {
                 arr[rootItem] = rootRoot
-            } else if (rankArr[rootRoot] < rankArr[rootItem]) {
-                arr[rootRoot] = rootItem
+                if (rankArr[rootRoot] == rankArr[rootItem]) rankArr[rootRoot]++
             } else {
-                arr[rootItem] = rootRoot
-                rankArr[rootRoot]++
+                arr[rootRoot] = rootItem
             }
             rootCount--
         }
     }
 
-    fun getCountRoots(): Int {
+    fun countRoots(): Int {
         var count = 0
         for (i in arr.indices) {
             if (i == arr[i]) count++
@@ -42,9 +40,9 @@ class UnionFind(size: Int) {
         return count
     }
 
-    fun getCountRootsOptimize() = rootCount
+    fun getAmountRoots() = rootCount
 
-    fun connected(item1: Int, item2: Int): Boolean {
+    fun isConnected(item1: Int, item2: Int): Boolean {
         return find(item1) == find(item2)
     }
 }

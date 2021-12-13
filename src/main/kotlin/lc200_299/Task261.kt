@@ -1,32 +1,19 @@
 package lc200_299
 
-import toString2
+import common.UnionFind
 
-//From a learning section, Wrong!!!
+//From a learning section, repeat
 //https://leetcode.com/problems/graph-valid-tree/
 class Task261 {
     fun validTree(n: Int, edges: Array<IntArray>): Boolean {
-        val arr = createAndFill(n)
+        val uf = UnionFind(n)
         for (edge in edges) {
             val start = edge[0]
             val end = edge[1]
-            if (arr[end] == end) {
-                arr[end] = start
-            } else if (arr[start] == start) {
-                arr[start] = end
-            } else {
-                return false
-            }
+            if (uf.isConnected(start, end)) return false
+            uf.union(start, end)
         }
-        return true
-    }
-
-    private fun createAndFill(size: Int): IntArray {
-        val arr = IntArray(size)
-        for (i in arr.indices) {
-            arr[i] = i
-        }
-        return arr
+        return uf.getAmountRoots() == 1
     }
 }
 

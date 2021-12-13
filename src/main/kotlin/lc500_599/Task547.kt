@@ -1,12 +1,12 @@
 package lc500_599
-//From a learning section, repeat
+//From a learning section, tricky, repeat
 //https://leetcode.com/problems/number-of-provinces/
 import common.UnionFind
 
 class Task547 {
     fun findCircleNum(isConnected: Array<IntArray>): Int {
         val unionFind = fill(isConnected)
-        return unionFind.getCountRootsOptimize()
+        return unionFind.getAmountRoots()
     }
 
     private fun fill(isConnected: Array<IntArray>): UnionFind {
