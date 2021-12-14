@@ -1,10 +1,11 @@
 package lc1100_1199
-//From a learning section, wrong
+//From a learning section, repeat
 //https://leetcode.com/problems/the-earliest-moment-when-everyone-become-friends/
 import common.UnionFind
 
 class Task1101 {
     fun earliestAcq(logs: Array<IntArray>, n: Int): Int {
+        logs.sortBy { it[0] } //Can we optimize here? And don't use a sorting
         val uf = UnionFind(n)
         for (logItem in logs) {
             uf.union(logItem[1], logItem[2])
@@ -30,5 +31,5 @@ fun main() {
         intArrayOf(9, 3, 0), intArrayOf(0, 2, 1), intArrayOf(8, 0, 1), intArrayOf(1, 3, 2), intArrayOf(2, 2, 0),
         intArrayOf(3, 3, 1)
     )
-    println(task.earliestAcq(logs3, 4))
+    println(task.earliestAcq(logs3, 4)) //?
 }
