@@ -1,5 +1,6 @@
 package lc1200_1299
-
+//From a learning section, wrong
+//https://leetcode.com/problems/smallest-string-with-swaps/
 import toString2
 import java.util.*
 
@@ -8,22 +9,35 @@ class Task1202 {
         val sf = StringBuilder()
         val uf = UnionFind(s.length)
         for (pair in pairs) {
-            uf.union(pair[0], pair[1])
+            val item1 = s[pair[0]] - 'a'
+            val item2 = s[pair[1]] - 'a'
+            println(item1.toString() + " " + item2)
+            uf.union(item1, item2)
         }
         println(uf.print())
         val graphs = uf.getAllGraphs()
         println(graphs.toString())
-        val indices = IntArray(graphs.size)
+        val indices = createIndices(graphs).toMutableMap()
+        println(indices)
         for (ch in s.toCharArray()) {
             val graphId = uf.find(ch - 'a')
             println(ch + " " + graphId)
-            val index = indices[graphId]
+            val index = indices[graphId]!!
+            println("index:$index")
             val item = graphs[graphId]?.elementAt(index)
             println(item)
             sf.append('a' + item!!)
-            indices[graphId]++
+            indices[graphId] = indices[graphId]!! + 1
         }
         return sf.toString()
+    }
+
+    private fun createIndices(graphs: Map<Int, SortedSet<Int>>): Map<Int, Int> {
+        val map = mutableMapOf<Int, Int>()
+        for (entry in graphs.entries) {
+            map[entry.key] = 0
+        }
+        return map
     }
 }
 
@@ -66,7 +80,7 @@ class UnionFind(size: Int) {
     fun getAllGraphs(): Map<Int, SortedSet<Int>> {
         val map = mutableMapOf<Int, SortedSet<Int>>()
         for (i in arr.indices) {
-            val rootChar = arr[i]
+            val rootChar = find(i)
             val char = i
             if (map[rootChar] == null) {
                 map[rootChar] = sortedSetOf()
@@ -87,4 +101,9 @@ class UnionFind(size: Int) {
 fun main() {
     val task = Task1202()
     println(task.smallestStringWithSwaps("dcab", listOf(listOf(0, 3), listOf(1, 2))))
+    println(task.smallestStringWithSwaps("dcab", listOf(listOf(0, 3), listOf(1, 2), listOf(0, 2))))
+    println(task.smallestStringWithSwaps("cba", listOf(listOf(0, 1), listOf(1, 2))))
+    println(task.smallestStringWithSwaps("a", listOf()))
+    println(task.smallestStringWithSwaps("qdwyt", listOf(listOf(2,3), listOf(3,2), listOf(0,1), listOf(4,0),
+        listOf(3,2))))
 }
