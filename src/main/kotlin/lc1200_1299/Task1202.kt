@@ -7,7 +7,7 @@ import java.util.*
 class Task1202 {
     fun smallestStringWithSwaps(s: String, pairs: List<List<Int>>): String {
         val sf = StringBuilder()
-        val uf = UnionFind(s.length)
+        val uf = UnionFind(26)
         for (pair in pairs) {
             val item1 = s[pair[0]] - 'a'
             val item2 = s[pair[1]] - 'a'
@@ -106,4 +106,9 @@ fun main() {
     println(task.smallestStringWithSwaps("a", listOf()))
     println(task.smallestStringWithSwaps("qdwyt", listOf(listOf(2,3), listOf(3,2), listOf(0,1), listOf(4,0),
         listOf(3,2))))
+    println(task.smallestStringWithSwaps("qdwyt", listOf(listOf(2,3), listOf(3,2), listOf(0,1), listOf(4,0),
+        listOf(3,2))))
+    println(task.smallestStringWithSwaps("udyyek", listOf(listOf(3,3), listOf(3,0), listOf(5,1), listOf(3,1),
+        listOf(3,4), listOf(3,5)
+    )))
 }
