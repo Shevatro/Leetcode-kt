@@ -9,14 +9,14 @@ class Task1971 {
 
     fun validPath(n: Int, edges: Array<IntArray>, start: Int, end: Int): Boolean {
         if (edges.isEmpty() && start == end) return true
-        val visitedVertexes = mutableMapOf<Int, Unit>()
+        val visitedVertexes = BooleanArray(n)
         val graph = createGraph(n, edges)
         val stack = ArrayDeque<Int>()
         stack.push(start)
         while (stack.isNotEmpty()) {
             val node = stack.pop()
-            if (visitedVertexes[node] != null) continue
-            visitedVertexes[node] = Unit
+            if (visitedVertexes[node]) continue
+            visitedVertexes[node] = true
             for (subNode in graph[node]) {
                 if (subNode == end) return true
                 stack.push(subNode)
