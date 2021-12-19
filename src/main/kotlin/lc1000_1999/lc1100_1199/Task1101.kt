@@ -1,4 +1,4 @@
-package lc1100_1199
+package lc1000_1999.lc1100_1199
 //From a learning section, repeat
 //https://leetcode.com/problems/the-earliest-moment-when-everyone-become-friends/
 import common.UnionFind

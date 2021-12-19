@@ -1,4 +1,4 @@
-package lc200_299
+package lc1_999.lc200_299
 //From a learning section, repeat
 //https://leetcode.com/problems/graph-valid-tree/
 import common.UnionFind

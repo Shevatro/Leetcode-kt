@@ -1,4 +1,4 @@
-package lc300_399
+package lc1_999.lc300_399
 //From a learning section, repeat, similar to Task547
 //https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/
 import common.UnionFind

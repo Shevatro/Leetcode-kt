@@ -1,4 +1,4 @@
-package lc800_899
+package lc1_999.lc800_899
 //Solved, but repeat
 //https://leetcode.com/problems/find-and-replace-in-string/
 

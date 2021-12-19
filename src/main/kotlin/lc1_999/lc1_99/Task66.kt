@@ -1,4 +1,4 @@
-package lc1_99
+package lc1_999.lc1_99
 //Solved, but repeat
 //https://leetcode.com/problems/plus-one/
 

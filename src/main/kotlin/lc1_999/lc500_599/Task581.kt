@@ -1,4 +1,4 @@
-package lc500_599
+package lc1_999.lc500_599
 
 //Not solved, repeat
 //https://leetcode.com/problems/shortest-unsorted-continuous-subarray/

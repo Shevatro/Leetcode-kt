@@ -1,4 +1,4 @@
-package lc1_99
+package lc1_999.lc1_99
 //Not solved, repeat
 //https://leetcode.com/problems/maximum-subarray/
 import java.lang.Integer.max

@@ -1,4 +1,4 @@
-package lc1900_1999
+package lc1000_1999.lc1900_1999
 //From a learning section, Solved
 //https://leetcode.com/problems/find-if-path-exists-in-graph/
 import common.SimpleGraph

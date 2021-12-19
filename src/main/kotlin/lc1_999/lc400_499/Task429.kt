@@ -1,4 +1,4 @@
-package lc400_499
+package lc1_999.lc400_499
 
 //Solved
 //https://leetcode.com/problems/n-ary-tree-level-order-traversal/

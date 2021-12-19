@@ -1,4 +1,4 @@
-package lc200_299
+package lc1_999.lc200_299
 //Solved, but repeat
 //https://leetcode.com/problems/wiggle-sort/
 import toString2

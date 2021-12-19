@@ -1,4 +1,4 @@
-package lc500_599
+package lc1_999.lc500_599
 //From a learning section, tricky, repeat
 //https://leetcode.com/problems/number-of-provinces/
 import common.UnionFind

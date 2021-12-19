@@ -1,4 +1,4 @@
-package lc500_599
+package lc1_999.lc500_599
 //Black list, wrong solution
 //https://leetcode.com/problems/perfect-number/
 

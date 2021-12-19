@@ -1,4 +1,4 @@
-package lc300_399
+package lc1_999.lc300_399
 
 //Task was changed, repeat
 //https://leetcode.com/problems/reverse-string/

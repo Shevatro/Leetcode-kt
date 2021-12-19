@@ -1,4 +1,4 @@
-package lc1200_1299
+package lc1000_1999.lc1200_1299
 //From a learning section, wrong
 //https://leetcode.com/problems/smallest-string-with-swaps/
 import toString2

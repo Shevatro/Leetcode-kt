@@ -1,4 +1,4 @@
-package lc800_899
+package lc1_999.lc800_899
 
 //Not solved, repeat
 //https://leetcode.com/problems/buddy-strings/
