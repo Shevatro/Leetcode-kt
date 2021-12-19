@@ -9,27 +9,27 @@ class Task1971 {
 
     fun validPath(n: Int, edges: Array<IntArray>, start: Int, end: Int): Boolean {
         if (edges.isEmpty() && start == end) return true
+        val visitedVertexes = mutableMapOf<Int, Unit>()
         val graph = createGraph(n, edges)
-        val stack = ArrayDeque<Node>()
-        stack.push(graph[start])
+        val stack = ArrayDeque<Int>()
+        stack.push(start)
         while (stack.isNotEmpty()) {
             val node = stack.pop()
-            if (node.isVisited) continue
-            node.isVisited = true
-            for (subNodeInd in node.nodes) {
-                val subNode = graph[subNodeInd]
-                if (subNode.name == end) return true
+            if (visitedVertexes[node] != null) continue
+            visitedVertexes[node] = Unit
+            for (subNode in graph[node]) {
+                if (subNode == end) return true
                 stack.push(subNode)
             }
         }
         return false
     }
 
-    private fun createGraph(n: Int, edges: Array<IntArray>): Array<Node> {
-        val nodes = Array(n) { i -> Node(i) }
+    private fun createGraph(n: Int, edges: Array<IntArray>): Array<MutableSet<Int>> {
+        val nodes = Array(n) { mutableSetOf<Int>() }
         for (edge in edges) {
-            nodes[edge[0]].nodes.add(edge[1])
-            nodes[edge[1]].nodes.add(edge[0])
+            nodes[edge[0]].add(edge[1])
+            nodes[edge[1]].add(edge[0])
         }
         return nodes
     }
@@ -47,17 +47,6 @@ class Task1971 {
         return uf
     }
 
-}
-
-class Node(
-    val name: Int,
-    val nodes: MutableList<Int> = mutableListOf(),
-    var isVisited: Boolean = false
-
-) {
-    override fun toString(): String {
-        return name.toString() + " " + nodes.toString()
-    }
 }
 
 fun main() {
