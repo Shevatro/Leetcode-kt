@@ -24,6 +24,27 @@ class Task797 {
         }
         return paths
     }
+
+    fun allPathsSourceTargetWithRecursive(graph: Array<IntArray>): List<List<Int>> {
+        val paths = mutableListOf<List<Int>>()
+        allPathsSourceTargetRecursive(graph, paths)
+        return paths
+    }
+
+    private fun allPathsSourceTargetRecursive(
+        graph: Array<IntArray>, paths: MutableList<List<Int>>, path: MutableList<Int> = mutableListOf(0),
+        target: Int = graph.size - 1
+    ) {
+        val item = path.last()
+        if (item == target) {
+            paths.add(path)
+        } else {
+            for (relatedNode in graph[item]) {
+                val newPath = path.toMutableList().apply { add(relatedNode) }
+                allPathsSourceTargetRecursive(graph, paths, newPath, target)
+            }
+        }
+    }
 }
 
 fun main() {
