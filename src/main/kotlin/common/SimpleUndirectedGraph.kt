@@ -2,7 +2,7 @@ package common
 
 import java.util.ArrayDeque
 
-class SimpleGraph(n: Int) {
+class SimpleUndirectedGraph(n: Int) {
     private val graph = Array(n) { mutableSetOf<Int>() }
     private val visitedVertexes = BooleanArray(graph.size)
 
