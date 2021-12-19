@@ -7,7 +7,6 @@ import common.UnionFind
 class Task1971 {
 
     fun validPath(n: Int, edges: Array<IntArray>, start: Int, end: Int): Boolean {
-        if (edges.isEmpty() && start == end) return true
         val graph = SimpleGraph(n).apply { createGraph(edges) }
         return graph.isConnected(start, end)
     }

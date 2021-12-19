@@ -14,6 +14,7 @@ class SimpleGraph(n: Int) {
     }
 
     fun isConnected(item1: Int, item2: Int): Boolean {
+        if (item1 == item2) return true
         val stack = ArrayDeque<Int>()
         stack.push(item1)
         while (stack.isNotEmpty()) {
