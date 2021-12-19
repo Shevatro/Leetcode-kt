@@ -1,37 +1,15 @@
 package lc1900_1999
 //From a learning section, Solved
 //https://leetcode.com/problems/find-if-path-exists-in-graph/
+import common.SimpleGraph
 import common.UnionFind
-import toString2
-import java.util.*
 
 class Task1971 {
 
     fun validPath(n: Int, edges: Array<IntArray>, start: Int, end: Int): Boolean {
         if (edges.isEmpty() && start == end) return true
-        val visitedVertexes = BooleanArray(n)
-        val graph = createGraph(n, edges)
-        val stack = ArrayDeque<Int>()
-        stack.push(start)
-        while (stack.isNotEmpty()) {
-            val node = stack.pop()
-            if (visitedVertexes[node]) continue
-            visitedVertexes[node] = true
-            for (subNode in graph[node]) {
-                if (subNode == end) return true
-                stack.push(subNode)
-            }
-        }
-        return false
-    }
-
-    private fun createGraph(n: Int, edges: Array<IntArray>): Array<MutableSet<Int>> {
-        val nodes = Array(n) { mutableSetOf<Int>() }
-        for (edge in edges) {
-            nodes[edge[0]].add(edge[1])
-            nodes[edge[1]].add(edge[0])
-        }
-        return nodes
+        val graph = SimpleGraph(n).apply { createGraph(edges) }
+        return graph.isConnected(start, end)
     }
 
     fun validPathUsingUnionFind(n: Int, edges: Array<IntArray>, start: Int, end: Int): Boolean {
