@@ -8,7 +8,7 @@ class Task1971 {
 
     fun validPath(n: Int, edges: Array<IntArray>, start: Int, end: Int): Boolean {
         val graph = SimpleUndirectedGraph(n).apply { createGraph(edges) }
-        return graph.isConnected(start, end)
+        return graph.isConnectedBFS(start, end)
     }
 
     fun validPathUsingUnionFind(n: Int, edges: Array<IntArray>, start: Int, end: Int): Boolean {
