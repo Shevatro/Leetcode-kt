@@ -7,11 +7,11 @@ import kotlin.math.max
 class Task485 {
     fun findMaxConsecutiveOnes(nums: IntArray): Int {
         var maxCount = 0
-        var currentCount = nums[0]
-        for (i in 1 until nums.size) {
+        var currentCount = 0
+        for (i in nums.indices) {
             if (nums[i] == 1) {
                 currentCount++
-            } else if (nums[i - 1] == 1) {
+            } else {
                 maxCount = max(maxCount, currentCount)
                 currentCount = 0
             }
