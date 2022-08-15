@@ -9,21 +9,16 @@ class Task27 {
     fun removeElement(nums: IntArray, `val`: Int): Int {
         var startPos = 0
         var endPos = nums.lastIndex
-        var amount = 0
         while (endPos >= startPos) {
             if (nums[startPos] == `val`) {
-                amount++
-                if (nums[endPos] != `val`) {
-                    nums[startPos] = nums[endPos]
-                    startPos++
-                }
+                nums[startPos] = nums[endPos]
                 endPos--
             } else {
                 startPos++
             }
         }
         println(nums.toString2())
-        return nums.size - amount
+        return endPos + 1
     }
 }
 
