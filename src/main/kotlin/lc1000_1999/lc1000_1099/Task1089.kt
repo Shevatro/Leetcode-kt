@@ -2,7 +2,7 @@ package lc1000_1999.lc1000_1099
 
 import toString2
 
-//From a learning section, Solved but not optimized
+//From a learning section, Solved
 //https://leetcode.com/problems/duplicate-zeros/
 class Task1089 {
 
