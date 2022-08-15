@@ -7,16 +7,15 @@ import toString2
 class Task88 {
 
     fun merge(nums1: IntArray, m: Int, nums2: IntArray, n: Int): Unit {
-        val nums1Copy = nums1.copyOfRange(0, m)
-        var nums1Index = 0
-        var nums2Index = 0
-        for (k in nums1.indices) {
-            if (nums2.getOrNull(nums2Index) == null || nums1Copy.getOrNull(nums1Index) != null && nums1Copy[nums1Index] < nums2[nums2Index]) {
-                nums1[k] = nums1Copy[nums1Index]
-                nums1Index++
+        var nums1Index = m - 1
+        var nums2Index = n - 1
+        for (k in nums1.lastIndex downTo 0) {
+            if (nums2Index < 0 || nums1Index >= 0 && nums1[nums1Index] > nums2[nums2Index]) {
+                nums1[k] = nums1[nums1Index]
+                nums1Index--
             } else {
                 nums1[k] = nums2[nums2Index]
-                nums2Index++
+                nums2Index--
             }
         }
         println(nums1.toString2())
