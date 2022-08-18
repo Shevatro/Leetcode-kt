@@ -6,18 +6,16 @@ import toString2
 //https://leetcode.com/problems/remove-duplicates-from-sorted-array/
 class Task26 {
     fun removeDuplicates(nums: IntArray): Int {
-        var fillPos = 1
-        var previousItem = nums[0]
+        var fillPos = 0
         for (i in 1 until nums.size) {
-            val item = nums[i]
-            if (item != previousItem) {
-                nums[fillPos] = item
+            if (nums[i] != nums[fillPos]) {
                 fillPos++
-                previousItem = item
+                nums[fillPos] = nums[i]
+
             }
         }
         println(nums.toString2())
-        return fillPos
+        return fillPos + 1
     }
 }
 
