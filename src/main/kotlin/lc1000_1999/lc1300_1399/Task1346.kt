@@ -4,6 +4,15 @@ package lc1000_1999.lc1300_1399
 //https://leetcode.com/problems/check-if-n-and-its-double-exist/
 class Task1346 {
     fun checkIfExist(arr: IntArray): Boolean {
+        val hash = mutableSetOf<Int>()
+        for (item in arr) {
+            if (hash.contains(item * 2) || (item % 2 == 0 && hash.contains(item / 2))) return true
+            hash.add(item)
+        }
+        return false
+    }
+
+    fun checkIfExist2(arr: IntArray): Boolean {
         arr.sort()
         for (i in arr.indices) {
             val pos = arr.binarySearch(arr[i] * 2)
@@ -21,5 +30,7 @@ fun main() {
     println(obj.checkIfExist(intArrayOf(3, 1, 7, 11)))
     println(obj.checkIfExist(intArrayOf(-10, 12, -20, -8, 15)))
     println(obj.checkIfExist(intArrayOf(0, 2)))
+    println(obj.checkIfExist(intArrayOf(0, 0)))
+    println(obj.checkIfExist(intArrayOf(0)))
 }
 
