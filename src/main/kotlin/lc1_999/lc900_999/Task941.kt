@@ -7,21 +7,14 @@ class Task941 {
         if (arr.size < 3) return false
         var isIncreasing = true
         for (i in 1 until arr.size) {
-            if (arr[i] == arr[i - 1]) {
-                return false
-            }
+            if (arr[i] == arr[i - 1]) return false
             if (isIncreasing) {
                 if (arr[i] < arr[i - 1]) {
-                    if (i == 1) {
-                        return false
-                    } else {
-                        isIncreasing = false
-                    }
+                    if (i == 1) return false
+                    isIncreasing = false
                 }
-            } else {
-                if (arr[i] > arr[i - 1]) {
-                    return false
-                }
+            } else if (arr[i] > arr[i - 1]) {
+                return false
             }
         }
         return !isIncreasing
