@@ -16,8 +16,14 @@ repositories {
 tasks.withType<KotlinCompile>() {
     kotlinOptions.jvmTarget = "1.8"
 }
+tasks.test {
+    useJUnitPlatform()
+}
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
