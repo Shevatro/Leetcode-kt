@@ -3,16 +3,31 @@ package lc1000_1999.lc1000_1099
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-//From a learning section, Solved
+//From a learning section, Solved (Optimization needs to repeat)
 //https://leetcode.com/problems/height-checker/
 class Task1051 {
     fun heightChecker(heights: IntArray): Int {
-        val expected = heights.sorted()
+        val buckets = generateBuckets(heights)
         var amount = 0
-        for (i in heights.indices) {
-            if (expected[i] != heights[i]) amount++
+        var currentBucket = 0
+        for (item in heights) {
+            while (buckets[currentBucket] == 0) {
+                currentBucket++
+            }
+            if (currentBucket != item) {
+                amount++
+            }
+            buckets[currentBucket]--
         }
         return amount
+    }
+
+    private fun generateBuckets(heights: IntArray): IntArray {
+        val buckets = IntArray(101)
+        for (item in heights) {
+            buckets[item]++
+        }
+        return buckets
     }
 }
 
