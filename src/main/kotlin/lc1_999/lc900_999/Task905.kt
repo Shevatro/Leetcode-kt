@@ -33,32 +33,12 @@ private class Task905Test {
     private val task = Task905()
 
     @Test
-    fun sortArrayByParity1() {
+    fun sortArrayByParity() {
         sortArrayByParity(intArrayOf(4, 2, 1, 3), intArrayOf(3, 1, 2, 4))
-    }
-
-    @Test
-    fun sortArrayByParity2() {
         sortArrayByParity(intArrayOf(0), intArrayOf(0))
-    }
-
-    @Test
-    fun sortArrayByParity3() {
         sortArrayByParity(intArrayOf(3, 1, 5, 7), intArrayOf(3, 1, 5, 7))
-    }
-
-    @Test
-    fun sortArrayByParity4() {
         sortArrayByParity(intArrayOf(2, 4, 8, 10), intArrayOf(2, 4, 8, 10))
-    }
-
-    @Test
-    fun sortArrayByParity5() {
         sortArrayByParity(intArrayOf(4, 7, 5, 7), intArrayOf(7, 4, 5, 7))
-    }
-
-    @Test
-    fun sortArrayByParity6() {
         sortArrayByParity(intArrayOf(4, 6, 7), intArrayOf(7, 6, 4))
     }
 
