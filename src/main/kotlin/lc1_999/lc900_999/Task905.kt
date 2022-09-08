@@ -34,51 +34,38 @@ private class Task905Test {
 
     @Test
     fun sortArrayByParity1() {
-        val expected = intArrayOf(4, 2, 1, 3)
-        val actual = task.sortArrayByParity(intArrayOf(3, 1, 2, 4))
-        println(actual.toString2())
-        assertArrayEquals(expected, actual)
+        sortArrayByParity(intArrayOf(4, 2, 1, 3), intArrayOf(3, 1, 2, 4))
     }
 
     @Test
     fun sortArrayByParity2() {
-        val expected = intArrayOf(0)
-        val actual = task.sortArrayByParity(intArrayOf(0))
-        println(actual.toString2())
-        assertArrayEquals(expected, actual)
+        sortArrayByParity(intArrayOf(0), intArrayOf(0))
     }
 
     @Test
     fun sortArrayByParity3() {
-        val expected = intArrayOf(3, 1, 5, 7)
-        val actual = task.sortArrayByParity(intArrayOf(3, 1, 5, 7))
-        println(actual.toString2())
-        assertArrayEquals(expected, actual)
+        sortArrayByParity(intArrayOf(3, 1, 5, 7), intArrayOf(3, 1, 5, 7))
     }
 
     @Test
     fun sortArrayByParity4() {
-        val expected = intArrayOf(2, 4, 8, 10)
-        val actual = task.sortArrayByParity(intArrayOf(2, 4, 8, 10))
-        println(actual.toString2())
-        assertArrayEquals(expected, actual)
+        sortArrayByParity(intArrayOf(2, 4, 8, 10), intArrayOf(2, 4, 8, 10))
     }
 
     @Test
     fun sortArrayByParity5() {
-        val expected = intArrayOf(4, 7, 5, 7)
-        val actual = task.sortArrayByParity(intArrayOf(7, 4, 5, 7))
-        println(actual.toString2())
-        assertArrayEquals(expected, actual)
+        sortArrayByParity(intArrayOf(4, 7, 5, 7), intArrayOf(7, 4, 5, 7))
     }
 
     @Test
     fun sortArrayByParity6() {
-        val expected = intArrayOf(4, 6, 7)
-        val actual = task.sortArrayByParity(intArrayOf(7, 6, 4))
+        sortArrayByParity(intArrayOf(4, 6, 7), intArrayOf(7, 6, 4))
+    }
+
+    private fun sortArrayByParity(expected: IntArray, actualInp: IntArray) {
+        val actual = task.sortArrayByParity(actualInp)
         println(actual.toString2())
         assertArrayEquals(expected, actual)
     }
-
 }
 
