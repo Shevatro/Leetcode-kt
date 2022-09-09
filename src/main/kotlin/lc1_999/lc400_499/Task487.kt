@@ -23,6 +23,21 @@ class Task487 {
         }
         return max
     }
+
+    //Not mine, Repeat
+    fun findMaxConsecutiveOnesSlidingWindow(nums: IntArray): Int {
+        var max = 0
+        var startInd = 0
+        var prevZeroInd = -1
+        for (i in nums.indices) {
+            if (nums[i] == 0) {
+                startInd = prevZeroInd + 1
+                prevZeroInd = i
+            }
+            max = max(i - startInd + 1, max)
+        }
+        return max
+    }
 }
 
 private class Task487Test {
