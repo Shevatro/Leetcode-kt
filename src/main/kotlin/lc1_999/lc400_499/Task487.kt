@@ -4,30 +4,24 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import kotlin.math.max
 
-//From a learning section, Solved
+//From a learning section, Solved (Optimization needs to repeat)
 //https://leetcode.com/problems/max-consecutive-ones-ii/
 class Task487 {
     fun findMaxConsecutiveOnes(nums: IntArray): Int {
         var max = 0
-        var amountBeforeZero = 0
+        var amountBeforeAndIncludeZero = 0
         var amountAfterZero = 0
-        var hasZeroBefore = false
         for (item in nums) {
             if (item == 0) {
-                if (hasZeroBefore) {
-                    val amount = amountBeforeZero + amountAfterZero + 1
-                    max = max(amount, max)
-                } else {
-                    hasZeroBefore = true
-                }
-                amountBeforeZero = amountAfterZero
+                // Including the zero number
+                amountBeforeAndIncludeZero = amountAfterZero + 1
                 amountAfterZero = 0
             } else {
                 amountAfterZero++
             }
+            max = max(amountBeforeAndIncludeZero + amountAfterZero, max)
         }
-        val amount = if (hasZeroBefore) amountBeforeZero + amountAfterZero + 1 else amountAfterZero
-        return max(amount, max)
+        return max
     }
 }
 
