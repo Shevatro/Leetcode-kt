@@ -2,6 +2,7 @@ package lc1_999.lc400_499
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import kotlin.math.abs
 
 //From a learning section, Solved
 //https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
@@ -13,19 +14,15 @@ class Task448 {
 
     private fun fillAppeared(nums: IntArray) {
         for (num in nums) {
-            var index = num - 1
-            while (index >= 0) {
-                val temp = nums[index] - 1
-                nums[index] = -1
-                index = temp
-            }
+            val index = abs(num) - 1
+            if (nums[index] > 0) nums[index] *= -1
         }
     }
 
     private fun getDisappearedList(nums: IntArray): List<Int> {
         val list = mutableListOf<Int>()
         for (i in nums.indices) {
-            if (nums[i] != -1) list.add(i + 1)
+            if (nums[i] > 0) list.add(i + 1)
         }
         return list
     }
