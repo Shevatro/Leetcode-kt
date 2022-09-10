@@ -10,16 +10,16 @@ class Task242 {
     fun isAnagram(s: String, t: String): Boolean {
         if (s.length != t.length) return false
         val letters = countLettersDiff(t, s)
-        return letters.all { it.value == 0 }
+        return letters.all { it == 0 }
     }
 
-    private fun countLettersDiff(s1: String, s2: String): Map<Int, Int> {
-        val letters = mutableMapOf<Int, Int>()
+    private fun countLettersDiff(s1: String, s2: String): IntArray {
+        val letters = IntArray(26)
         for (i in s1.indices) {
-            val code1 = s1[i].code
-            val code2 = s2[i].code
-            letters[code1] = letters.getOrDefault(code1, 0) + 1
-            letters[code2] = letters.getOrDefault(code2, 0) - 1
+            val code1 = s1[i] - 'a'
+            val code2 = s2[i] - 'a'
+            letters[code1]++
+            letters[code2]--
         }
         return letters
     }
