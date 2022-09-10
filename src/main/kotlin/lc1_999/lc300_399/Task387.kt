@@ -6,28 +6,26 @@ import org.junit.jupiter.api.Test
 //From Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/contains-duplicate/
 
-private const val LOWER_CASE_LETTERS_AMOUNT = 26
-private const val FIRST_LETTER_ASCII_POS = 97
-
 class Task387 {
     fun firstUniqChar(s: String): Int {
         val lettersAmount = fillLettersAmount(s)
-        for (i in s.indices) {
-            val item = s[i].code - FIRST_LETTER_ASCII_POS
-            if (lettersAmount[item] == 1) {
-                return i
-            }
-        }
-        return -1
+        return findFirstUniqCharPos(s, lettersAmount)
     }
 
-    private fun fillLettersAmount(s: String): IntArray {
-        val lettersAmount = IntArray(LOWER_CASE_LETTERS_AMOUNT)
+    private fun fillLettersAmount(s: String): Map<Int, Int> {
+        val lettersAmount = mutableMapOf<Int, Int>()
         for (i in s.indices) {
-            val item = s[i].code - FIRST_LETTER_ASCII_POS
-            lettersAmount[item]++
+            val item = s[i].code
+            lettersAmount[item] = lettersAmount.getOrDefault(item, 0) + 1
         }
         return lettersAmount
+    }
+
+    private fun findFirstUniqCharPos(s: String, lettersAmount: Map<Int, Int>): Int {
+        for (i in s.indices) {
+            if (lettersAmount[s[i].code] == 1) return i
+        }
+        return -1
     }
 }
 
