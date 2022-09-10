@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
 //From Cracking The Coding Interview, Solved
-//https://leetcode.com/problems/contains-duplicate/
+//https://leetcode.com/problems/first-unique-character-in-a-string/
 
 class Task387 {
     fun firstUniqChar(s: String): Int {
