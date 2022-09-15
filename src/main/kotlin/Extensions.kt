@@ -5,3 +5,7 @@ fun IntArray.toString2(): String {
 fun <T>Array<T>.toString2(): String {
     return joinToString(prefix = "[", postfix = "]", separator = " ")
 }
+
+fun CharArray.toString2(): String {
+    return joinToString(prefix = "[", postfix = "]", separator = " ")
+}
