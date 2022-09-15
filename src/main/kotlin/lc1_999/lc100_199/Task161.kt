@@ -9,44 +9,32 @@ import kotlin.math.abs
 
 class Task161 {
     fun isOneEditDistance(s: String, t: String): Boolean {
-        if (s.length == t.length) {
-            var diffAmount = 0
-            for (i in s.indices) {
-                if (s[i] != t[i]) {
-                    diffAmount++
-                }
-                if (diffAmount > 1) {
-                    return false
-                }
+        if (abs(s.length - t.length) > 1) {
+            return false
+        }
+        val isFirstStrLonger = s.length > t.length
+        val strLong = if (isFirstStrLonger) s else t
+        val strShort = if (isFirstStrLonger) t else s
+        val isLengthEqual = s.length == t.length
+        var j = 0
+        var diffAmount = 0
+        for (i in strLong.indices) {
+            if (j >= strShort.length) {
+                diffAmount++
+                break
             }
-            return diffAmount == 1
-        } else {
-            if (abs(s.length - t.length) > 1) {
+            if (strLong[i] == strShort[j]) {
+                j++
+            } else {
+                diffAmount++
+                if (isLengthEqual) j++
+            }
+            if (diffAmount > 1) {
                 return false
             }
-            val isFirstStrLonger = s.length > t.length
-            val strLong = if (isFirstStrLonger) s else t
-            val strShort = if (isFirstStrLonger) t else s
-            var j = 0
-            var diffAmount = 0
-            for (i in strLong.indices) {
-                if (j >= strShort.length) {
-                    diffAmount++
-                    break
-                }
-                if (strLong[i] == strShort[j]) {
-                    j++
-                } else {
-                    diffAmount++
-                }
-                if (diffAmount > 1) {
-                    return false
-                }
-            }
-            return diffAmount == 1
         }
+        return diffAmount == 1
     }
-
 }
 
 private class Task161Test {
@@ -62,6 +50,7 @@ private class Task161Test {
         isOneEditDistance("abc", "", false)
         isOneEditDistance("abc", "abcd", true)
         isOneEditDistance("teacher", "detacher", false)
+        isOneEditDistance("cb", "ab", true)
     }
 
     private fun isOneEditDistance(actualInp1: String, actualInp2: String, expected: Boolean) {
