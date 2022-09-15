@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import kotlin.math.abs
 
-//From Cracking The Coding Interview, Solved
+//From Cracking The Coding Interview, Solved (but Repeat an optimal solution)
 //https://leetcode.com/problems/one-edit-distance/
 
 class Task161 {
@@ -12,28 +12,41 @@ class Task161 {
         if (abs(s.length - t.length) > 1) {
             return false
         }
-        val isFirstStrLonger = s.length > t.length
-        val strLong = if (isFirstStrLonger) s else t
-        val strShort = if (isFirstStrLonger) t else s
-        val isLengthEqual = s.length == t.length
-        var j = 0
-        var diffAmount = 0
-        for (i in strLong.indices) {
-            if (j >= strShort.length) {
-                diffAmount++
-                break
-            }
-            if (strLong[i] == strShort[j]) {
-                j++
-            } else {
-                diffAmount++
-                if (isLengthEqual) j++
-            }
-            if (diffAmount > 1) {
-                return false
+        return if (s.length == t.length) {
+            hasOneEditReplace(s, t)
+        } else if (s.length > t.length) {
+            hasOneEditInsert(s, t)
+        } else {
+            hasOneEditInsert(t, s)
+        }
+    }
+
+    private fun hasOneEditReplace(str1: String, str2: String): Boolean {
+        var foundDiff = false
+        for (i in str1.indices) {
+            if (str1[i] != str2[i]) {
+                if (!foundDiff) {
+                    foundDiff = true
+                } else {
+                    return false
+                }
             }
         }
-        return diffAmount == 1
+        return foundDiff
+    }
+
+    private fun hasOneEditInsert(longStr: String, shortStr: String): Boolean {
+        var longStrInd = 0
+        var shortStrInd = 0
+        while (longStrInd < longStr.length && shortStrInd < shortStr.length) {
+            if (longStr[longStrInd] == shortStr[shortStrInd]) {
+                shortStrInd++
+            } else if (longStrInd != shortStrInd) {
+                return false
+            }
+            longStrInd++
+        }
+        return true
     }
 }
 
