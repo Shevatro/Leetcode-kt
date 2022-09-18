@@ -4,31 +4,33 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import toString2
 
-//From Cracking The Coding Interview, Solved but Not in Place
+//From Cracking The Coding Interview, Not Solved, Repeat
 //https://leetcode.com/problems/rotate-image/
 
 class Task48 {
     fun rotate(matrix: Array<IntArray>): Unit {
-        val newMatrix = rotateInNewMatrix(matrix)
-        copy(newMatrix, matrix)
+        transpose(matrix)
+        reflect(matrix)
     }
 
-    private fun rotateInNewMatrix(matrix: Array<IntArray>): Array<IntArray> {
-        val newMatrix = Array(matrix.size) { IntArray(matrix[0].size) }
-        var k = 0
-        for (i in matrix.lastIndex downTo 0) {
-            for (j in matrix[0].indices) {
-                newMatrix[j][k] = matrix[i][j]
+    private fun transpose(matrix: Array<IntArray>) {
+        for (i in matrix.indices) {
+            for (j in i + 1 until matrix[0].size) {
+                val temp = matrix[i][j]
+                matrix[i][j] = matrix[j][i]
+                matrix[j][i] = temp
             }
-            k++
         }
-        return newMatrix
     }
 
-    private fun copy(matrixFrom: Array<IntArray>, matrixTo: Array<IntArray>) {
-        for (i in matrixFrom.indices) {
-            for (j in matrixFrom[0].indices) {
-                matrixTo[i][j] = matrixFrom[i][j]
+    private fun reflect(matrix: Array<IntArray>) {
+        for (i in matrix[0].indices) {
+            var k = matrix.lastIndex
+            for (j in 0 until matrix.size / 2) {
+                val temp = matrix[i][j]
+                matrix[i][j] = matrix[i][k]
+                matrix[i][k] = temp
+                k--
             }
         }
     }
