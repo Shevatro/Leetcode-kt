@@ -24,9 +24,9 @@ class Task48 {
     }
 
     private fun reflect(matrix: Array<IntArray>) {
-        for (i in matrix[0].indices) {
+        for (i in matrix.indices) {
             var k = matrix.lastIndex
-            for (j in 0 until matrix.size / 2) {
+            for (j in 0 until matrix[0].size / 2) {
                 val temp = matrix[i][j]
                 matrix[i][j] = matrix[i][k]
                 matrix[i][k] = temp
