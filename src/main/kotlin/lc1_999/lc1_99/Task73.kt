@@ -4,32 +4,62 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import toString2
 
-//From Cracking The Coding Interview, Solved but Not in Place
+//From Cracking The Coding Interview, Not Solved, Repeat
 //https://leetcode.com/problems/set-matrix-zeroes/
 class Task73 {
     fun setZeroes(matrix: Array<IntArray>): Unit {
-        val (rowArray, columnArray) = fillFlagsArrays(matrix)
+        val hasFirstRowZero = hasFirstRowZero(matrix[0])
+        val hasFirstColumnZero = hasFirstColumnZero(matrix)
+        setZeroesAtFirstPosition(matrix)
+        setOtherZeroes(matrix)
+        if (hasFirstRowZero) setZerosForFirstRow(matrix)
+        if (hasFirstColumnZero) setZerosForFirstColumn(matrix)
+    }
+
+    private fun hasFirstRowZero(row: IntArray): Boolean {
+        return row.any { it == 0 }
+    }
+
+    private fun hasFirstColumnZero(matrix: Array<IntArray>): Boolean {
         for (i in matrix.indices) {
-            for (j in matrix[0].indices) {
-                if (rowArray[i] || columnArray[j]) {
+            if (matrix[i][0] == 0) {
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun setZeroesAtFirstPosition(matrix: Array<IntArray>) {
+        for (i in 1 until matrix.size) {
+            for (j in 1 until matrix[0].size) {
+                if (matrix[i][j] == 0) {
+                    matrix[0][j] = 0
+                    matrix[i][0] = 0
+                }
+            }
+        }
+    }
+
+    private fun setOtherZeroes(matrix: Array<IntArray>) {
+        for (i in matrix.lastIndex downTo 1) {
+            for (j in matrix[0].lastIndex downTo 1) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
                     matrix[i][j] = 0
                 }
             }
         }
     }
 
-    private fun fillFlagsArrays(matrix: Array<IntArray>): Pair<BooleanArray, BooleanArray> {
-        val rowArray = BooleanArray(matrix.size)
-        val columnArray = BooleanArray(matrix[0].size)
-        for (i in matrix.indices) {
-            for (j in matrix[0].indices) {
-                if (matrix[i][j] == 0) {
-                    rowArray[i] = true
-                    columnArray[j] = true
-                }
-            }
+    private fun setZerosForFirstRow(matrix: Array<IntArray>) {
+        for (i in matrix[0].indices) {
+            matrix[0][i] = 0
         }
-        return rowArray to columnArray
+    }
+
+    private fun setZerosForFirstColumn(matrix: Array<IntArray>) {
+        for (i in matrix.indices) {
+            matrix[i][0] = 0
+        }
     }
 }
 
@@ -45,6 +75,10 @@ private class Task73Test {
         setZeroes(
             arrayOf(intArrayOf(0, 1, 2, 0), intArrayOf(3, 4, 5, 2), intArrayOf(1, 3, 1, 5)),
             arrayOf(intArrayOf(0, 0, 0, 0), intArrayOf(0, 4, 5, 0), intArrayOf(0, 3, 1, 0))
+        )
+        setZeroes(
+            arrayOf(intArrayOf(1, 1, 2, 6), intArrayOf(0, 4, 5, 0), intArrayOf(1, 3, 1, 5)),
+            arrayOf(intArrayOf(0, 1, 2, 0), intArrayOf(0, 0, 0, 0), intArrayOf(0, 3, 1, 0))
         )
     }
 
