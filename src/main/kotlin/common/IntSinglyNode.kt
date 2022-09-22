@@ -15,3 +15,20 @@ class IntSinglyNode(var `val`: Int) {
         println(list.toString())
     }
 }
+
+fun IntSinglyNode.addAtTail(newNode: IntSinglyNode) {
+    var node: IntSinglyNode = this
+    while (node.next != null) {
+        node = requireNotNull(node.next)
+    }
+    node.next = newNode
+}
+
+fun IntSinglyNode.get(index: Int): IntSinglyNode? {
+    var node: IntSinglyNode? = this
+    for (i in 0 until index) {
+        node = node?.next
+        if (node == null) return null
+    }
+    return node
+}

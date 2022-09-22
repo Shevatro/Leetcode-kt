@@ -1,5 +1,16 @@
+import common.IntSinglyNode
+
 fun IntArray.toString2(): String {
     return joinToString(prefix = "[", postfix = "]", separator = " ")
+}
+
+fun IntArray.toIntSinglyNode(): IntSinglyNode? {
+    var head: IntSinglyNode? = null
+    for (i in this.lastIndex downTo 0) {
+        val newHead = IntSinglyNode(this[i])
+        head = newHead.apply { next = head }
+    }
+    return head
 }
 
 fun <T> Array<T>.toString2(): String {
