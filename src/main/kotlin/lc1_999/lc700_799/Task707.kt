@@ -6,20 +6,16 @@ import common.IntSinglyNode
 //https://leetcode.com/problems/design-linked-list/
 
 class Task707 {
-    private var head: IntSinglyNode? = null
+    private val head = IntSinglyNode(0)
     private var size = 0
 
     private fun getNode(index: Int): IntSinglyNode? {
-        var curIndex = 0
-        var node = head
-        while (node != null) {
-            if (index == curIndex) {
-                return node
-            }
-            node = node.next
-            curIndex++
+        var node: IntSinglyNode? = head
+        for (i in 0..index) {
+            node = node?.next
+            if (node == null) return null
         }
-        return null
+        return node
     }
 
     fun get(index: Int): Int {
@@ -27,53 +23,27 @@ class Task707 {
     }
 
     fun addAtHead(`val`: Int) {
-        head = (IntSinglyNode(`val`).apply { next = head })
-        size++
-        head?.print()
+        addAtIndex(0, `val`)
     }
 
     fun addAtTail(`val`: Int) {
-        if (head == null) {
-            addAtHead(`val`)
-            return
-        }
-        var node = head
-        while (node?.next != null) {
-            node = node.next
-        }
-        node?.next = IntSinglyNode(`val`)
-        size++
-        head?.print()
-    }
-
-    private fun addBeforeNode(node: IntSinglyNode?, `val`: Int) {
-        node?.next = IntSinglyNode(`val`).apply { next = node?.next }
-        size++
-        head?.print()
+        addAtIndex(size, `val`)
     }
 
     fun addAtIndex(index: Int, `val`: Int) {
-        if (index == 0) {
-            addAtHead(`val`)
-            return
-        }
-        if (index < size) {
-            addBeforeNode(getNode(index - 1), `val`)
-        } else if (index == size) {
-            addAtTail(`val`)
-        }
+        val prev = getNode(index - 1) ?: return
+        val new = IntSinglyNode(`val`).apply { next = prev.next }
+        prev.next = new
+        size++
+        head.print(shouldPrintRoot = false)
     }
 
     fun deleteAtIndex(index: Int) {
-        if (index == 0) {
-            head = head?.next
-        } else {
-            val prev = getNode(index - 1) ?: return
-            val node = prev.next ?: return
-            prev.next = node.next
-        }
+        val prev = getNode(index - 1) ?: return
+        val cur = prev.next ?: return
+        prev.next = cur.next
         size--
-        head?.print()
+        head.print(shouldPrintRoot = false)
     }
 }
 
@@ -105,6 +75,20 @@ fun main() {
     Task707().apply {
         addAtTail(1)
         println(get(0))
+    }
+
+    Task707().apply {
+        addAtHead(2)
+        deleteAtIndex(1)
+        addAtHead(2)
+        addAtHead(7)
+        addAtHead(3)
+        addAtHead(2)
+        addAtHead(5)
+        addAtTail(5)
+        println(get(5))
+        deleteAtIndex(6)
+        deleteAtIndex(4)
     }
 }
 
