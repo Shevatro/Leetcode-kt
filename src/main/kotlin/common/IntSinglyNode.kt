@@ -32,3 +32,17 @@ fun IntSinglyNode.get(index: Int): IntSinglyNode? {
     }
     return node
 }
+
+fun IntSinglyNode?.equals(otherHead: IntSinglyNode?): Boolean {
+    if (this == null || otherHead == null) {
+        return this?.`val` == otherHead?.`val`
+    }
+    var node1 = this
+    var node2 = otherHead
+    while (node1 != null && node2 != null) {
+        if (node1.`val` != node2.`val`) return false
+        node1 = node1.next
+        node2 = node2.next
+    }
+    return node1?.`val` == node2?.`val`
+}
