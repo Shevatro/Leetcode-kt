@@ -10,32 +10,19 @@ import toIntSinglyNode
 //https://leetcode.com/problems/remove-nth-node-from-end-of-list/
 class Task19 {
     fun removeNthFromEnd(head: IntSinglyNode?, n: Int): IntSinglyNode? {
-        val size = getSize(head)
-        val index = size - n
-        if (index == 0) {
-            return head?.next
-        }
-        val prevNode = get(requireNotNull(head), index - 1)
-        prevNode.next = prevNode.next?.next
-        return head
-    }
-
-    private fun getSize(head: IntSinglyNode?): Int {
-        var node = head
+        val newHead = IntSinglyNode(0).apply { next = head }
         var size = 0
-        while (node != null) {
+        var fastPointer: IntSinglyNode? = newHead
+        var slowPointer: IntSinglyNode? = newHead
+        while (fastPointer != null) {
+            if (size > n) {
+                slowPointer = slowPointer?.next
+            }
             size++
-            node = node.next
+            fastPointer = fastPointer.next
         }
-        return size
-    }
-
-    private fun get(head: IntSinglyNode, index: Int): IntSinglyNode {
-        var node = head
-        for (i in 0 until index) {
-            node = requireNotNull(node.next)
-        }
-        return node
+        slowPointer?.next=slowPointer?.next?.next
+        return newHead.next
     }
 }
 
