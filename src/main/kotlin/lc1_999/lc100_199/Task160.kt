@@ -6,49 +6,18 @@ import common.get
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import toIntSinglyNode
-import kotlin.math.abs
 
-//From a learning section, Solved
+//From a learning section, Solved but Not optimal
 //https://leetcode.com/problems/intersection-of-two-linked-lists/
 class Task160 {
     fun getIntersectionNode(headA: IntSinglyNode?, headB: IntSinglyNode?): IntSinglyNode? {
-        val headASize = getSize(headA)
-        val headBSize = getSize(headB)
-        val diff = abs(headASize - headBSize)
-        return if (headASize >= headBSize) {
-            getIntersectionNodeImpl(get(headA, diff), headB)
-        } else {
-            getIntersectionNodeImpl(get(headB, diff), headA)
-        }
-    }
-
-    private fun getSize(head: IntSinglyNode?): Int {
-        var node = head
-        var size = 0
-        while (node != null) {
-            size++
-            node = node.next
-        }
-        return size
-    }
-
-    private fun get(head: IntSinglyNode?, index: Int): IntSinglyNode? {
-        var node = head
-        for (i in 0 until index) {
-            node = node?.next
-        }
-        return node
-    }
-
-    private fun getIntersectionNodeImpl(headA: IntSinglyNode?, headB: IntSinglyNode?): IntSinglyNode? {
         var nodeA = headA
         var nodeB = headB
-        while (nodeA != null) {
-            if (nodeA == nodeB) return nodeA
-            nodeA = nodeA.next
-            nodeB = nodeB?.next
+        while (nodeA != nodeB) {
+            nodeA = if (nodeA == null) headB else nodeA.next
+            nodeB = if (nodeB == null) headA else nodeB.next
         }
-        return null
+        return nodeA
     }
 }
 
