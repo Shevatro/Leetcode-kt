@@ -1,6 +1,10 @@
 package lc1_999.lc700_799
 
 import common.IntSinglyNode
+import common.equals
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+import toIntSinglyNode
 
 //From a learning section, Solved
 //https://leetcode.com/problems/design-linked-list/
@@ -35,7 +39,6 @@ class Task707 {
         val new = IntSinglyNode(`val`).apply { next = prev.next }
         prev.next = new
         size++
-        head.print(shouldPrintRoot = false)
     }
 
     fun deleteAtIndex(index: Int) {
@@ -43,52 +46,100 @@ class Task707 {
         val cur = prev.next ?: return
         prev.next = cur.next
         size--
-        head.print(shouldPrintRoot = false)
     }
+
+    fun getHead() = head.next
 }
 
+private class Task707Test {
 
-fun main() {
-    Task707().apply {
-        addAtHead(1)
-        addAtTail(3)
-        addAtIndex(1, 2)
-        println(get(1))
-        deleteAtIndex(1)
-        println(get(1))
+    @Test
+    fun test1() {
+        Task707().apply {
+            addAtHead(1)
+            compare(intArrayOf(1), getHead())
+            addAtTail(3)
+            compare(intArrayOf(1, 3), getHead())
+            addAtIndex(1, 2)
+            compare(intArrayOf(1, 2, 3), getHead())
+            compareGet(2, get(1))
+            deleteAtIndex(1)
+            compare(intArrayOf(1, 3), getHead())
+            compareGet(3, get(1))
+        }
     }
 
-    Task707().apply {
-        addAtHead(7)
-        addAtHead(2)
-        addAtHead(1)
-        addAtIndex(3, 0)
-        deleteAtIndex(2)
-        addAtHead(6)
-        addAtTail(4)
-        println(get(4))
-        addAtHead(4)
-        addAtIndex(5, 0)
-        addAtHead(6)
+    @Test
+    fun test2() {
+        Task707().apply {
+            addAtHead(7)
+            compare(intArrayOf(7), getHead())
+            addAtHead(2)
+            compare(intArrayOf(2, 7), getHead())
+            addAtHead(1)
+            compare(intArrayOf(1, 2, 7), getHead())
+            addAtIndex(3, 0)
+            compare(intArrayOf(1, 2, 7, 0), getHead())
+            deleteAtIndex(2)
+            compare(intArrayOf(1, 2, 0), getHead())
+            addAtHead(6)
+            compare(intArrayOf(6, 1, 2, 0), getHead())
+            addAtTail(4)
+            compare(intArrayOf(6, 1, 2, 0, 4), getHead())
+            compareGet(4, get(4))
+            addAtHead(4)
+            compare(intArrayOf(4, 6, 1, 2, 0, 4), getHead())
+            addAtIndex(5, 0)
+            compare(intArrayOf(4, 6, 1, 2, 0, 0, 4), getHead())
+            addAtHead(6)
+            compare(intArrayOf(6, 4, 6, 1, 2, 0, 0, 4), getHead())
+        }
     }
 
-    Task707().apply {
-        addAtTail(1)
-        println(get(0))
+    @Test
+    fun test3() {
+        Task707().apply {
+            addAtTail(1)
+            compare(intArrayOf(1), getHead())
+            compareGet(1, get(0))
+        }
     }
 
-    Task707().apply {
-        addAtHead(2)
-        deleteAtIndex(1)
-        addAtHead(2)
-        addAtHead(7)
-        addAtHead(3)
-        addAtHead(2)
-        addAtHead(5)
-        addAtTail(5)
-        println(get(5))
-        deleteAtIndex(6)
-        deleteAtIndex(4)
+    @Test
+    fun test4() {
+        Task707().apply {
+            addAtHead(2)
+            compare(intArrayOf(2), getHead())
+            deleteAtIndex(1)
+            compare(intArrayOf(2), getHead())
+            addAtHead(2)
+            compare(intArrayOf(2, 2), getHead())
+            addAtHead(7)
+            compare(intArrayOf(7, 2, 2), getHead())
+            addAtHead(3)
+            compare(intArrayOf(3, 7, 2, 2), getHead())
+            addAtHead(2)
+            compare(intArrayOf(2, 3, 7, 2, 2), getHead())
+            addAtHead(5)
+            compare(intArrayOf(5, 2, 3, 7, 2, 2), getHead())
+            addAtTail(5)
+            compare(intArrayOf(5, 2, 3, 7, 2, 2, 5), getHead())
+            compareGet(2, get(5))
+            deleteAtIndex(6)
+            compare(intArrayOf(5, 2, 3, 7, 2, 2), getHead())
+            deleteAtIndex(4)
+            compare(intArrayOf(5, 2, 3, 7, 2), getHead())
+        }
+    }
+
+    private fun compare(expected: IntArray, actual: IntSinglyNode?) {
+        actual?.print()
+        Assertions.assertEquals(true, actual.equals(expected.toIntSinglyNode()))
+    }
+
+    private fun compareGet(expected: Int, actual: Int) {
+        println(actual)
+        Assertions.assertEquals(expected, actual)
     }
 }
 

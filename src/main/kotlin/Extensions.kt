@@ -1,3 +1,4 @@
+import common.IntDoublyNode
 import common.IntSinglyNode
 
 fun IntArray.toString2(): String {
@@ -8,6 +9,16 @@ fun IntArray.toIntSinglyNode(): IntSinglyNode? {
     var head: IntSinglyNode? = null
     for (i in this.lastIndex downTo 0) {
         val newHead = IntSinglyNode(this[i])
+        head = newHead.apply { next = head }
+    }
+    return head
+}
+
+fun IntArray.toIntDoublyNode(): IntDoublyNode? {
+    var head: IntDoublyNode? = null
+    for (i in this.lastIndex downTo 0) {
+        val newHead = IntDoublyNode(this[i])
+        head?.prev = newHead
         head = newHead.apply { next = head }
     }
     return head
