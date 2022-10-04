@@ -1,5 +1,6 @@
 import common.IntDoublyNode
 import common.IntSinglyNode
+import common.IntTriplyNode
 
 fun IntArray.toString2(): String {
     return joinToString(prefix = "[", postfix = "]", separator = " ")
@@ -18,6 +19,16 @@ fun IntArray.toIntDoublyNode(): IntDoublyNode? {
     var head: IntDoublyNode? = null
     for (i in this.lastIndex downTo 0) {
         val newHead = IntDoublyNode(this[i])
+        head?.prev = newHead
+        head = newHead.apply { next = head }
+    }
+    return head
+}
+
+fun IntArray.toSimpleIntTriplyNode(): IntTriplyNode? {
+    var head: IntTriplyNode? = null
+    for (i in this.lastIndex downTo 0) {
+        val newHead = IntTriplyNode(this[i])
         head?.prev = newHead
         head = newHead.apply { next = head }
     }
