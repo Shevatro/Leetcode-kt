@@ -1,6 +1,7 @@
 import common.IntDoublyNode
 import common.IntSinglyNode
 import common.IntTriplyNode
+import common.getTail
 
 fun IntArray.toString2(): String {
     return joinToString(prefix = "[", postfix = "]", separator = " ")
@@ -12,6 +13,12 @@ fun IntArray.toIntSinglyNode(): IntSinglyNode? {
         val newHead = IntSinglyNode(this[i])
         head = newHead.apply { next = head }
     }
+    return head
+}
+
+fun IntArray.toIntCircularSinglyNode(): IntSinglyNode?{
+    val head = this.toIntSinglyNode()
+    head?.getTail()?.apply { next = head }
     return head
 }
 
