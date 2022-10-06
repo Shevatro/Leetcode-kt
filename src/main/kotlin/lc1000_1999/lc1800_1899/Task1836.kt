@@ -9,6 +9,34 @@ import toIntSinglyNode
 //From Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/remove-duplicates-from-an-unsorted-linked-list/
 class Task1836 {
+    fun deleteDuplicatesUnsortedAlternative(head: IntSinglyNode?): IntSinglyNode? {
+        val newHead = IntSinglyNode(-1).apply { next = head }
+        var node: IntSinglyNode? = newHead
+        while (node?.next != null) {
+            if (removeDuplicates(node.next)) {
+                node.next = node.next?.next
+            } else {
+                node = node.next
+            }
+        }
+        return newHead.next
+    }
+
+    private fun removeDuplicates(node: IntSinglyNode?): Boolean {
+        var p = node
+        var hasDuplicates = false
+        while (p?.next != null) {
+            val next = p.next
+            if (next?.`val` == node?.`val`) {
+                hasDuplicates = true
+                p.next = p.next?.next
+            } else {
+                p = p.next
+            }
+        }
+        return hasDuplicates
+    }
+
     fun deleteDuplicatesUnsorted(head: IntSinglyNode?): IntSinglyNode? {
         val newHead = IntSinglyNode(-1).apply { next = head }
         deleteDuplicates(newHead)
@@ -16,13 +44,13 @@ class Task1836 {
     }
 
     private fun getDuplicatesMark(head: IntSinglyNode?): Map<Int, Boolean> {
-        val frequency = mutableMapOf<Int, Boolean>()
+        val duplicatesMark = mutableMapOf<Int, Boolean>()
         var node = head
         while (node != null) {
-            frequency[node.`val`] = frequency[node.`val`] != null
+            duplicatesMark[node.`val`] = duplicatesMark[node.`val`] != null
             node = node.next
         }
-        return frequency
+        return duplicatesMark
     }
 
     private fun deleteDuplicates(head: IntSinglyNode) {
