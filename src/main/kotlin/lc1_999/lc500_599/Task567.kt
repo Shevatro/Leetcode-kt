@@ -15,9 +15,16 @@ class Task567 {
             val previous = s2[i - 1] - 'a'
             val next = s2[i + s1.length - 1] - 'a'
             if (previous == next) continue
+            val previousDifferentNotEqual = frequencyS1[previous] != frequencyS2[previous]
+            val nextDifferentNotEqual = frequencyS1[next] != frequencyS2[next]
             frequencyS2[previous]--
             frequencyS2[next]++
-            amountNotEqual = countNotEqual(frequencyS1, frequencyS2)
+            val previousDifferentAfterNotEqual = frequencyS1[previous] != frequencyS2[previous]
+            val nextDifferentAfterNotEqual = frequencyS1[next] != frequencyS2[next]
+            if (previousDifferentNotEqual && !previousDifferentAfterNotEqual) amountNotEqual--
+            if (!previousDifferentNotEqual && previousDifferentAfterNotEqual) amountNotEqual++
+            if (nextDifferentNotEqual && !nextDifferentAfterNotEqual) amountNotEqual--
+            if (!nextDifferentNotEqual && nextDifferentAfterNotEqual) amountNotEqual++
             if (amountNotEqual == 0) return true
         }
         return false
