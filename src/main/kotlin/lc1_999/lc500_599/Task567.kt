@@ -19,14 +19,14 @@ class Task567 {
             if (s1.length > s2.length) return false
             populateInitState()
             amountNotEqual = countNotEqual()
-            if (amountNotEqual == 0) return true
+            if (isAllEquals()) return true
             for (i in 1..s2.length - s1.length) {
                 val previousItem = s2[i - 1] - 'a'
                 val newItem = s2[i + s1.length - 1] - 'a'
                 if (previousItem == newItem) continue
                 shiftFrequency(previousItem, -1)
                 shiftFrequency(newItem, 1)
-                if (amountNotEqual == 0) return true
+                if (isAllEquals()) return true
             }
             return false
         }
@@ -47,9 +47,9 @@ class Task567 {
             return count
         }
 
-        private fun isFrequencyDifferent(item: Int): Boolean {
-            return frequencyS1[item] != frequencyS2[item]
-        }
+        private fun isFrequencyDifferent(item: Int) = frequencyS1[item] != frequencyS2[item]
+
+        private fun isAllEquals() = amountNotEqual == 0
 
         private fun shiftFrequency(item: Int, frequencyDiff: Int) {
             val diffFrequencyIndicatorBefore = isFrequencyDifferent(item).toInt()
