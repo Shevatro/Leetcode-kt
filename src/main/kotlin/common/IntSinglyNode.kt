@@ -33,6 +33,15 @@ fun IntSinglyNode.get(index: Int): IntSinglyNode? {
     return node
 }
 
+fun IntSinglyNode.getByValue(value: Int): IntSinglyNode? {
+    var node: IntSinglyNode? = this
+    while (node!=null) {
+        if (node.`val` == value) return node
+        node = node.next
+    }
+    return null
+}
+
 fun IntSinglyNode.getTail(): IntSinglyNode? {
     var node: IntSinglyNode? = this
     while (node?.next != null) {
