@@ -11,14 +11,8 @@ import toIntSinglyNode
 //https://leetcode.com/problems/delete-node-in-a-linked-list/
 class Task237 {
     fun deleteNode(node: IntSinglyNode?) {
-        var p: IntSinglyNode? = node
-        while (p != null) {
-            p.`val` = requireNotNull(p.next).`val`
-            if (p.next?.next == null) {
-                p.next = null
-            }
-            p = p.next
-        }
+        node?.`val` = requireNotNull(node?.next?.`val`)
+        node?.next = node?.next?.next
     }
 }
 
