@@ -12,9 +12,9 @@ import toIntSinglyNode
 class Task237 {
     fun deleteNode(node: IntSinglyNode?) {
         var p: IntSinglyNode? = node
-        while (p!=null){
-            p.`val` = p.next!!.`val`
-            if (p.next?.next ==null){
+        while (p != null) {
+            p.`val` = requireNotNull(p.next).`val`
+            if (p.next?.next == null) {
                 p.next = null
             }
             p = p.next
@@ -27,9 +27,9 @@ private class Task237Test {
 
     @Test
     fun deleteNode() {
-        deleteNode(intArrayOf(4,5,1,9).toIntSinglyNode(), 5, intArrayOf(4,1,9).toIntSinglyNode())
-        deleteNode(intArrayOf(4,5,1,9).toIntSinglyNode(), 1, intArrayOf(4,5,9).toIntSinglyNode())
-        deleteNode(intArrayOf(4,5,1,9).toIntSinglyNode(), 4, intArrayOf(5,1,9).toIntSinglyNode())
+        deleteNode(intArrayOf(4, 5, 1, 9).toIntSinglyNode(), 5, intArrayOf(4, 1, 9).toIntSinglyNode())
+        deleteNode(intArrayOf(4, 5, 1, 9).toIntSinglyNode(), 1, intArrayOf(4, 5, 9).toIntSinglyNode())
+        deleteNode(intArrayOf(4, 5, 1, 9).toIntSinglyNode(), 4, intArrayOf(5, 1, 9).toIntSinglyNode())
     }
 
     private fun deleteNode(actualRoot: IntSinglyNode?, actualInp: Int, expected: IntSinglyNode?) {
