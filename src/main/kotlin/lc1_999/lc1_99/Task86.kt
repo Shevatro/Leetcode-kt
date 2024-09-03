@@ -17,16 +17,17 @@ class Task86 {
         var node: IntSinglyNode? = head
         while (node != null) {
             if (node.`val` >= x) {
-                greaterPointer.next = IntSinglyNode(node.`val`)
+                greaterPointer.next = node
                 greaterPointer = requireNotNull(greaterPointer.next)
             } else {
-                lessPointer.next = IntSinglyNode(node.`val`)
+                lessPointer.next = node
                 lessPointer = requireNotNull(lessPointer.next)
             }
             node = node.next
         }
 
         lessPointer.next = greaterHead.next
+        greaterPointer.next = null
         return lessHead.next
     }
 }
