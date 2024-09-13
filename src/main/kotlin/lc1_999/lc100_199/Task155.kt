@@ -6,7 +6,7 @@ import kotlin.collections.ArrayDeque
 import kotlin.math.min
 
 
-//From a learning section, Solved but with a hint
+//From Cracking The Coding Interview, Solved but with a hint
 //https://leetcode.com/problems/min-stack/
 class Task155 {
     class Solution1 {
