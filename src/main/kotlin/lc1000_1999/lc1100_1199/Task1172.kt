@@ -30,18 +30,27 @@ class Task1172(capacity: Int) {
     }
 
     fun pop(): Int {
-        val position = stacks.indexOfLast { it.isNotEmpty() }
-        if (position == -1) return -1
-        val stack = stacks[position]
-        if (!availableStacks.contains(position)) availableStacks.add(position)
-        return stack.pop()
+        return popAtStack(stacks.size - 1)
     }
 
     fun popAtStack(index: Int): Int {
         val stack = stacks.getOrNull(index) ?: return -1
         if (stack.isEmpty()) return -1
         if (!availableStacks.contains(index)) availableStacks.add(index)
-        return stack.pop()
+        val item = stack.pop()
+        cleanUp()
+        return item
+    }
+
+    private fun cleanUp() {
+        for (i in stacks.size - 1 downTo 0) {
+            if (stacks[i].isEmpty()) {
+                stacks.removeAt(i)
+                availableStacks.remove(i)
+            } else {
+                break
+            }
+        }
     }
 
     fun getStackForTest(): ArrayList<LinkedList<Int>> = stacks
@@ -75,19 +84,19 @@ private class Task1172Test {
         Assertions.assertEquals(createLList(listOf(1), listOf(4, 3), listOf(5)), task.getStackForTest())
         Assertions.assertEquals(5, task.pop())
         //The stacks are now: 0: [1]; 1: [4, 3], 2:[]
-        Assertions.assertEquals(createLList(listOf(1), listOf(4, 3), listOf()), task.getStackForTest())
+        Assertions.assertEquals(createLList(listOf(1), listOf(4, 3)), task.getStackForTest())
         Assertions.assertEquals(4, task.pop())
         //The stacks are now: 0: [1]; 1: [3], 2:[]
-        Assertions.assertEquals(createLList(listOf(1), listOf(3), listOf()), task.getStackForTest())
+        Assertions.assertEquals(createLList(listOf(1), listOf(3)), task.getStackForTest())
         Assertions.assertEquals(3, task.pop())
         //The stacks are now: 0: [1], 1:[], 2:[]
-        Assertions.assertEquals(createLList(listOf(1), listOf(), listOf()), task.getStackForTest())
+        Assertions.assertEquals(createLList(listOf(1)), task.getStackForTest())
         Assertions.assertEquals(1, task.pop())
         //The stacks are now: 0: []; 1: []; 2: []
-        Assertions.assertEquals(createLList(listOf(), listOf(), listOf()), task.getStackForTest())
+        Assertions.assertEquals(createLList(), task.getStackForTest())
         Assertions.assertEquals(-1, task.pop())
         //The stacks are now: 0: []; 1: []; 2: []
-        Assertions.assertEquals(createLList(listOf(), listOf(), listOf()), task.getStackForTest())
+        Assertions.assertEquals(createLList(), task.getStackForTest())
     }
 
     private fun createLList(vararg list: List<Int>): List<LinkedList<Int>> {
