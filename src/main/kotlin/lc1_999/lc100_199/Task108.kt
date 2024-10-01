@@ -35,16 +35,16 @@ private class Task108Test {
     fun sortedArrayToBST() {
         val task = Task108()
         val result = task.sortedArrayToBST(intArrayOf(-10, -3, 0, 5, 9))
-        Assertions.assertEquals(result?.`val`, 0)
+        Assertions.assertEquals(0, result?.`val`)
         Assertions.assertEquals(listOf(0, -10, 5, null, -3, null, 9), result?.toLevelsList())
 
         val result2 = task.sortedArrayToBST(intArrayOf(-10, -4, -3, -2, -1, 0, 5, 9))
-        Assertions.assertEquals(result2?.`val`, -2)
-        val actualResult2 = listOf( -2, -4, 0, -10, -3, -1, 5, null, null, null, null, null, null, null, 9)
+        Assertions.assertEquals(-2, result2?.`val`)
+        val actualResult2 = listOf(-2, -4, 0, -10, -3, -1, 5, null, null, null, null, null, null, null, 9)
         Assertions.assertEquals(actualResult2, result2?.toLevelsList())
 
         val result3 = task.sortedArrayToBST(intArrayOf(2, 4, 6, 8, 10, 20))
-        Assertions.assertEquals(result3?.`val`, 6)
+        Assertions.assertEquals(6, result3?.`val`)
         Assertions.assertEquals(listOf(6, 2, 10, null, 4, 8, 20), result3?.toLevelsList())
     }
 }
