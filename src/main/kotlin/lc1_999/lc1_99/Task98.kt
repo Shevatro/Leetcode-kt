@@ -10,6 +10,7 @@ class Task98 {
     fun isValidBST(root: IntTreeNode?): Boolean {
         return Solution().isValidBST(root)
 //        return Solution2().isValidBST(root)
+//        return Solution3().isValidBST(root)
     }
 
     private class Solution {
@@ -58,45 +59,78 @@ class Task98 {
             return true
         }
     }
+
+    private class Solution3 {
+        fun isValidBST(root: IntTreeNode?): Boolean {
+            return isBST(root, null, null)
+        }
+
+        private fun isBST(root: IntTreeNode?, min: Int?, max: Int?): Boolean {
+            if (root == null) return true
+            if (min != null && min >= root.`val` || max != null && max <= root.`val`) return false
+            val isLeftValid = isBST(root.left, min, root.`val`)
+            val isRightValid = isBST(root.right, root.`val`, max)
+            return isLeftValid && isRightValid
+        }
+    }
 }
 
 
 private class Task110Test {
+    private val task = Task98()
+
     @Test
-    fun isValidBSTTest() {
-        val task = Task98()
+    fun isValidBSTTest1() {
         val tree = IntTreeNode(2).apply {
             left = IntTreeNode(1)
             right = IntTreeNode(3)
         }
         val result = task.isValidBST(tree)
         Assertions.assertEquals(true, result)
+    }
 
-        val tree2 = IntTreeNode(5).apply {
+    @Test
+    fun isValidBSTTest2() {
+        val tree = IntTreeNode(5).apply {
             left = IntTreeNode(1)
             right = IntTreeNode(4).apply {
                 left = IntTreeNode(3)
                 right = IntTreeNode(6)
             }
         }
-        val result2 = task.isValidBST(tree2)
-        Assertions.assertEquals(false, result2)
+        val result = task.isValidBST(tree)
+        Assertions.assertEquals(false, result)
+    }
 
-        val tree3 = IntTreeNode(5).apply {
+    @Test
+    fun isValidBSTTest3() {
+        val tree = IntTreeNode(5).apply {
             left = IntTreeNode(4)
             right = IntTreeNode(6).apply {
                 left = IntTreeNode(3)
                 right = IntTreeNode(7)
             }
         }
-        val result3 = task.isValidBST(tree3)
-        Assertions.assertEquals(false, result3)
+        val result = task.isValidBST(tree)
+        Assertions.assertEquals(false, result)
+    }
 
-        val tree4 = IntTreeNode(2).apply {
+    @Test
+    fun isValidBSTTest4() {
+        val tree = IntTreeNode(2).apply {
             left = IntTreeNode(2)
             right = IntTreeNode(2)
         }
-        val result4 = task.isValidBST(tree4)
-        Assertions.assertEquals(false, result4)
+        val result = task.isValidBST(tree)
+        Assertions.assertEquals(false, result)
+    }
+
+    @Test
+    fun isValidBSTTest5() {
+        val tree = IntTreeNode(1).apply {
+            left = IntTreeNode(1)
+        }
+        val result = task.isValidBST(tree)
+        Assertions.assertEquals(false, result)
     }
 }
