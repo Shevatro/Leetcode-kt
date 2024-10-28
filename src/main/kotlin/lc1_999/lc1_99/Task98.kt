@@ -76,7 +76,7 @@ class Task98 {
 }
 
 
-private class Task110Test {
+private class Task98Test {
     private val task = Task98()
 
     @Test
