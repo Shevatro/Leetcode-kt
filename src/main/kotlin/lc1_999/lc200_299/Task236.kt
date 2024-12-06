@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test
 //https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
 class Task236 {
     fun lowestCommonAncestor(root: IntTreeNode?, p: IntTreeNode?, q: IntTreeNode?): IntTreeNode? {
-        return Solution(root, p, q).lowestCommonAncestor()
+//        return Solution(root, p, q).lowestCommonAncestor()
+        return Solution2(p, q).lowestCommonAncestor(root)
     }
 
     private class Solution(private val root: IntTreeNode?, private val p: IntTreeNode?, private val q: IntTreeNode?) {
@@ -47,7 +48,22 @@ class Task236 {
 
     }
 
-
+    private class Solution2(private val p: IntTreeNode?, private val q: IntTreeNode?) {
+        fun lowestCommonAncestor(root: IntTreeNode?): IntTreeNode? {
+            // If the root is null or root is either p or q, then root is the LCA
+            if (root == null || root == p || root == q) return root
+            // Recurse on the left subtree to find the LCA of p and q
+            val left = lowestCommonAncestor(root.left)
+            // Recurse on the right subtree to find the LCA of p and q
+            val right = lowestCommonAncestor(root.right)
+            // If finding LCA in the left subtree returns null, the LCA is in the right subtree
+            if (left == null) return right
+            // If finding LCA in the right subtree returns null, the LCA is in the left subtree
+            if (right == null) return left
+            // If both left and right are non-null, we've found the LCA at the root
+            return root
+        }
+    }
 }
 
 private class Task236Test {
