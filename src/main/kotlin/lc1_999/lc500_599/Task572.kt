@@ -9,13 +9,14 @@ import org.junit.jupiter.api.Test
 class Task572 {
     fun isSubtree(root: IntTreeNode?, subRoot: IntTreeNode?): Boolean {
         return Solution(root, subRoot).isSubtree()
+//        return Solution2(root, subRoot).isSubtree()
     }
 
     private class Solution(private val root: IntTreeNode?, private val subRoot: IntTreeNode?) {
         private val potentialSubRoots = ArrayList<IntTreeNode>()
         fun isSubtree(): Boolean {
             findSubRootInAnotherTree(root)
-            println(potentialSubRoots.map{it.`val`})
+            println(potentialSubRoots.map { it.`val` })
             if (potentialSubRoots.isEmpty()) return false
             return potentialSubRoots.any { compareNodes(it, subRoot) ?: false }
         }
@@ -35,6 +36,26 @@ class Task572 {
             val left = compareNodes(node1?.left, node2?.left)
             val right = compareNodes(node1?.right, node2?.right)
             return !(left == false || right == false)
+        }
+    }
+
+    private class Solution2(private val root: IntTreeNode?, private val subRoot: IntTreeNode?) {
+        fun isSubtree(): Boolean {
+            val treeStr = StringBuilder()
+            nodesToString(root, treeStr)
+            val subTreeStr = StringBuilder()
+            nodesToString(subRoot, subTreeStr)
+            println(treeStr.toString())
+            println(subTreeStr.toString())
+            return treeStr.contains(subTreeStr)
+        }
+
+        private fun nodesToString(node: IntTreeNode?, sb: StringBuilder) {
+            sb.append("-").append(node?.`val`).append("-")
+            if (node != null) {
+                nodesToString(node.left, sb)
+                nodesToString(node.right, sb)
+            }
         }
     }
 }
@@ -102,5 +123,14 @@ private class Task572Test {
 
         val result = task.isSubtree(root, subRoot)
         Assertions.assertEquals(true, result)
+    }
+
+    @Test
+    fun isSubtreeTest5() {
+        val root = IntTreeNode(12)
+        val subRoot = IntTreeNode(2)
+
+        val result = task.isSubtree(root, subRoot)
+        Assertions.assertEquals(false, result)
     }
 }
