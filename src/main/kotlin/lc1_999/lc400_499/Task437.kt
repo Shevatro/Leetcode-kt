@@ -4,13 +4,15 @@ import common.IntTreeNode
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-//From Cracking The Coding Interview, Solved
+//From Cracking The Coding Interview, Solved but not optimal
 //https://leetcode.com/problems/path-sum-iii/
 class Task437 {
     fun pathSum(root: IntTreeNode?, targetSum: Int): Int {
-        return Solution(root, targetSum).pathSum()
+        return Solution2(root, targetSum).pathSum()
+//        return Solution(root, targetSum).pathSum()
     }
 
+    //Note: Not optimal
     private class Solution(private val root: IntTreeNode?, private val targetSum: Int) {
         private var amount = 0
         fun pathSum(): Int {
@@ -29,6 +31,24 @@ class Task437 {
             amount += sum.count { it == targetSum.toLong() }
             println(node.`val`.toString() + " amount:$amount return:$sum")
             return sum
+        }
+    }
+
+    private class Solution2(private val root: IntTreeNode?, private val targetSum: Int) {
+        private val sumMap = hashMapOf(0L to 1)
+        fun pathSum(): Int {
+            return dfs(root, 0L)
+        }
+
+        private fun dfs(node: IntTreeNode?, sum: Long): Int {
+            if (node == null) return 0
+            val currentSum = sum + node.`val`
+            var pathSum = sumMap.getOrDefault(currentSum - targetSum, 0)
+            sumMap.merge(currentSum, 1, Integer::sum) //= sumMap[currentSum] = sumMap.getOrDefault(currentSum, 0) + 1
+            pathSum += dfs(node.left, currentSum)
+            pathSum += dfs(node.right, currentSum)
+            sumMap.merge(currentSum, -1, Integer::sum) //= sumMap[currentSum] = sumMap.getOrDefault(currentSum, 0) - 1
+            return pathSum
         }
     }
 }
