@@ -7,12 +7,11 @@ import org.junit.jupiter.api.Test
 //https://leetcode.com/problems/number-of-islands/
 class Task200 {
     fun numIslands(grid: Array<CharArray>): Int {
-        return Solution(grid).numIslands()
 //        return Solution2(grid).numIslands()
+        return Solution(grid).numIslands()
     }
 
     private class Solution2(private val grid: Array<CharArray>) {
-        private val visited = mutableSetOf<IJ>()
         private val directions = listOf(
             Direction(iDiff = 1, iLimit = grid.lastIndex), //right
             Direction(jDiff = -1, jLimit = 0), //up
@@ -24,7 +23,7 @@ class Task200 {
             var amount = 0
             for (i in grid.indices) {
                 for (j in grid[0].indices) {
-//                    println("$i $j")
+                    println("[$i $j]")
                     if (grid[i][j] == '1') {
                         bfs(IJ(i, j))
                         amount++
@@ -37,10 +36,10 @@ class Task200 {
 
         private fun bfs(ij: IJ) {
             queue.addLast(ij)
-            visited.add(ij)
             while (queue.isNotEmpty()) {
                 val (i, j) = queue.removeFirst()
-//                println("investigate:($i, $j)")
+                if (grid[i][j] == '0') continue
+                println("[$i $j]=0")
                 grid[i][j] = '0'
                 visitNeighbours(i, j)
 
@@ -51,8 +50,7 @@ class Task200 {
             for (direction in directions) {
                 if (i != direction.iLimit && j != direction.jLimit) {
                     val ij = IJ(i + direction.iDiff, j + direction.jDiff)
-                    if (grid[ij.i][ij.j] == '1' && !visited.contains(ij)) {
-                        visited.add(ij)
+                    if (grid[ij.i][ij.j] == '1') {
                         queue.addLast(ij)
                     }
                 }
@@ -67,11 +65,13 @@ class Task200 {
             Direction(iDiff = -1, iLimit = 0), //left
             Direction(jDiff = 1, jLimit = grid[0].lastIndex), //down
         )
+
         fun numIslands(): Int {
             var amount = 0
             for (i in grid.indices) {
                 for (j in grid[0].indices) {
                     if (grid[i][j] == '1') {
+                        println("[$i $j]")
                         dfs(IJ(i, j))
                         amount++
                     }
@@ -80,13 +80,14 @@ class Task200 {
             return amount
         }
 
-        private fun dfs(ij: IJ){
-            val (i,j) = ij
-            grid[i][j]='0'
-            for (destination in directions){
-                if (i!= destination.iLimit && j!=destination.jLimit){
-                    val newItem = IJ(i+destination.iDiff, j+destination.jDiff)
-                    if (grid[newItem.i][newItem.j]=='1') dfs(IJ(i+destination.iDiff, j+destination.jDiff))
+        private fun dfs(ij: IJ) {
+            val (i, j) = ij
+            grid[i][j] = '0'
+            println("[$i $j]=0")
+            for (destination in directions) {
+                if (i != destination.iLimit && j != destination.jLimit) {
+                    val newItem = IJ(i + destination.iDiff, j + destination.jDiff)
+                    if (grid[newItem.i][newItem.j] == '1') dfs(newItem)
                 }
             }
         }
