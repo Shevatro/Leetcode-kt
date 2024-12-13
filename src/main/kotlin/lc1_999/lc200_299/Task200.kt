@@ -11,14 +11,21 @@ class Task200 {
     }
 
     private class Solution2(private val grid: Array<CharArray>) {
-        private var amount = 0
         private val visited = mutableSetOf<IJ>()
+        private val directions = listOf(
+            Direction(iDiff = 1, iLimit = grid.lastIndex), //right
+            Direction(jDiff = -1, jLimit = 0), //up
+            Direction(iDiff = -1, iLimit = 0), //left
+            Direction(jDiff = 1, jLimit = grid[0].lastIndex), //down
+        )
+        private val queue = ArrayDeque<IJ>()
         fun numIslands(): Int {
+            var amount = 0
             for (i in grid.indices) {
                 for (j in grid[0].indices) {
 //                    println("$i $j")
                     if (grid[i][j] == '1') {
-                        visitNeighboards(IJ(i, j))
+                        bfs(IJ(i, j))
                         amount++
                     }
                 }
@@ -27,60 +34,35 @@ class Task200 {
         }
 
 
-        private fun visitNeighboards(ij: IJ) {
-            val queue = ArrayDeque<IJ>()
+        private fun bfs(ij: IJ) {
             queue.addLast(ij)
             visited.add(ij)
             while (queue.isNotEmpty()) {
-                val (i,j) = queue.removeFirst()
+                val (i, j) = queue.removeFirst()
 //                println("investigate:($i, $j)")
                 grid[i][j] = '0'
-                moveRight(i, j)?.let { queue.addLast(it) }
-                moveUp(i, j)?.let { queue.addLast(it) }
-                moveLeft(i, j)?.let { queue.addLast(it) }
-                moveDown(i, j)?.let { queue.addLast(it) }
+                visitNeighbours(i, j)
 
             }
         }
 
-        private fun moveRight(i: Int, j: Int): IJ? {
-            if (i != grid.size - 1) {
-                return create2DifValid(i + 1, j)
+        private fun visitNeighbours(i: Int, j: Int) {
+            for (direction in directions) {
+                if (i != direction.iLimit && j != direction.jLimit) {
+                    val ij = IJ(i + direction.iDiff, j + direction.jDiff)
+                    if (grid[ij.i][ij.j] == '1' && !visited.contains(ij)) {
+                        visited.add(ij)
+                        queue.addLast(ij)
+                    }
+                }
             }
-            return null
-        }
-
-        private fun moveLeft(i: Int, j: Int): IJ? {
-            if (i != 0) {
-                return create2DifValid(i - 1, j)
-            }
-            return null
-        }
-
-        private fun moveUp(i: Int, j: Int): IJ? {
-            if (j != 0) {
-                return create2DifValid(i, j - 1)
-            }
-            return null
-        }
-
-        private fun moveDown(i: Int, j: Int): IJ? {
-            if (j != grid[0].size - 1) {
-                return create2DifValid(i, j + 1)
-            }
-            return null
-        }
-
-        private fun create2DifValid(i: Int, j: Int): IJ? {
-            val ij = IJ(i, j)
-            if (grid[i][j] == '1' && !visited.contains(ij)) {
-                visited.add(ij)
-                return ij
-            }
-            return null
         }
 
         private data class IJ(val i: Int, val j: Int)
+        private data class Direction(
+            val iDiff: Int = 0, val iLimit: Int? = null,
+            val jDiff: Int = 0, val jLimit: Int? = null
+        )
     }
 }
 
