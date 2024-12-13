@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test
 //https://leetcode.com/problems/number-of-islands/
 class Task200 {
     fun numIslands(grid: Array<CharArray>): Int {
-        return Solution2(grid).numIslands()
+        return Solution(grid).numIslands()
+//        return Solution2(grid).numIslands()
     }
 
     private class Solution2(private val grid: Array<CharArray>) {
@@ -57,12 +58,38 @@ class Task200 {
                 }
             }
         }
+    }
 
-        private data class IJ(val i: Int, val j: Int)
-        private data class Direction(
-            val iDiff: Int = 0, val iLimit: Int? = null,
-            val jDiff: Int = 0, val jLimit: Int? = null
+    private class Solution(private val grid: Array<CharArray>) {
+        private val directions = listOf(
+            Direction(iDiff = 1, iLimit = grid.lastIndex), //right
+            Direction(jDiff = -1, jLimit = 0), //up
+            Direction(iDiff = -1, iLimit = 0), //left
+            Direction(jDiff = 1, jLimit = grid[0].lastIndex), //down
         )
+        fun numIslands(): Int {
+            var amount = 0
+            for (i in grid.indices) {
+                for (j in grid[0].indices) {
+                    if (grid[i][j] == '1') {
+                        dfs(IJ(i, j))
+                        amount++
+                    }
+                }
+            }
+            return amount
+        }
+
+        private fun dfs(ij: IJ){
+            val (i,j) = ij
+            grid[i][j]='0'
+            for (destination in directions){
+                if (i!= destination.iLimit && j!=destination.jLimit){
+                    val newItem = IJ(i+destination.iDiff, j+destination.jDiff)
+                    if (grid[newItem.i][newItem.j]=='1') dfs(IJ(i+destination.iDiff, j+destination.jDiff))
+                }
+            }
+        }
     }
 }
 
@@ -118,3 +145,9 @@ private class Task200Test {
     }
 
 }
+
+private data class IJ(val i: Int, val j: Int)
+private data class Direction(
+    val iDiff: Int = 0, val iLimit: Int? = null,
+    val jDiff: Int = 0, val jLimit: Int? = null
+)
