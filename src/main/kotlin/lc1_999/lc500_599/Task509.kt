@@ -3,22 +3,24 @@ package lc1_999.lc500_599
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-//Solved but repeat
+//Solved
 //https://leetcode.com/problems/fibonacci-number/
 
 class Task509 {
     fun fib(n: Int): Int {
-        return fib(n, IntArray(n + 1))
+        return BottomUpSolution(n).fib()
     }
 
-    private fun fib(i: Int, memo: IntArray): Int {
-        if (i == 0 || i == 1) return i
-        if (memo[i] == 0) {
-            memo[i] = fib(i - 1) + fib(i - 2)
+    private class BottomUpSolution(private val n: Int) {
+        private val cache = IntArray(n + 1)
+        fun fib(i: Int = n): Int {
+            if (i == 0 || i == 1) return i
+            if (cache[i] == 0) {
+                cache[i] = fib(i - 1) + fib(i - 2)
+            }
+            return cache[i]
         }
-        return memo[i]
     }
-
 }
 
 private class Task509Test {
