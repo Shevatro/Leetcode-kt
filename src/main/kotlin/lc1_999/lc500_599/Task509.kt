@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test
 
 class Task509 {
     fun fib(n: Int): Int {
-//        return BottomUpSolution(n).fib()
-        return TopDownSolution(n).fib()
+        return BottomUpSolution(n).fib()
+//        return TopDownSolution(n).fib()
     }
 
-    private class BottomUpSolution(private val n: Int) {
+    private class TopDownSolution(private val n: Int) {
         private val cache = IntArray(n + 1)
         fun fib(i: Int = n): Int {
             if (i == 0 || i == 1) return i
@@ -23,7 +23,7 @@ class Task509 {
         }
     }
 
-    private class TopDownSolutionWithCache(private val n: Int) {
+    private class BottomUpSolutionWithCache(private val n: Int) {
         private val cache = IntArray(n + 1)
         fun fib(): Int {
             if (n == 0 || n == 1) return n
@@ -35,7 +35,7 @@ class Task509 {
         }
     }
 
-    private class TopDownSolution(private val n: Int) {
+    private class BottomUpSolution(private val n: Int) {
         fun fib(): Int {
             if (n == 0 || n == 1) return n
             var `n-2` = 0
