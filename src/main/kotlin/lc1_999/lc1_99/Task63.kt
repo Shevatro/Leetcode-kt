@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test
 //https://leetcode.com/problems/unique-paths-ii/
 class Task63 {
     fun uniquePathsWithObstacles(obstacleGrid: Array<IntArray>): Int {
-        return TopDownSolution(obstacleGrid).uniquePathsWithObstacles(obstacleGrid.size - 1, obstacleGrid[0].size - 1)
+//        return TopDownSolution(obstacleGrid).uniquePathsWithObstacles(obstacleGrid.size - 1, obstacleGrid[0].size - 1)
+        return BottomUpSolution(obstacleGrid).uniquePathsWithObstacles()
     }
 
     private class TopDownSolution(private val obstacleGrid: Array<IntArray>) {
@@ -22,6 +23,49 @@ class Task63 {
                 cache[i][j] = uniquePathsWithObstacles(i - 1, j) + uniquePathsWithObstacles(i, j - 1)
             }
             return cache[i][j]
+        }
+    }
+
+    private class BottomUpSolution(private val obstacleGrid: Array<IntArray>) {
+        fun uniquePathsWithObstacles(): Int {
+            if (obstacleGrid[0][0] == 1) return 0
+            obstacleGrid[0][0] = 1
+            fillFirstRow()
+            fillFirstColumn()
+            fillEverythingElse()
+            return obstacleGrid[obstacleGrid.size - 1][obstacleGrid[0].size - 1]
+        }
+
+        private fun fillFirstRow() {
+            for (c in 1 until obstacleGrid[0].size) {
+                if (obstacleGrid[0][c] == 1) {
+                    obstacleGrid[0][c] = 0
+                } else {
+                    obstacleGrid[0][c] = obstacleGrid[0][c - 1]
+                }
+            }
+        }
+
+        private fun fillFirstColumn() {
+            for (r in 1 until obstacleGrid.size) {
+                if (obstacleGrid[r][0] == 1) {
+                    obstacleGrid[r][0] = 0
+                } else {
+                    obstacleGrid[r][0] = obstacleGrid[r - 1][0]
+                }
+            }
+        }
+
+        private fun fillEverythingElse() {
+            for (c in 1 until obstacleGrid.size) {
+                for (r in 1 until obstacleGrid[0].size) {
+                    if (obstacleGrid[c][r] == 1) {
+                        obstacleGrid[c][r] = 0
+                    } else {
+                        obstacleGrid[c][r] = obstacleGrid[c][r - 1] + obstacleGrid[c - 1][r]
+                    }
+                }
+            }
         }
     }
 }
