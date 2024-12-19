@@ -75,7 +75,11 @@ private class Task63Test {
 
     @Test
     fun uniquePathsWithObstaclesTest1() {
-        val input = arrayOf(intArrayOf(0, 0, 0), intArrayOf(0, 1, 0), intArrayOf(0, 0, 0))
+        val input = arrayOf(
+            intArrayOf(0, 0, 0),
+            intArrayOf(0, 1, 0),
+            intArrayOf(0, 0, 0)
+        )
         val actual = task.uniquePathsWithObstacles(input)
         Assertions.assertEquals(2, actual)
     }
@@ -143,5 +147,17 @@ private class Task63Test {
         )
         val actual = task.uniquePathsWithObstacles(input)
         Assertions.assertEquals(13594824, actual)
+    }
+
+    @Test
+    fun uniquePathsWithObstaclesTest7() {
+        val input = arrayOf(
+            intArrayOf(0, 0, 1, 0),
+            intArrayOf(0, 0, 0, 0),
+            intArrayOf(1, 1, 1, 0),
+            intArrayOf(0, 0, 0, 0)
+        )
+        val actual = task.uniquePathsWithObstacles(input)
+        Assertions.assertEquals(2, actual)
     }
 }
