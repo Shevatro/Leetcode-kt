@@ -12,20 +12,21 @@ class Task46 {
 
     private class Solution2(private val nums: IntArray) {
         private val result = mutableListOf<List<Int>>()
+        private val current = mutableSetOf<Int>()
         fun permute(): List<List<Int>> {
-            permute(mutableSetOf())
+            performPermutation()
             return result
         }
 
-        private fun permute(data: MutableSet<Int>) {
-            if (data.size == nums.size) {
-                result.add(data.toList())
+        private fun performPermutation() {
+            if (current.size == nums.size) {
+                result.add(current.toList())
             } else {
                 for (num in nums) {
-                    if (data.contains(num)) continue
-                    data.add(num)
-                    permute(data)
-                    data.remove(num)
+                    if (current.contains(num)) continue
+                    current.add(num)
+                    performPermutation()
+                    current.remove(num)
                 }
             }
         }
