@@ -12,13 +12,14 @@ class Task47 {
 
     private class Solution2(private val nums: IntArray) {
         private val frequency = mutableMapOf<Int, Int>()
-        private val result = mutableSetOf<List<Int>>()
+        private val result = mutableListOf<List<Int>>()
         private val current = mutableListOf<Int>()
+        private val uniqueNums = nums.toSet()
 
         fun permuteUnique(): List<List<Int>> {
             countFrequency()
             permute()
-            return result.toList()
+            return result
         }
 
         private fun countFrequency() {
@@ -34,7 +35,7 @@ class Task47 {
                 result.add(current.toList())
             } else {
                 // println(" continue")
-                for (num in nums) {
+                for (num in uniqueNums) {
                     if (frequency[num]!! == 0) continue
                     current.add(num)
                     frequency[num] = frequency[num]!! - 1
