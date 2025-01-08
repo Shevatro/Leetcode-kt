@@ -2,6 +2,7 @@ package lc1_999.lc1_99
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import java.util.LinkedList
 
 //From Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/permutations-ii/
@@ -13,7 +14,7 @@ class Task47 {
     private class Solution2(private val nums: IntArray) {
         private val frequency = mutableMapOf<Int, Int>()
         private val result = mutableListOf<List<Int>>()
-        private val current = mutableListOf<Int>()
+        private val current = LinkedList<Int>()
         private val uniqueNums = nums.toSet()
 
         fun permuteUnique(): List<List<Int>> {
@@ -36,11 +37,12 @@ class Task47 {
             } else {
                 // println(" continue")
                 for (num in uniqueNums) {
-                    if (frequency[num]!! == 0) continue
-                    current.add(num)
-                    frequency[num] = frequency[num]!! - 1
+                    val amount = frequency[num] ?: 0
+                    if (amount == 0) continue
+                    current.addLast(num)
+                    frequency[num] = amount - 1
                     permute()
-                    frequency[num] = frequency[num]!! + 1
+                    frequency[num] = amount
                     current.removeLast()
                 }
             }
