@@ -7,50 +7,42 @@ import org.junit.jupiter.api.Test
 //https://leetcode.com/problems/flood-fill/
 class Task733 {
     fun floodFill(image: Array<IntArray>, sr: Int, sc: Int, color: Int): Array<IntArray> {
-        return Solution2(image, sr, sc, color).floodFill()
+        return Solution2(image, Point(sr, sc), color).floodFill()
     }
 
     private class Solution2(
         private val image: Array<IntArray>,
-        private val iStart: Int,
-        private val jStart: Int,
+        startPoint: Point,
         private val color: Int
     ) {
-        private var iCurrent = iStart
-        private var jCurrent = jStart
-        private val originalColor = image[iCurrent][jCurrent]
+        private var point = startPoint
+        private val originalColor = image[point.i][point.j]
         private val directions = listOf(
             Direction(iDiff = -1, iLimit = -1, desc = "up"),
             Direction(iDiff = 1, iLimit = image.size, desc = "down"),
             Direction(jDiff = -1, jLimit = -1, desc = "left"),
             Direction(jDiff = 1, jLimit = image[0].size, desc = "right"),
         )
-        private var k = 0
-        private val size = image.size * image[0].size
+
         fun floodFill(): Array<IntArray> {
             applyChanges()
             return image
         }
 
         private fun applyChanges() {
-            println("k:" + k + " i:" + iCurrent + " j:" + jCurrent)
-            if (iCurrent < 0 || jCurrent < 0 || iCurrent >= image.size || jCurrent >= image[0].size) return
-            if (image[iCurrent][jCurrent] != originalColor || image[iCurrent][jCurrent] == color) return
-            if (k > size) return
-            k++
-            image[iCurrent][jCurrent] = color
-            println("i:" + iCurrent + " j:" + jCurrent)
-            println(image.map { it.toList() + "\n" }.toList())
+            val pixel = image[point.i][point.j]
+            if (pixel != originalColor || pixel == color) return
+            image[point.i][point.j] = color
             for (direction in directions) {
-                val iNew = iCurrent + direction.iDiff
-                val jNew = jCurrent + direction.jDiff
-                if (iNew == direction.iLimit || jNew == direction.jLimit || image[iNew][jNew] != originalColor) continue
-                iCurrent = iNew
-                jCurrent = jNew
-                println("go:" + direction.desc)
+                val oldPoint = point
+                val nextPoint = Point(point.i + direction.iDiff, point.j + direction.jDiff)
+                if (!nextPoint.isValid(direction)) continue
+                val nextPixel = image[nextPoint.i][nextPoint.j]
+                if (nextPixel != originalColor) continue
+                println(oldPoint.toString() + " ->" + direction.desc)
+                point = nextPoint
                 applyChanges()
-                iCurrent = iNew - direction.iDiff
-                jCurrent = jNew - direction.jDiff
+                point = oldPoint
             }
         }
     }
@@ -62,6 +54,15 @@ class Task733 {
         val jLimit: Int? = null,
         val desc: String
     )
+
+    private data class Point(
+        val i: Int,
+        var j: Int
+    ) {
+        fun isValid(direction: Direction): Boolean {
+            return i != direction.iLimit && j != direction.jLimit
+        }
+    }
 }
 
 private class Task733Test {
