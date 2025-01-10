@@ -25,20 +25,18 @@ class Task733 {
         )
 
         fun floodFill(): Array<IntArray> {
-            applyChanges()
+            if (originalColor != color) applyChanges()
             return image
         }
 
         private fun applyChanges() {
-            val pixel = image[point.i][point.j]
-            if (pixel != originalColor || pixel == color) return
             image[point.i][point.j] = color
             for (direction in directions) {
                 val oldPoint = point
                 val nextPoint = Point(point.i + direction.iDiff, point.j + direction.jDiff)
                 if (!nextPoint.isValid(direction)) continue
                 val nextPixel = image[nextPoint.i][nextPoint.j]
-                if (nextPixel != originalColor) continue
+                if (nextPixel != originalColor || nextPixel == color) continue
                 println(oldPoint.toString() + " ->" + direction.desc)
                 point = nextPoint
                 applyChanges()
