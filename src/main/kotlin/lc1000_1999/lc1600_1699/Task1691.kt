@@ -12,14 +12,14 @@ class Task1691 {
     }
 
     private class Solution2(private val cuboids: Array<IntArray>) {
-        private var sum = 0
-        private val current = mutableSetOf<Int>()
-        private var maxSum = 0
+        private val heights = IntArray(cuboids.size)
+        private var maxHeight = 0
         fun maxHeight(): Int {
-            println(cuboids.size)
             sort()
-            backtrack()
-            return maxSum
+            for (i in cuboids.indices) {
+                maxHeight = max(maxHeight, backtrack(i))
+            }
+            return maxHeight
         }
 
         private fun sort() {
@@ -29,33 +29,23 @@ class Task1691 {
             cuboids.sortByDescending { it[0] + it[1] + it[2] }
         }
 
-        private fun backtrack() {
-            if (current.size == cuboids.size) {
-//                println(sum.toString() + " " + current.toList())
-//                maxSum = max(maxSum, sum)
-                return
+        private fun backtrack(index: Int): Int {
+            if (index < cuboids.size && heights[index] > 0) {
+                return heights[index]
             }
-            for (i in cuboids.indices) {
-//                println("i:" + i + " " + current.toList())
-                if (current.contains(i)) continue
-                if (!isValid(i)) {
-//                    println(sum.toString() + " " + current.toList())
-//                    maxSum = max(maxSum, sum)
-                    continue
-                }
-                current.add(i)
-                sum += cuboids[i][2]
-                maxSum = max(maxSum, sum)
-                backtrack()
-                current.remove(i)
-                sum -= cuboids[i][2]
+            var height = 0
+            for (i in index + 1 until cuboids.size) {
+                if (!isValid(index, i)) continue
+                height = max(backtrack(i), height)
             }
+            height += cuboids[index][2]
+            heights[index] = height
+            return height
         }
 
-        private fun isValid(i: Int): Boolean {
-            if (current.isEmpty()) return true
-            val prev = cuboids[current.last()]
-            val curr = cuboids[i]
+        private fun isValid(prevInd: Int, currInd: Int): Boolean {
+            val prev = cuboids[prevInd]
+            val curr = cuboids[currInd]
             return prev[0] >= curr[0] && prev[1] >= curr[1] && prev[2] >= curr[2]
         }
     }
