@@ -3,7 +3,7 @@ package lc1_999.lc1_99
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-//From a learning section, Solved
+//From a learning section, Cracking The Coding Interview Solved
 //https://leetcode.com/problems/merge-sorted-array/
 class Task88 {
 
@@ -11,7 +11,8 @@ class Task88 {
         var nums1Index = m - 1
         var nums2Index = n - 1
         for (k in nums1.lastIndex downTo 0) {
-            if (nums2Index < 0 || nums1Index >= 0 && nums1[nums1Index] > nums2[nums2Index]) {
+            if (nums2Index < 0) break // don't need to waste time to copy again inside nums1
+            if (nums1Index >= 0 && nums1[nums1Index] > nums2[nums2Index]) {
                 nums1[k] = nums1[nums1Index]
                 nums1Index--
             } else {
