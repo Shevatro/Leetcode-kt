@@ -8,18 +8,54 @@ import org.junit.jupiter.api.Test
 class Task49 {
 
     fun groupAnagrams(strs: Array<String>): List<List<String>> {
-        val result = mutableListOf<MutableList<String>>()
-        val map = mutableMapOf<String, Int>()
-        for (str in strs) {
-            val sortedStr = str.toCharArray().sorted().toString()
-            if (map[sortedStr] == null) {
-                result.add(mutableListOf())
-                map[sortedStr] = result.lastIndex
+        return Solution2(strs).groupAnagrams()
+//        val result = mutableListOf<MutableList<String>>()
+//        val map = mutableMapOf<String, Int>()
+//        for (str in strs) {
+//            val sortedStr = str.toCharArray().sorted().toString()
+//            if (map[sortedStr] == null) {
+//                result.add(mutableListOf())
+//                map[sortedStr] = result.lastIndex
+//            }
+//            val index = map[sortedStr]!!
+//            result[index].add(str)
+//        }
+//        return result
+    }
+
+    private class Solution() {
+        fun groupAnagrams(strs: Array<String>): List<List<String>> {
+            val result = mutableListOf<MutableList<String>>()
+            val map = mutableMapOf<String, Int>()
+            for (str in strs) {
+                val sortedStr = str.toCharArray().sorted().toString()
+                if (map[sortedStr] == null) {
+                    result.add(mutableListOf())
+                    map[sortedStr] = result.lastIndex
+                }
+                val index = map[sortedStr]!!
+                result[index].add(str)
             }
-            val index = map[sortedStr]!!
-            result[index].add(str)
+            return result
         }
-        return result
+    }
+
+    private class Solution2(private val strs: Array<String>) {
+        private val map = mutableMapOf<String, MutableList<String>>()
+        fun groupAnagrams(): List<List<String>> {
+            fillInMap()
+            return ArrayList(map.values)
+        }
+
+        private fun fillInMap() {
+            for (str in strs) {
+                val sortedStr = str.toCharArray().sorted().toString()
+                if (map[sortedStr] == null) {
+                    map[sortedStr] = mutableListOf()
+                }
+                map[sortedStr]?.add(str)
+            }
+        }
     }
 }
 
