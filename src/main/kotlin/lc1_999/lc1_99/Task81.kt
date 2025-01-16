@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 //https://leetcode.com/problems/search-in-rotated-sorted-array-ii/
 class Task81 {
 
-    fun search(nums: IntArray, target: Int): Boolean {
+    fun searchFirstSolution(nums: IntArray, target: Int): Boolean {
         var start = 0
         var end = nums.size - 1
         while (start <= end) {
@@ -16,6 +16,36 @@ class Task81 {
             end--
         }
         return false
+    }
+
+    fun search(nums: IntArray, target: Int): Boolean {
+        var start = 0
+        var end = nums.size - 1
+        // Continue searching while the window is valid
+        while (start < end) {
+            val mid = start + (end - start) / 2 // Avoid potential overflow of (left + right)
+            // If middle element is greater than the rightmost element, the pivot is in the right half
+            if (nums[mid] > nums[end]) {
+                // If target lies within the left sorted portion
+                if (nums[start] <= target && target <= nums[mid]) {
+                    end = mid // Narrow down to left half
+                } else {
+                    start = mid + 1 // Search in the right half
+                }
+            } else if (nums[mid] < nums[end]) {
+                // If target lies within the right sorted portion
+                if (nums[mid] < target && target <= nums[end]) {
+                    start = mid + 1 // Narrow down to right half
+                } else {
+                    end = mid // Search in the left half
+                }
+            } else {
+                end--
+            }
+        }
+        // After the loop ends, left == right,
+        // checking if we have found the target
+        return nums[start] == target
     }
 }
 
