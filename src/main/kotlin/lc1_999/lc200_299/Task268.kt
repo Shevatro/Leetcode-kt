@@ -8,6 +8,16 @@ import org.junit.jupiter.api.Test
 class Task268 {
 
     fun missingNumber(nums: IntArray): Int {
+        var targetSum = 0
+        var sum = 0
+        for (i in 0..nums.size) {
+            targetSum += i
+            if (i != nums.size) sum += nums[i]
+        }
+        return targetSum - sum
+    }
+
+    fun missingNumberUsingSort(nums: IntArray): Int {
         nums.sort()
         var prev = -1
         for (cur in nums) {
