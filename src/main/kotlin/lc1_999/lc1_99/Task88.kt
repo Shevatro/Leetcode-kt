@@ -1,6 +1,7 @@
 package lc1_999.lc1_99
 
-import toString2
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
 //From a learning section, Solved
 //https://leetcode.com/problems/merge-sorted-array/
@@ -18,16 +19,42 @@ class Task88 {
                 nums2Index--
             }
         }
-        println(nums1.toString2())
     }
 }
 
+private class Task88Test {
+    private val task = Task88()
 
-fun main() {
-    val obj = Task88()
-    obj.merge(intArrayOf(1, 2, 3, 0, 0, 0), 3, intArrayOf(2, 5, 6), 3)
-    obj.merge(intArrayOf(1), 1, intArrayOf(), 0)
-    obj.merge(intArrayOf(0), 0, intArrayOf(1), 1)
-    obj.merge(intArrayOf(), 0, intArrayOf(), 0)
+    @Test
+    fun test1() {
+        val input = intArrayOf(1, 2, 3, 0, 0, 0)
+        task.merge(input, 3, intArrayOf(2, 5, 6), 3)
+        val expectedResult = intArrayOf(1, 2, 2, 3, 5, 6)
+        Assertions.assertArrayEquals(expectedResult, input)
+    }
+
+    @Test
+    fun test2() {
+        val input = intArrayOf(1)
+        task.merge(input, 1, intArrayOf(), 0)
+        val expectedResult = intArrayOf(1)
+        Assertions.assertArrayEquals(expectedResult, input)
+    }
+
+    @Test
+    fun test3() {
+        val input = intArrayOf(0)
+        task.merge(input, 0, intArrayOf(1), 1)
+        val expectedResult = intArrayOf(1)
+        Assertions.assertArrayEquals(expectedResult, input)
+    }
+
+    @Test
+    fun test4() {
+        val input = intArrayOf()
+        task.merge(input, 0, intArrayOf(), 0)
+        val expectedResult = intArrayOf()
+        Assertions.assertArrayEquals(expectedResult, input)
+    }
 }
 
