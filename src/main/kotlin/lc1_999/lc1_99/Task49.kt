@@ -9,18 +9,6 @@ class Task49 {
 
     fun groupAnagrams(strs: Array<String>): List<List<String>> {
         return Solution2(strs).groupAnagrams()
-//        val result = mutableListOf<MutableList<String>>()
-//        val map = mutableMapOf<String, Int>()
-//        for (str in strs) {
-//            val sortedStr = str.toCharArray().sorted().toString()
-//            if (map[sortedStr] == null) {
-//                result.add(mutableListOf())
-//                map[sortedStr] = result.lastIndex
-//            }
-//            val index = map[sortedStr]!!
-//            result[index].add(str)
-//        }
-//        return result
     }
 
     private class Solution() {
