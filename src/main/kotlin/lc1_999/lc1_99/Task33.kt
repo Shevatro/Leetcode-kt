@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 //https://leetcode.com/problems/search-in-rotated-sorted-array/
 class Task33 {
 
-    fun search(nums: IntArray, target: Int): Int {
+    fun searchFirstSolution(nums: IntArray, target: Int): Int {
         var start = 0
         var end = nums.size - 1
         while (start <= end) {
@@ -17,6 +17,34 @@ class Task33 {
             end--
         }
         return -1
+    }
+
+    fun search(nums: IntArray, target: Int): Int {
+        var start = 0
+        var end = nums.size - 1
+        while (start < end){
+            val mid = (end + start) / 2
+            // When middle element is on the non-rotated portion of the array.
+            if (nums[0] <= nums[mid]) {
+                // Check if the target is also on the non-rotated portion and adjust end accordingly.
+                if (nums[0] <= target && target <= nums[mid]) {
+                    end = mid
+                } else {
+                    start = mid + 1
+                }
+                // When middle element is on the rotated portion of the array.
+            } else {
+                // Check if the target is also on the rotated portion and adjust start accordingly.
+                if (nums[mid] < target && target <= nums[nums.size - 1]) {
+                    start = mid + 1
+                } else {
+                    end = mid
+                }
+            }
+        }
+        // After narrowing down to one element, check if it's the target.
+        // If nums[start] is the target, return its index, otherwise return -1.
+        return if (nums[start] == target) start else -1
     }
 }
 
