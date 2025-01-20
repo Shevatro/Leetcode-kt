@@ -3,18 +3,36 @@ package lc1_999.lc200_299
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-//From Cracking The Coding Interview, Solved
+//From Cracking The Coding Interview, Not Solved
 //https://leetcode.com/problems/find-the-duplicate-number/
 class Task287 {
-
     fun findDuplicate(nums: IntArray): Int {
-        nums.sort()
-        var prev = nums[0]
-        for (i in 1 until nums.size) {
-            if (nums[i] == prev) return prev
-            prev = nums[i]
+        return LinkedListBasedSolution(nums).findDuplicate()
+    }
+
+    private class LinkedListBasedSolution(private val nums: IntArray) {
+        private var fastP = nums[0]
+        private var slowP = nums[0]
+        fun findDuplicate(): Int {
+            findCycle()
+            findEntranceInCycle()
+            return fastP
         }
-        return -1
+
+        private fun findCycle() {
+            do {
+                fastP = nums[nums[fastP]]
+                slowP = nums[slowP]
+            } while (fastP != slowP)
+        }
+
+        private fun findEntranceInCycle() {
+            fastP = nums[0]
+            while (fastP != slowP) {
+                fastP = nums[fastP]
+                slowP = nums[slowP]
+            }
+        }
     }
 }
 
@@ -40,5 +58,19 @@ private class Task287Test {
         val input = intArrayOf(3, 3, 3, 3, 3)
         val actualResult = task.findDuplicate(input)
         Assertions.assertEquals(3, actualResult)
+    }
+
+    @Test
+    fun test4() {
+        val input = intArrayOf(9, 4, 9, 5, 7, 2, 8, 9, 3, 9)
+        val actualResult = task.findDuplicate(input)
+        Assertions.assertEquals(9, actualResult)
+    }
+
+    @Test
+    fun test5() {
+        val input = intArrayOf(2, 5, 9, 6, 9, 3, 8, 9, 7, 1)
+        val actualResult = task.findDuplicate(input)
+        Assertions.assertEquals(9, actualResult)
     }
 }
