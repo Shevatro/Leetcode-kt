@@ -7,7 +7,25 @@ import org.junit.jupiter.api.Test
 //https://leetcode.com/problems/find-the-duplicate-number/
 class Task287 {
     fun findDuplicate(nums: IntArray): Int {
+//        return LessOrEqualBinarySearchSolution(nums).findDuplicate()
         return LinkedListBasedSolution(nums).findDuplicate()
+    }
+
+    private class LessOrEqualBinarySearchSolution(private val nums: IntArray) {
+        private var low = 1
+        private var high = nums.size - 1
+        fun findDuplicate(): Int {
+            while (low <= high) {
+                val mid = (low + high) / 2
+                val amount = nums.count { it <= mid }
+                if (amount > mid) {
+                    high = mid - 1
+                } else {
+                    low = mid + 1
+                }
+            }
+            return high + 1
+        }
     }
 
     private class LinkedListBasedSolution(private val nums: IntArray) {
