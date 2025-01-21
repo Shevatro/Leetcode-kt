@@ -7,6 +7,20 @@ import org.junit.jupiter.api.Test
 //https://leetcode.com/problems/search-a-2d-matrix-ii/
 class Task240 {
     fun searchMatrix(matrix: Array<IntArray>, target: Int): Boolean {
+        var i = 0
+        var j = matrix[0].size - 1
+        while (i < matrix.size && j >= 0) {
+            if (matrix[i][j] == target) return true
+            if (matrix[i][j] > target) {
+                j--
+            } else {
+                i++
+            }
+        }
+        return false
+    }
+
+    fun searchMatrixHalfBSearch(matrix: Array<IntArray>, target: Int): Boolean {
         for (midI in matrix.indices) {
             var startJ = 0
             var endJ = matrix[0].size - 1
@@ -62,5 +76,19 @@ private class Task240Test {
         )
         val actualResult = task.searchMatrix(input, 8)
         Assertions.assertEquals(true, actualResult)
+    }
+
+    @Test
+    fun test5() {
+        val input = arrayOf(intArrayOf(-5))
+        val actualResult = task.searchMatrix(input, -2)
+        Assertions.assertEquals(false, actualResult)
+    }
+
+    @Test
+    fun test6() {
+        val input = arrayOf(intArrayOf(1, 1))
+        val actualResult = task.searchMatrix(input, 0)
+        Assertions.assertEquals(false, actualResult)
     }
 }
