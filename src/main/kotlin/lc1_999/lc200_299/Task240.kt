@@ -10,18 +10,19 @@ class Task240 {
         var i = 0
         var j = matrix[0].size - 1
         while (i < matrix.size && j >= 0) {
-            println("$i $j " + matrix[i][j])
             if (matrix[i][j] == target) return true
             if (matrix[i][j] > target) {
                 val midJ = j / 2
-                if (midJ > 0 && matrix[i][midJ] > target) {
+                if (midJ > 0 && matrix[i][midJ] >= target) {
+                    if (matrix[i][midJ] == target) return true
                     j = midJ - 1
                 } else {
                     j--
                 }
             } else {
                 val midI = i * 2
-                if (midI < matrix.size && matrix[midI][j] < target) {
+                if (midI < matrix.size && matrix[midI][j] <= target) {
+                    if (matrix[midI][j] == target) return true
                     i = midI + 1
                 } else {
                     i++
