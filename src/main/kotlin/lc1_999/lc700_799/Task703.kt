@@ -3,6 +3,7 @@ package lc1_999.lc700_799
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.util.*
+import kotlin.NoSuchElementException
 
 //From Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/kth-largest-element-in-a-stream/description/
@@ -23,17 +24,25 @@ class Task703 {
             private val topItemsMinHeap = PriorityQueue<Int>()
 
             fun init() {
-                val numsSorted = nums.sorted()
-                for (i in numsSorted.indices) {
-                    val num = numsSorted[i]
-                    if (i < nums.size - k) {
-                        leftoverMaxHeap.add(num)
-                    } else {
-                        topItemsMinHeap.add(num)
-                    }
+                addAllItemInLeftOver()
+                removeKItems()
+//                println("max:" + leftoverMaxHeap.toString())
+//                println("min:" + topItemsMinHeap.toString())
+            }
+
+            private fun addAllItemInLeftOver() {
+                for (num in nums) {
+                    leftoverMaxHeap.add(num)
                 }
-//                 println("max:"+leftoverMaxHeap.toString())
-//                 println("min:"+topItemsMinHeap.toString())
+            }
+
+            private fun removeKItems() {
+                for (i in 0 until k)
+                    try {
+                        topItemsMinHeap.add(leftoverMaxHeap.remove())
+                    } catch (e: NoSuchElementException) {
+                        break
+                    }
             }
 
             fun add(`val`: Int): Int {
