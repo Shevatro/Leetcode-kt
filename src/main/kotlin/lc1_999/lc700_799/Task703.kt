@@ -25,18 +25,16 @@ class Task703 {
 
             fun init() {
                 addAllItemInLeftOver()
-                removeKItems()
+                moveKItemsToTopItems()
 //                println("max:" + leftoverMaxHeap.toString())
 //                println("min:" + topItemsMinHeap.toString())
             }
 
             private fun addAllItemInLeftOver() {
-                for (num in nums) {
-                    leftoverMaxHeap.add(num)
-                }
+                nums.forEach { leftoverMaxHeap.add(it) }
             }
 
-            private fun removeKItems() {
+            private fun moveKItemsToTopItems() {
                 for (i in 0 until k)
                     try {
                         topItemsMinHeap.add(leftoverMaxHeap.remove())
