@@ -3,7 +3,6 @@ package lc1_999.lc700_799
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.NoSuchElementException
 
 //From Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/kth-largest-element-in-a-stream/description/
@@ -20,39 +19,20 @@ class Task703 {
             private val k: Int,
             private val nums: IntArray
         ) {
-            private val leftoverMaxHeap = PriorityQueue<Int>(Collections.reverseOrder())
             private val topItemsMinHeap = PriorityQueue<Int>()
 
             fun init() {
-                addAllItemInLeftOver()
-                moveKItemsToTopItems()
-//                println("max:" + leftoverMaxHeap.toString())
-//                println("min:" + topItemsMinHeap.toString())
-            }
-
-            private fun addAllItemInLeftOver() {
-                nums.forEach { leftoverMaxHeap.add(it) }
-            }
-
-            private fun moveKItemsToTopItems() {
-                for (i in 0 until k)
-                    try {
-                        topItemsMinHeap.add(leftoverMaxHeap.remove())
-                    } catch (e: NoSuchElementException) {
-                        break
-                    }
+                nums.forEach { add(it) }
             }
 
             fun add(`val`: Int): Int {
-                val max = topItemsMinHeap.peek()
-//                 println("item:"+`val`+" "+max.toString())
+                val kItem = topItemsMinHeap.peek()
                 if (topItemsMinHeap.size < k) {
                     topItemsMinHeap.add(`val`)
-                } else if (`val` >= max) {
+                } else if (`val` > kItem) {
                     topItemsMinHeap.remove()
                     topItemsMinHeap.add(`val`)
                 }
-//                 println("mi:"+topItemsMinHeap.toString())
                 return topItemsMinHeap.peek()
             }
         }
@@ -98,5 +78,15 @@ private class Task703Test {
         Assertions.assertEquals(-2, input.add(-4))
         Assertions.assertEquals(0, input.add(0))
         Assertions.assertEquals(4, input.add(4))
+    }
+
+    @Test
+    fun test5() {
+        val input = Task703.KthLargest(2, intArrayOf(0))
+        Assertions.assertEquals(-1, input.add(-1))
+        Assertions.assertEquals(0, input.add(1))
+        Assertions.assertEquals(0, input.add(-2))
+        Assertions.assertEquals(0, input.add(-4))
+        Assertions.assertEquals(1, input.add(3))
     }
 }
