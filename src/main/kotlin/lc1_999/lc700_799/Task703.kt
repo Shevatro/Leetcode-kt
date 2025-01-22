@@ -49,12 +49,9 @@ class Task703 {
                 if (topItemsMinHeap.size < k) {
                     topItemsMinHeap.add(`val`)
                 } else if (`val` >= max) {
-                    leftoverMaxHeap.add(topItemsMinHeap.remove())
+                    topItemsMinHeap.remove()
                     topItemsMinHeap.add(`val`)
-                } else {
-                    leftoverMaxHeap.add(`val`)
                 }
-//                 println("ma:"+leftoverMaxHeap.toString())
 //                 println("mi:"+topItemsMinHeap.toString())
                 return topItemsMinHeap.peek()
             }
