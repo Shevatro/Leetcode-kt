@@ -28,11 +28,13 @@ class Task1275 {
                 if (row[pos][i] == 2 || column[pos][j] == 2) return returnVal
                 row[pos][i]++
                 column[pos][j]++
+                //main diagonal
                 if (i == j) {
                     if (diagonals[pos][0] == 2) return returnVal
                     diagonals[pos][0]++
                 }
-                if (i == 2 && j == 0 || i == 1 && j == 1 || j == 2 && i == 0) {
+                //second diagonal
+                if (i + j == 2) {
                     if (diagonals[pos][1] == 2) return returnVal
                     diagonals[pos][1]++
                 }
