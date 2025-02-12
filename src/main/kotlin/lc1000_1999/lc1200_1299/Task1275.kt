@@ -18,28 +18,19 @@ class Task1275 {
         fun tictactoe(): String {
             if (moves.size < 5) return "Pending"
             for (k in moves.size - 1 downTo 0 step 2) {
-                val move = moves[k]
-                val i = move[0]
-                val j = move[1]
-                val returnVal = if (k % 2 == 0) "A" else "B"
-                if (row[i] == 2 || column[j] == 2) return returnVal
-                if (i == j) {
-                    if (mainDiagonal == 2) return returnVal
-                    mainDiagonal++
-                }
-                if (i + j == 2) {
-                    if (secondDiagonal == 2) return returnVal
-                    secondDiagonal++
-                }
+                val i = moves[k][0]
+                val j = moves[k][1]
+                if (i == j) mainDiagonal++
+                if (i + j == 2) secondDiagonal++
                 row[i]++
                 column[j]++
+                if (isWin(i, j)) return if (k % 2 == 0) "A" else "B"
+            }
+            return if (moves.size == 9) "Draw" else "Pending"
+        }
 
-            }
-            return if (moves.size == 9) {
-                "Draw"
-            } else {
-                "Pending"
-            }
+        private fun isWin(i: Int, j: Int): Boolean {
+            return row[i] == 3 || column[j] == 3 || mainDiagonal == 3 || secondDiagonal == 3
         }
     }
 }
