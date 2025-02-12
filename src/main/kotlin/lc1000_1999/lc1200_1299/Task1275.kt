@@ -11,42 +11,36 @@ class Task1275 {
     }
 
     private class Solution2(private val moves: Array<IntArray>) {
-        private val grid = Array(3) { IntArray(3) }
-        private var mark: Int = 0
+        //row for cross and zero
+        private val row = Array(2) { IntArray(3) }
+        //column for cross and zero
+        private val column = Array(2) { IntArray(3) }
+        //main and second diagonals for cross and zero
+        private val diagonals = Array(2) { IntArray(2) }
         fun tictactoe(): String {
-            applyMoves()
-            mark = 1
-            if (checkIfWins()) return "A"
-            mark = 2
-            if (checkIfWins()) return "B"
-            return if (moves.size == 9) {
-                "Draw"
-            } else {
-                "Pending"
-            }
-        }
-
-        private fun checkIfWins(): Boolean {
-            return isEq(0, 0) && isEq(0, 1) && isEq(0, 2)
-                    || isEq(0, 0) && isEq(1, 1) && isEq(2, 2)
-                    || isEq(0, 0) && isEq(1, 0) && isEq(2, 0)
-                    || isEq(1, 0) && isEq(1, 1) && isEq(1, 2)
-                    || isEq(0, 2) && isEq(1, 1) && isEq(2, 0)
-                    || isEq(0, 1) && isEq(1, 1) && isEq(2, 1)
-                    || isEq(2, 0) && isEq(2, 1) && isEq(2, 2)
-                    || isEq(0, 2) && isEq(1, 2) && isEq(2, 2)
-        }
-
-        private fun isEq(i: Int, j: Int): Boolean {
-            return grid[i][j] == mark
-        }
-
-        private fun applyMoves() {
             for (k in moves.indices) {
                 val move = moves[k]
                 val i = move[0]
                 val j = move[1]
-                grid[i][j] = if (k % 2 == 0) 1 else 2
+                val isEven = k % 2 == 0
+                val pos = if (isEven) 0 else 1
+                val returnVal = if (isEven) "A" else "B"
+                if (row[pos][i] == 2 || column[pos][j] == 2) return returnVal
+                row[pos][i]++
+                column[pos][j]++
+                if (i == j) {
+                    if (diagonals[pos][0] == 2) return returnVal
+                    diagonals[pos][0]++
+                }
+                if (i == 2 && j == 0 || i == 1 && j == 1 || j == 2 && i == 0) {
+                    if (diagonals[pos][1] == 2) return returnVal
+                    diagonals[pos][1]++
+                }
+            }
+            return if (moves.size == 9) {
+                "Draw"
+            } else {
+                "Pending"
             }
         }
     }
@@ -84,7 +78,15 @@ private class Task1275Test {
     @Test
     fun test4() {
         val input = arrayOf(
-            intArrayOf(0,2),intArrayOf(1,2),intArrayOf(0,1),intArrayOf(1,0)
+            intArrayOf(0, 2), intArrayOf(1, 2), intArrayOf(0, 1), intArrayOf(1, 0)
+        )
+        Assertions.assertEquals("Pending", task.tictactoe(input))
+    }
+
+    @Test
+    fun test5() {
+        val input = arrayOf(
+            intArrayOf(1, 2), intArrayOf(1, 0), intArrayOf(0, 0), intArrayOf(0, 1), intArrayOf(2, 1)
         )
         Assertions.assertEquals("Pending", task.tictactoe(input))
     }
