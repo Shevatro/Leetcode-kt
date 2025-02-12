@@ -11,33 +11,29 @@ class Task1275 {
     }
 
     private class Solution2(private val moves: Array<IntArray>) {
-        //row for cross and zero
-        private val row = Array(2) { IntArray(3) }
-        //column for cross and zero
-        private val column = Array(2) { IntArray(3) }
-        //main and second diagonals for cross and zero
-        private val diagonals = Array(2) { IntArray(2) }
+        private val row = IntArray(3)
+        private val column = IntArray(3)
+        private var mainDiagonal = 0
+        private var secondDiagonal = 0
         fun tictactoe(): String {
-            for (k in moves.indices) {
+            if (moves.size < 5) return "Pending"
+            for (k in moves.size - 1 downTo 0 step 2) {
                 val move = moves[k]
                 val i = move[0]
                 val j = move[1]
-                val isEven = k % 2 == 0
-                val pos = if (isEven) 0 else 1
-                val returnVal = if (isEven) "A" else "B"
-                if (row[pos][i] == 2 || column[pos][j] == 2) return returnVal
-                row[pos][i]++
-                column[pos][j]++
-                //main diagonal
+                val returnVal = if (k % 2 == 0) "A" else "B"
+                if (row[i] == 2 || column[j] == 2) return returnVal
                 if (i == j) {
-                    if (diagonals[pos][0] == 2) return returnVal
-                    diagonals[pos][0]++
+                    if (mainDiagonal == 2) return returnVal
+                    mainDiagonal++
                 }
-                //second diagonal
                 if (i + j == 2) {
-                    if (diagonals[pos][1] == 2) return returnVal
-                    diagonals[pos][1]++
+                    if (secondDiagonal == 2) return returnVal
+                    secondDiagonal++
                 }
+                row[i]++
+                column[j]++
+
             }
             return if (moves.size == 9) {
                 "Draw"
