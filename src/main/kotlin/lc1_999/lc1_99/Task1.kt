@@ -20,10 +20,9 @@ class Task1 {
                 val firstIndex = diffs[nums[i]]
                 if (firstIndex != null) {
                     return intArrayOf(firstIndex, i)
-                } else {
-                    val diff = target - nums[i]
-                    diffs[diff] = i
                 }
+                val diff = target - nums[i]
+                diffs[diff] = i
             }
             return intArrayOf()
         }
