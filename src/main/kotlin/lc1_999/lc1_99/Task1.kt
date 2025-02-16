@@ -17,11 +17,11 @@ class Task1 {
         private val diffs = mutableMapOf<Int, Int>()
         fun twoSum(): IntArray {
             for (i in nums.indices) {
-                val num = nums[i]
-                val diff = target - num
-                if (diffs[num] != null) {
-                    return intArrayOf(diffs[num]!!, i)
+                val firstIndex = diffs[nums[i]]
+                if (firstIndex != null) {
+                    return intArrayOf(firstIndex, i)
                 } else {
+                    val diff = target - nums[i]
                     diffs[diff] = i
                 }
             }
@@ -61,5 +61,17 @@ private class Task1Test {
     fun test5() {
         val result = task.twoSum(intArrayOf(1, 1, 1, 1, 1, 4, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1), 11)
         Assertions.assertArrayEquals(intArrayOf(5, 11), result)
+    }
+
+    @Test
+    fun test6() {
+        val result = task.twoSum(intArrayOf(-1, -4, 3, 0), 2)
+        Assertions.assertArrayEquals(intArrayOf(0, 2), result)
+    }
+
+    @Test
+    fun test7() {
+        val result = task.twoSum(intArrayOf(-1, 3, 0, -4), -5)
+        Assertions.assertArrayEquals(intArrayOf(0, 3), result)
     }
 }
