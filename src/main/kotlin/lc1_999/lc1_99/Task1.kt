@@ -15,39 +15,17 @@ class Task1 {
         private val target: Int
     ) {
         private val diffs = mutableMapOf<Int, Int>()
-        private var result: IntArray? = null
         fun twoSum(): IntArray {
-            calculateDiff()
-            //println(diffs)
-            if (result == null) {
-                findAnotherDiff()
-            }
-            return result!!
-        }
-
-        private fun calculateDiff() {
             for (i in nums.indices) {
                 val num = nums[i]
                 val diff = target - num
-                //if (diff>0){
-                if (diffs[diff] != null && diff == num) {
-                    result = intArrayOf(diffs[diff]!!, i)
-                    return
+                if (diffs[num] != null) {
+                    return intArrayOf(diffs[num]!!, i)
                 } else {
                     diffs[diff] = i
                 }
-                //}
             }
-        }
-
-        private fun findAnotherDiff() {
-            for (diff in diffs.keys) {
-                val secondDiff = target - diff
-                if (diffs[secondDiff] != null && secondDiff != diff) {
-                    result = intArrayOf(diffs[diff]!!, diffs[secondDiff]!!)
-                    return
-                }
-            }
+            return intArrayOf()
         }
     }
 }
