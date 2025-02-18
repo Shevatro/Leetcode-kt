@@ -3,7 +3,7 @@ package lc1_999.lc100_199
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-// Solved
+//From Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/lru-cache/description/
 class Task146 {
     class LRUCache(private val capacity: Int) {
