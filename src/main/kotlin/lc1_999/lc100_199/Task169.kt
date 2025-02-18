@@ -7,6 +7,16 @@ import org.junit.jupiter.api.Test
 //https://leetcode.com/problems/majority-element/
 class Task169 {
     fun majorityElement(nums: IntArray): Int {
+        var candidate = 0
+        var count = 0
+        for (num in nums) {
+            if (count == 0) candidate = num
+            count += if (candidate == num) 1 else -1
+        }
+        return candidate
+    }
+
+    fun majorityElementMy(nums: IntArray): Int {
         val majority = nums.size / 2
         val map = mutableMapOf<Int, Int>()
         var max = 1
