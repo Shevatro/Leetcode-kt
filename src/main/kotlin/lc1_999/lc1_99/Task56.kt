@@ -8,8 +8,12 @@ import kotlin.math.max
 //https://leetcode.com/problems/merge-intervals/description/
 class Task56 {
     fun merge(intervals: Array<IntArray>): Array<IntArray> {
-        val result = mutableListOf<IntArray>()
         val sortedIntervals = intervals.sortedBy { it[0] }
+        return mergeIntervals(sortedIntervals).toTypedArray()
+    }
+
+    private fun mergeIntervals(sortedIntervals: List<IntArray>): List<IntArray> {
+        val result = mutableListOf<IntArray>()
         var previousInterval = sortedIntervals[0]
         for (i in 1 until sortedIntervals.size) {
             val currentInterval = sortedIntervals[i]
@@ -21,7 +25,7 @@ class Task56 {
             }
         }
         result.add(previousInterval)
-        return result.toTypedArray()
+        return result
     }
 }
 
