@@ -3,7 +3,6 @@ package lc1_999.lc1_99
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import kotlin.math.max
-import kotlin.math.min
 
 //Solved
 //https://leetcode.com/problems/merge-intervals/description/
@@ -15,7 +14,6 @@ class Task56 {
         for (i in 1 until sortedIntervals.size) {
             val currentInterval = sortedIntervals[i]
             if (currentInterval[0] <= previousInterval[1]) {
-                previousInterval[0] = min(currentInterval[0], previousInterval[0])
                 previousInterval[1] = max(currentInterval[1], previousInterval[1])
             } else {
                 result.add(previousInterval)
