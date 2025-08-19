@@ -20,27 +20,19 @@ class Task36() {
                 if (item == '.') continue
                 val itemInt = item.digitToInt()
                 //column
-                if (columns[i][itemInt]) {
-                    return false
-                } else {
-                    columns[i][itemInt] = true
-                }
+                if (columns[i][itemInt]) return false
+                columns[i][itemInt] = true
+
                 //row
-                if (rows[j][itemInt]) {
-                    return false
-                } else {
-                    rows[j][itemInt] = true
-                }
+                if (rows[j][itemInt]) return false
+                rows[j][itemInt] = true
 
                 //box
                 val boxI = i / 3
                 val boxJ = j / 3
                 val boxInd = (boxI * 3) + boxJ
-                if (boxes[boxInd][itemInt]) {
-                    return false
-                } else {
-                    boxes[boxInd][itemInt] = true
-                }
+                if (boxes[boxInd][itemInt]) return false
+                boxes[boxInd][itemInt] = true
             }
         }
         return true
