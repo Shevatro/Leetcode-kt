@@ -10,15 +10,16 @@ import java.util.stream.Stream
 //https://leetcode.com/problems/valid-sudoku
 class Task36() {
     fun isValidSudoku(board: Array<CharArray>): Boolean {
-        val columns = Array(9) { BooleanArray(10) }
-        val rows = Array(9) { BooleanArray(10) }
-        val boxes = Array(9) { BooleanArray(10) }
+        val columns = Array(9) { BooleanArray(9) }
+        val rows = Array(9) { BooleanArray(9) }
+        val boxes = Array(9) { BooleanArray(9) }
 
         for (i in board.indices) {
             for (j in board[0].indices) {
                 val item = board[i][j]
                 if (item == '.') continue
-                val itemInt = item.digitToInt()
+                //transfer [1-9] to [0-8]
+                val itemInt = item.digitToInt() - 1
                 //column
                 if (columns[i][itemInt]) return false
                 columns[i][itemInt] = true
