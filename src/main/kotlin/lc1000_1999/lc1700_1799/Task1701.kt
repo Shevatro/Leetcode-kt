@@ -16,7 +16,7 @@ class Task1701() {
         for (customer in customers) {
             chefTime = max(chefTime, customer[0])
             chefTime += customer[1]
-            sum += (chefTime - customer[0])
+            sum += chefTime - customer[0]
         }
         return sum / customers.size.toDouble()
     }
