@@ -17,31 +17,34 @@ class Task748() {
         private val licensePlate: String,
         private val words: Array<String>
     ) {
-        var licensePlateArr = IntArray(0)
+        var licensePlateArr = mutableMapOf<Int, Int>()
         fun shortestCompletingWord(): String {
             licensePlateArr = countChs(licensePlate)
-            // println(licensePlateArr.toList())
-            for (word in words.sortedBy { it.length }) {
-                if (compareToOriginal(word)) return word
+//             println(licensePlateArr.toList())
+            var (wordLen, wordResult) = Int.MAX_VALUE to ""
+            for (word in words) {
+                if (word.length < wordLen && compareToOriginal(word)) {
+                    wordLen = word.length
+                    wordResult = word
+                }
             }
-            return ""
+            return wordResult
         }
 
-        private fun countChs(word: String): IntArray {
-            val result = IntArray(26)
+        private fun countChs(word: String): MutableMap<Int, Int> {
+            val result = mutableMapOf<Int, Int>()
             for (ch in word) {
                 val code = ch.lowercaseChar() - 'a'
-                // println("code:"+code)
-                if (code in 0..26) result[code]++
+                if (code in 0..26) result.merge(code, 1, Int::plus)
             }
             return result
         }
 
         private fun compareToOriginal(word: String): Boolean {
             val wordArr = countChs(word)
-            // println("compare:"+wordArr.toList())
-            for (i in licensePlateArr.indices) {
-                if (wordArr[i] < licensePlateArr[i]) return false
+//             println("compare:"+wordArr.toList())
+            for (key in licensePlateArr.keys) {
+                if (wordArr.getOrDefault(key, 0) < licensePlateArr.getOrDefault(key, 0)) return false
             }
             return true
         }
