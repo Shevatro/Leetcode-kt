@@ -24,14 +24,13 @@ class Task748() {
         }
 
         private fun getShortestWord(): String {
-            var (wordLen, wordResult) = Int.MAX_VALUE to ""
+            var shortestWord = ""
             for (word in words) {
-                if (word.length < wordLen && compareToLicensePlate(word)) {
-                    wordLen = word.length
-                    wordResult = word
+                if ((shortestWord.isEmpty() || word.length < shortestWord.length) && compareToLicensePlate(word)) {
+                    shortestWord = word
                 }
             }
-            return wordResult
+            return shortestWord
         }
 
         private fun countChsFrequencyInLicensePlate() {
