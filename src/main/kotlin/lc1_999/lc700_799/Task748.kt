@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-//Solved
+//From an interview, Solved
 //https://leetcode.com/problems/shortest-completing-word/description/
 class Task748() {
     fun shortestCompletingWord(licensePlate: String, words: Array<String>): String {
@@ -17,13 +17,16 @@ class Task748() {
         private val licensePlate: String,
         private val words: Array<String>
     ) {
-        var licensePlateArr = mutableMapOf<Int, Int>()
+        var licensePlateChsFrequency = IntArray(26)
         fun shortestCompletingWord(): String {
-            licensePlateArr = countChs(licensePlate)
-//             println(licensePlateArr.toList())
+            countChsFrequencyInLicensePlate()
+            return getShortestWord()
+        }
+
+        private fun getShortestWord(): String {
             var (wordLen, wordResult) = Int.MAX_VALUE to ""
             for (word in words) {
-                if (word.length < wordLen && compareToOriginal(word)) {
+                if (word.length < wordLen && compareToLicensePlate(word)) {
                     wordLen = word.length
                     wordResult = word
                 }
@@ -31,20 +34,26 @@ class Task748() {
             return wordResult
         }
 
-        private fun countChs(word: String): MutableMap<Int, Int> {
-            val result = mutableMapOf<Int, Int>()
-            for (ch in word) {
+        private fun countChsFrequencyInLicensePlate() {
+            for (ch in licensePlate) {
                 val code = ch.lowercaseChar() - 'a'
-                if (code in 0..26) result.merge(code, 1, Int::plus)
+                if (code in 0..26) licensePlateChsFrequency[code]++
+            }
+        }
+
+        private fun getChsFrequency(word: String): IntArray {
+            val result = IntArray(26)
+            for (ch in word) {
+                val code = ch - 'a'
+                result[code]++
             }
             return result
         }
 
-        private fun compareToOriginal(word: String): Boolean {
-            val wordArr = countChs(word)
-//             println("compare:"+wordArr.toList())
-            for (key in licensePlateArr.keys) {
-                if (wordArr.getOrDefault(key, 0) < licensePlateArr.getOrDefault(key, 0)) return false
+        private fun compareToLicensePlate(word: String): Boolean {
+            val wordArr = getChsFrequency(word)
+            for (i in licensePlateChsFrequency.indices) {
+                if (wordArr[i] < licensePlateChsFrequency[i]) return false
             }
             return true
         }
