@@ -1,7 +1,10 @@
 package lc1_999.lc100_199
 
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 import kotlin.math.max
 import kotlin.math.min
 
@@ -22,33 +25,22 @@ class Task121 {
 private class Task121Test {
     private val task = Task121()
 
-    @Test
-    fun test1() {
-        val result = task.maxProfit(intArrayOf(7, 1, 5, 3, 6, 4))
-        Assertions.assertEquals(5, result)
+    @ParameterizedTest
+    @MethodSource("inputDataProvider")
+    fun test(prices: IntArray, expected: Int) {
+        Assertions.assertEquals(expected, task.maxProfit(prices))
     }
 
-    @Test
-    fun test2() {
-        val result = task.maxProfit(intArrayOf(7, 6, 4, 3, 1))
-        Assertions.assertEquals(0, result)
-    }
-
-    @Test
-    fun test3() {
-        val result = task.maxProfit(intArrayOf(7))
-        Assertions.assertEquals(0, result)
-    }
-
-    @Test
-    fun test4() {
-        val result = task.maxProfit(intArrayOf(7, 1))
-        Assertions.assertEquals(0, result)
-    }
-
-    @Test
-    fun test5() {
-        val result = task.maxProfit(intArrayOf(2, 4, 1))
-        Assertions.assertEquals(2, result)
+    companion object {
+        @JvmStatic
+        private fun inputDataProvider(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(intArrayOf(7, 1, 5, 3, 6, 4), 5),
+                Arguments.of(intArrayOf(7, 6, 4, 3, 1), 0),
+                Arguments.of(intArrayOf(7), 0),
+                Arguments.of(intArrayOf(7, 1), 0),
+                Arguments.of(intArrayOf(2, 4, 1), 2)
+            )
+        }
     }
 }
