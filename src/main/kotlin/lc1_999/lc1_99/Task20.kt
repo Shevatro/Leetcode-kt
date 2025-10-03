@@ -10,6 +10,7 @@ import java.util.stream.Stream
 //https://leetcode.com/problems/valid-parentheses/
 class Task20 {
     fun isValid(s: String): Boolean {
+        if (s.length % 2 != 0) return false
         val openToClose = mapOf('(' to ')', '[' to ']', '{' to '}')
         val openPar = setOf('(', '[', '{')
         val stack = ArrayDeque<Char>()
