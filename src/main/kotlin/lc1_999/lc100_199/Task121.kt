@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 import kotlin.math.max
 import kotlin.math.min
 
-//Not Solved
+//Solved from the second attempt, tricky
 //https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
 class Task121 {
     fun maxProfit(prices: IntArray): Int {
