@@ -11,22 +11,26 @@ import java.util.stream.Stream
 class Task125 {
     fun isPalindrome(s: String): Boolean {
         var startInd = 0
-        var endInd = s.length -1
-        while (startInd < endInd){
+        var endInd = s.length - 1
+        while (startInd < endInd) {
             val startCh = s[startInd].lowercaseChar()
             val endCh = s[endInd].lowercaseChar()
             val isStartChValid = isValid(startCh)
             val isEndChValid = isValid(endCh)
-            if (!isStartChValid) startInd++
-            if (!isEndChValid) endInd--
-            if (!isStartChValid ||!isEndChValid) continue
-            if (startCh!= endCh) return false
-            startInd++
-            endInd--
+            if (isStartChValid && isEndChValid){
+                if (startCh != endCh) return false
+                startInd++
+                endInd--
+            }else{
+                if (!isStartChValid) startInd++
+                if (!isEndChValid) endInd--
+            }
         }
         return true
     }
-    private fun isValid (ch: Char) = ch in 'a' .. 'z' || ch in '0' ..'9'
+
+    //also it's possible to use ch.isLetterOrDigit()
+    private fun isValid(ch: Char) = ch in 'a'..'z' || ch in '0'..'9'
 }
 
 private class Task125Test {
