@@ -28,9 +28,9 @@ class DynamicArray() {
     fun popBack(): Int? {
         if (curInd == 0) return null
         val item = arr[curInd - 1]
-        arr[curInd] = 0
         curInd--
-        if (arr.size / 4 > curInd) decreaseSpace()
+        arr[curInd] = 0
+        if (arr.size / 4 >= curInd) decreaseSpace()
         return item
     }
 
@@ -39,7 +39,7 @@ class DynamicArray() {
     }
 
     private fun decreaseSpace() {
-        arr = arr.copyOf(arr.size / 4)
+        arr = arr.copyOf(arr.size / 2)
     }
 }
 
