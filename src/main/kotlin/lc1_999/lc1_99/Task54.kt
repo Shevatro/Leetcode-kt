@@ -37,8 +37,7 @@ class Task54() {
             val isRightOrLeft = direction == 0 || direction == 2
             val shouldChangeDirection = if (isRightOrLeft) count == jTimes else count == iTimes
             if (shouldChangeDirection) {
-                direction++
-                if (direction == 4) direction = 0
+                direction = (direction + 1) % 4
                 count = 0
                 if (isRightOrLeft) jTimes-- else iTimes--
             }
