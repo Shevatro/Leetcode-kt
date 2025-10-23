@@ -10,38 +10,42 @@ import java.util.stream.Stream
 //https://leetcode.com/problems/spiral-matrix/
 class Task54() {
     fun spiralOrder(matrix: Array<IntArray>): List<Int> {
-        val result = mutableListOf<Int>()
-        var iCur = 0
-        var jCur = 0
-        var iTimes = matrix.size - 1
-        var jTimes = matrix[0].size
-        val size = matrix.size * matrix[0].size
-        val directions = listOf(0 to 1, 1 to 0, 0 to -1, -1 to 0)
-        var curDirection = 0
-        result.add(matrix[iCur][jCur])
-        while (result.size != size) {
-            val (iDiff, jDiff) = directions[curDirection]
-            if (curDirection == 0 || curDirection == 2) {
-                repeat(jTimes) {
-                    if (jCur + jDiff < matrix[0].size) {
-                        iCur += iDiff
-                        jCur += jDiff
-                        result.add(matrix[iCur][jCur])
-                    }
-                }
-                jTimes--
-            } else {
-                repeat(iTimes) {
-                    iCur += iDiff
-                    jCur += jDiff
-                    result.add(matrix[iCur][jCur])
-                }
-                iTimes--
+        return Solution(matrix).spiralOrder()
+    }
+
+    class Solution(private val matrix: Array<IntArray>) {
+        private var i = 0
+        private var j = 0
+        private var iTimes = matrix.size - 1
+        private var jTimes = matrix[0].size
+        private var count = 0
+        private var direction = 0
+        private val allDirections = listOf(0 to 1, 1 to 0, 0 to -1, -1 to 0)
+        fun spiralOrder(): List<Int> {
+            val result = mutableListOf<Int>()
+            val expectedSize = matrix.size * matrix[0].size
+
+            while (result.size != expectedSize) {
+                result.add(matrix[i][j])
+                count++
+                shift()
             }
-            curDirection++
-            if (curDirection == 4) curDirection = 0
+            return result
         }
-        return result
+
+        private fun shift() {
+            val isRightOrLeft = direction == 0 || direction == 2
+            val shouldChangeDirection = if (isRightOrLeft) count == jTimes else count == iTimes
+            if (shouldChangeDirection) {
+                direction++
+                if (direction == 4) direction = 0
+                count = 0
+                if (isRightOrLeft) jTimes-- else iTimes--
+            }
+            val (iDiff, jDiff) = allDirections[direction]
+            i += iDiff
+            j += jDiff
+        }
     }
 }
 
