@@ -8,20 +8,28 @@ import org.junit.jupiter.api.Test
 
 class Task362 {
     class HitCounter() {
-        private val deque = ArrayDeque<Int>()
+        private val deque = ArrayDeque<Pair<Int, Int>>()
+        private var count = 0
         fun hit(timestamp: Int) {
+            val newTimeStamp = timestamp + 300
             trimDeque(timestamp)
-            deque.addLast(timestamp + 300)
+            if (deque.isEmpty() || deque.last().first != newTimeStamp) {
+                deque.addLast(newTimeStamp to 1)
+            } else {
+                val previousCount = deque.removeLast().second
+                deque.addLast(newTimeStamp to previousCount + 1)
+            }
+            count++
         }
 
         fun getHits(timestamp: Int): Int {
             trimDeque(timestamp)
-            return deque.size
+            return count
         }
 
         private fun trimDeque(timestamp: Int) {
-            while (deque.isNotEmpty() && timestamp >= deque.first()) {
-                deque.removeFirst()
+            while (deque.isNotEmpty() && timestamp >= deque.first().first) {
+                count -= deque.removeFirst().second
             }
         }
     }
