@@ -49,13 +49,14 @@ private class Task32_3Test {
 
     @Test
     fun test() {
-        val counter = Task32_3.ViewerCounter(10)
-        counter.join(1, "subscriber")
-        counter.join(1, "guest")
-        counter.join(2, "follower")
-        counter.join(2, "follower")
-        counter.join(2, "follower")
-        counter.join(3, "follower")
+        val counter = Task32_3.ViewerCounter(10).apply {
+            join(1, "subscriber")
+            join(1, "guest")
+            join(2, "follower")
+            join(2, "follower")
+            join(2, "follower")
+            join(3, "follower")
+        }
         Assertions.assertEquals(1, counter.getViewers(10, "subscriber"))
         Assertions.assertEquals(1, counter.getViewers(10, "guest"))
         Assertions.assertEquals(4, counter.getViewers(10, "follower"))
