@@ -10,13 +10,11 @@ class Task32_5() {
     }
 
     class Solution(private val actions: Array<Action>) {
-        private val mainStack = ArrayDeque<String>()
-        private val forwardStack = ArrayDeque<String>()
+        private val storage = ArrayList<String>()
+        private var maxAvailablePointer = 0
+        private var pointer = -1
         fun performActions(): String {
-            //the first action is always 'go'
-            mainStack.addFirst(actions[0].meta as String)
-            for (k in 1 until actions.size) {
-                val action = actions[k]
+            for (action in actions) {
                 when (action.type) {
                     "go" -> performGoAction(action.meta as String)
                     "back" -> performBackAction(action.meta as Int)
@@ -24,30 +22,25 @@ class Task32_5() {
                     else -> throw IllegalArgumentException("Unsupported action type")
                 }
             }
-            return mainStack.first()
+            return storage[pointer]
         }
 
         private fun performGoAction(url: String) {
-            mainStack.addFirst(url)
-            forwardStack.clear()
+            pointer++
+            maxAvailablePointer = pointer
+            if (storage.size == maxAvailablePointer) {
+                storage.add(url)
+            } else {
+                storage[pointer] = url
+            }
         }
 
         private fun performBackAction(times: Int) {
-            //we always need to keep at least one url in our stack
-            val times = min(mainStack.size - 1, times)
-            repeat(times) {
-                val removedItem = mainStack.removeFirst()
-                forwardStack.addFirst(removedItem)
-            }
+            pointer -= min(pointer, times)
         }
 
         private fun performForwardAction(times: Int) {
-            //we can keep forwardStack empty
-            val times = min(forwardStack.size, times)
-            repeat(times) {
-                val removedItem = forwardStack.removeFirst()
-                mainStack.addFirst(removedItem)
-            }
+            pointer += min(maxAvailablePointer - pointer, times)
         }
     }
 

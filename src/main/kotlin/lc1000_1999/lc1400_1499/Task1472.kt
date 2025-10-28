@@ -9,37 +9,29 @@ import kotlin.math.min
 
 class Task1472 {
     class BrowserHistory(homepage: String) {
-        private val mainStack = ArrayDeque<String>()
-        private val forwardStack = ArrayDeque<String>()
+        private val storage = Array<String?>(101) { null }
+        private var maxAvailablePointer = 0
+        private var pointer = -1
 
         init {
-            mainStack.addFirst(homepage)
+            visit(homepage)
         }
 
         fun visit(url: String) {
-            mainStack.addFirst(url)
-            forwardStack.clear()
+            pointer++
+            maxAvailablePointer = pointer
+            storage[pointer] = url
         }
 
         fun back(steps: Int): String {
-            val times = min(mainStack.size - 1, steps)
-            repeat(times) {
-                val removedItem = mainStack.removeFirst()
-                forwardStack.addFirst(removedItem)
-            }
-            return mainStack.first()
+            pointer -=  min(pointer, steps)
+            return storage[pointer]!!
         }
 
         fun forward(steps: Int): String {
-            //we can keep forwardStack empty
-            val times = min(forwardStack.size, steps)
-            repeat(times) {
-                val removedItem = forwardStack.removeFirst()
-                mainStack.addFirst(removedItem)
-            }
-            return mainStack.first()
+            pointer += min(maxAvailablePointer - pointer, steps)
+            return storage[pointer]!!
         }
-
     }
 }
 
