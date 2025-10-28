@@ -73,4 +73,15 @@ private class Task32_4Test {
         )
         Assertions.assertEquals("google.com", task.performActions(actions))
     }
+
+    @Test
+    fun test4() {
+        val actions = arrayOf(
+            Task32_4.Action("go", "site1.com"),
+            Task32_4.Action("go", "site2.com"),
+            Task32_4.Action("back", 1),
+            Task32_4.Action("back", 1)
+        )
+        Assertions.assertEquals("site1.com", task.performActions(actions))
+    }
 }
