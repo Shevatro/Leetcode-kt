@@ -50,7 +50,7 @@ class Task32_5() {
     )
 }
 
-private class Task35_4Test {
+private class Task35_5Test {
     private val task = Task32_5()
 
     @Test
