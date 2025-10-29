@@ -13,17 +13,10 @@ class Task32_7() {
         val openBrackets = openToCloseMap.keys
         val closeBrackets = openToCloseMap.values
         val stack = ArrayDeque<Char>()
-        var expectedCloseCh: Char? = null
         for (ch in s) {
             when (ch) {
-                in openBrackets -> {
-                    stack.addFirst(ch)
-                    expectedCloseCh = requireNotNull(openToCloseMap[ch])
-                }
-                expectedCloseCh -> {
-                    stack.removeFirst()
-                    expectedCloseCh = stack.firstOrNull()?.let { requireNotNull(openToCloseMap[it]) }
-                }
+                in openBrackets -> stack.addFirst(requireNotNull(openToCloseMap[ch]))
+                stack.firstOrNull() -> stack.removeFirst()
                 in closeBrackets -> return false
             }
         }
