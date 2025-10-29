@@ -10,14 +10,13 @@ class Task32_7() {
 
     fun isValidCustomBrackets(s: String, brackets: Array<String>): Boolean {
         val openToCloseMap = brackets.associateBy({ it[0] }, { it[1] })
-        val openBrackets = openToCloseMap.keys
-        val closeBrackets = openToCloseMap.values
+        val closeBrackets = openToCloseMap.values.toSet()
         val stack = ArrayDeque<Char>()
         for (ch in s) {
-            when (ch) {
-                in openBrackets -> stack.addFirst(requireNotNull(openToCloseMap[ch]))
-                stack.firstOrNull() -> stack.removeFirst()
-                in closeBrackets -> return false
+            when {
+                openToCloseMap[ch] != null -> stack.addFirst(requireNotNull(openToCloseMap[ch]))
+                ch == stack.firstOrNull() -> stack.removeFirst()
+                ch in closeBrackets -> return false
             }
         }
 
