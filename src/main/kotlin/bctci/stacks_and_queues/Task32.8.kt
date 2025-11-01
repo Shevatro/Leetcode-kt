@@ -13,53 +13,96 @@ class Task32_8() {
     }
 
     class Solution(private val s: String) {
-        private var extraOpeningBrackets = 0
-        private var prunedStr = ""
-
+        private val status = BooleanArray(s.length)
+        private val stack = ArrayDeque<Data>()
         fun longestBalancedSubsequence(): String {
-            removeIncorrectClosingBrackets()
-            if (extraOpeningBrackets <= 0) return prunedStr
-            return removeExtraOpeningBrackets()
+            fillStatuses()
+            removeExtraOpeningBrackets()
+            return buildResultStrByStatuses()
         }
 
-        private fun removeExtraOpeningBrackets(): String {
-            val newSb = StringBuilder()
-            var amountOpeningBracketsToSkip = 0
-            for (i in prunedStr.length - 1 downTo 0) {
-                val ch = prunedStr[i]
-                //if it's already balanced just add the rest of the prunedStr
-                if (extraOpeningBrackets == 0) {
+        private fun fillStatuses() {
+            for (i in 0 until s.length) {
+                val ch = s[i]
+                if (ch == '(') {
+                    stack.addFirst(Data(ch, i))
+                } else if (stack.isEmpty()) {
+                    status[i] = false
+                } else {
+                    status[i] = true
+                    status[stack.removeFirst().pos] = true
+                }
+            }
+        }
+
+        private fun removeExtraOpeningBrackets() {
+            while (stack.isNotEmpty()) {
+                status[stack.removeFirst().pos] = false
+            }
+        }
+
+        private fun buildResultStrByStatuses(): String {
+            val sb = StringBuilder()
+            for (i in 0 until s.length) {
+                if (status[i]) sb.append(s[i])
+            }
+            return sb.toString()
+        }
+    }
+
+    private data class Data(
+        val value: Char,
+        val pos: Int
+    )
+}
+
+class Solution2(private val s: String) {
+    private var extraOpeningBrackets = 0
+    private var prunedStr = ""
+
+    fun longestBalancedSubsequence(): String {
+        removeIncorrectClosingBrackets()
+        if (extraOpeningBrackets <= 0) return prunedStr
+        return removeExtraOpeningBrackets()
+    }
+
+    private fun removeExtraOpeningBrackets(): String {
+        val newSb = StringBuilder()
+        var amountOpeningBracketsToSkip = 0
+        for (i in prunedStr.length - 1 downTo 0) {
+            val ch = prunedStr[i]
+            //if it's already balanced just add the rest of the prunedStr
+            if (extraOpeningBrackets == 0) {
+                newSb.append(ch)
+            } else {
+                if (ch == ')') {
+                    amountOpeningBracketsToSkip++
                     newSb.append(ch)
                 } else {
-                    if (ch == ')') {
-                        amountOpeningBracketsToSkip++
+                    if (amountOpeningBracketsToSkip != 0) {
                         newSb.append(ch)
+                        amountOpeningBracketsToSkip--
                     } else {
-                        if (amountOpeningBracketsToSkip != 0) {
-                            newSb.append(ch)
-                            amountOpeningBracketsToSkip--
-                        } else {
-                            extraOpeningBrackets--
-                        }
+                        extraOpeningBrackets--
                     }
                 }
             }
-            return newSb.reversed().toString()
         }
+        return newSb.reversed().toString()
+    }
 
-        private fun removeIncorrectClosingBrackets() {
-            val str = StringBuilder()
-            for (ch in s) {
-                if (ch == '(') {
-                    extraOpeningBrackets++
-                    str.append(ch)
-                } else if (extraOpeningBrackets > 0) {
-                    str.append(ch)
-                    extraOpeningBrackets--
-                }
+    private fun removeIncorrectClosingBrackets() {
+        val str = StringBuilder()
+        for (ch in s) {
+            if (ch == '(') {
+                extraOpeningBrackets++
+                str.append(ch)
+            } else if (extraOpeningBrackets > 0) {
+                str.append(ch)
+                extraOpeningBrackets--
             }
-            prunedStr = str.toString()
         }
+        prunedStr = str.toString()
     }
 }
 
