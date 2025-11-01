@@ -17,7 +17,6 @@ class Task32_8() {
         private val stack = ArrayDeque<Data>()
         fun longestBalancedSubsequence(): String {
             fillStatuses()
-            removeExtraOpeningBrackets()
             return buildResultStrByStatuses()
         }
 
@@ -26,18 +25,10 @@ class Task32_8() {
                 val ch = s[i]
                 if (ch == '(') {
                     stack.addFirst(Data(ch, i))
-                } else if (stack.isEmpty()) {
-                    status[i] = false
-                } else {
+                } else if (stack.isNotEmpty()) {
                     status[i] = true
                     status[stack.removeFirst().pos] = true
                 }
-            }
-        }
-
-        private fun removeExtraOpeningBrackets() {
-            while (stack.isNotEmpty()) {
-                status[stack.removeFirst().pos] = false
             }
         }
 
