@@ -112,9 +112,11 @@ private class Task32_8Test {
             return Stream.of(
                 Arguments.of("))(())(()", setOf("(())()")),
                 Arguments.of("(()()", setOf("()()", "(())")),
+                Arguments.of("(()(()(", setOf("()()", "(())")),
                 Arguments.of("())(()", setOf("()()")),
                 Arguments.of("(", setOf("")),
-                Arguments.of("((()", setOf("()"))
+                Arguments.of("((()", setOf("()")),
+                Arguments.of("", setOf(""))
             )
         }
     }
