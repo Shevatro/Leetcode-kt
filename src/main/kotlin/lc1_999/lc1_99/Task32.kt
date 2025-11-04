@@ -11,31 +11,31 @@ import kotlin.math.max
 //https://leetcode.com/problems/longest-valid-parentheses/
 class Task32() {
     fun longestValidParentheses(s: String): Int {
-        val status = fillOutStatuses(s)
-        return findMaxValidSubstringSize(status)
+        val validPositions = fillOutStatuses(s)
+        return findMaxValidSubstringSize(validPositions, s.length)
     }
 
-    private fun fillOutStatuses(s: String): BooleanArray {
-        val status = BooleanArray(s.length)
-        val stack = ArrayDeque<Data>()
+    private fun fillOutStatuses(s: String): Set<Int> {
+        val validPositions = mutableSetOf<Int>()
+        val stack = ArrayDeque<Int>()
         for (i in 0 until s.length) {
             val ch = s[i]
             if (ch == '(') {
-                stack.addFirst(Data(ch, i))
+                stack.addFirst(i)
             } else if (stack.isNotEmpty()) {
-                val openingPos = stack.removeFirst().pos
-                status[i] = true
-                status[openingPos] = true
+                val openingPos = stack.removeFirst()
+                validPositions.add(i)
+                validPositions.add(openingPos)
             }
         }
-        return status
+        return validPositions
     }
 
-    private fun findMaxValidSubstringSize(status: BooleanArray): Int {
+    private fun findMaxValidSubstringSize(validPositions: Set<Int>, strSize: Int): Int {
         var max = 0
         var count = 0
-        for (item in status) {
-            if (item) {
+        for (i in 0 until strSize) {
+            if (validPositions.contains(i)){
                 count++
             } else {
                 max = max(max, count)
@@ -44,11 +44,6 @@ class Task32() {
         }
         return max(max, count)
     }
-
-    private data class Data(
-        val value: Char,
-        val pos: Int
-    )
 }
 
 private class Task32Test {
