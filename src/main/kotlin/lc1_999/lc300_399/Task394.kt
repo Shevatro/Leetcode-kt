@@ -16,45 +16,45 @@ class Task394() {
     private class Solution(s: String) {
         val arr = s.toCharArray()
         val stack = ArrayDeque<String>()
-        var buffer = ""
         fun decodeString(): String {
+            val buffer = StringBuilder()
             for (ch in arr) {
                 if (ch.isDigit()) {
                     //do not clean up a number but do it for old buffer with letters
                     if (buffer.isNotEmpty() && !buffer.last().isDigit()) {
-                        stack.addFirst(buffer)
-                        buffer = ""
+                        stack.addFirst(buffer.toString())
+                        buffer.clear()
                     }
-                    buffer += ch
+                    buffer.append(ch)
                 } else if (ch == '[') {
-                    stack.addFirst(buffer)
+                    stack.addFirst(buffer.toString())
                     stack.addFirst("[")
-                    buffer = ""
+                    buffer.clear()
                 } else if (ch == ']') {
-                    stack.addFirst(buffer)
-                    buffer = ""
+                    stack.addFirst(buffer.toString())
+                    buffer.clear()
                     val textInBrackets = getTextFromBrackets()
                     //remove "["
                     stack.removeFirst()
                     stack.addFirst(getCopyNTime(textInBrackets))
                 } else {
-                    buffer += ch
+                    buffer.append(ch)
                 }
             }
-            if (buffer.isNotEmpty()) stack.addFirst(buffer)
+            if (buffer.isNotEmpty()) stack.addFirst(buffer.toString())
             return combineResult()
         }
 
         private fun getTextFromBrackets(): String {
-            var textInBrackets = ""
+            val textInBrackets = StringBuilder()
             while (stack.isNotEmpty() && stack.first() != "[") {
-                textInBrackets += if (stack.first().length == 1) {
-                    stack.removeFirst()
+                if (stack.first().length == 1) {
+                    textInBrackets.append(stack.removeFirst())
                 } else {
-                    stack.removeFirst().reversed()
+                    textInBrackets.append(stack.removeFirst().reversed())
                 }
             }
-            return textInBrackets.reversed()
+            return textInBrackets.reversed().toString()
         }
 
         private fun getCopyNTime(str: String): String {
