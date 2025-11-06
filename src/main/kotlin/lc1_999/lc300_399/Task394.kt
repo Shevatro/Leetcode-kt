@@ -31,8 +31,10 @@ class Task394() {
                     stack.addFirst("[")
                     buffer.clear()
                 } else if (ch == ']') {
-                    stack.addFirst(buffer.toString())
-                    buffer.clear()
+                    if (buffer.isNotEmpty()) {
+                        stack.addFirst(buffer.toString())
+                        buffer.clear()
+                    }
                     val textInBrackets = getTextFromBrackets()
                     //remove "["
                     stack.removeFirst()
@@ -46,15 +48,11 @@ class Task394() {
         }
 
         private fun getTextFromBrackets(): String {
-            val textInBrackets = StringBuilder()
+            var textInBrackets = ""
             while (stack.isNotEmpty() && stack.first() != "[") {
-                if (stack.first().length == 1) {
-                    textInBrackets.append(stack.removeFirst())
-                } else {
-                    textInBrackets.append(stack.removeFirst().reversed())
-                }
+                textInBrackets = stack.removeFirst() + textInBrackets
             }
-            return textInBrackets.reversed().toString()
+            return textInBrackets
         }
 
         private fun getCopyNTime(str: String): String {
