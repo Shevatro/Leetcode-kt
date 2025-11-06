@@ -16,6 +16,19 @@ class Task33_2() {
         }
         return sum
     }
+
+    fun calculateNestedArraySumLazy(arr: List<Any>): Int {
+        return calculateNestedArraySumLazyRec(arr)
+    }
+
+    fun calculateNestedArraySumLazyRec(item: Any): Int {
+        if (item is Int) return item
+        var sum = 0
+        for (item in item as List<Any>) {
+            sum+= calculateNestedArraySumLazyRec(item)
+        }
+        return sum
+    }
 }
 
 
@@ -25,7 +38,7 @@ class Task33_2() {
         @ParameterizedTest
         @MethodSource("inputDataProvider")
         fun test(input: List<Any>, expected: Int) {
-            Assertions.assertEquals(expected, task.calculateNestedArraySum(input))
+            Assertions.assertEquals(expected, task.calculateNestedArraySumLazy(input))
         }
 
         companion object {
