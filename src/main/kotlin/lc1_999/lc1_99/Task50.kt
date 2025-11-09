@@ -24,6 +24,23 @@ class Task50() {
             x * powRec(x, n - 1)
         }
     }
+
+    fun myPowIterative(x: Double, n: Int): Double {
+        if (n == 0) return 1.0
+
+        var sum = 1.0
+        var curX = if (n < 0) 1 / x else x
+        var i = abs(n.toLong())
+        while (i > 0) {
+            if (i % 2 == 1L) {
+                sum *= curX
+                i--
+            }
+            curX *= curX
+            i /= 2
+        }
+        return sum
+    }
 }
 
 private class Task50Test {
@@ -33,7 +50,7 @@ private class Task50Test {
     @MethodSource("inputDataProvider")
     fun test(input1: Double, input2: Int, expected: Double) {
         val delta = 0.000001
-        Assertions.assertEquals(expected, task.myPow(input1, input2), delta)
+        Assertions.assertEquals(expected, task.myPowIterative(input1, input2), delta)
     }
 
     companion object {
