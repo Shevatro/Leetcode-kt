@@ -19,6 +19,23 @@ class Task33_3() {
         }
         return result % m
     }
+
+    fun calculatePowersModMIter(a: Long, p: Long, m: Long): Long {
+        if (p == 0L) return 1
+        var sum = 1L
+        var curA = a
+        var curP = p
+        while (curP > 0) {
+            if (curP % 2 == 1L) {
+                sum = (sum * curA) % m
+                curP--
+            } else {
+                curA = (curA * curA) % m
+                curP /= 2
+            }
+        }
+        return sum % m
+    }
 }
 
 
@@ -28,7 +45,7 @@ private class Task33_3Test {
     @ParameterizedTest
     @MethodSource("inputDataProvider")
     fun test(input1: Long, input2: Long, input3: Long, expected: Long) {
-        Assertions.assertEquals(expected, task.calculatePowersModM(input1, input2, input3))
+        Assertions.assertEquals(expected, task.calculatePowersModMIter(input1, input2, input3))
     }
 
     companion object {
