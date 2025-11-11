@@ -22,8 +22,8 @@ class Task33_5() {
             val sum = if (startPos == endPos) {
                 arr[startPos].toLong()
             } else {
-                val half = (startPos + endPos) / 2
-                calculateMaxLaminalArrayRec(startPos, half) + calculateMaxLaminalArrayRec(half + 1, endPos)
+                val mid = (startPos + endPos) / 2
+                calculateMaxLaminalArrayRec(startPos, mid) + calculateMaxLaminalArrayRec(mid + 1, endPos)
             }
             if (sum > max) max = sum
             return sum
@@ -50,12 +50,7 @@ private class Task33_5Test {
                 Arguments.of(intArrayOf(-1, -2), -1),
                 Arguments.of(intArrayOf(1, 2, 3, 4), 10),
                 Arguments.of(intArrayOf(-2, -1, -4, -3), -1),
-                Arguments.of(
-                    intArrayOf(
-                        1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -
-                        12, 13, -14, 15, -16
-                    ), 15
-                ),
+                Arguments.of(intArrayOf(1, -2, 3, -4, 5, -6, 7, -8, 9, -10, 11, -12, 13, -14, 15, -16), 15)
             )
         }
     }
