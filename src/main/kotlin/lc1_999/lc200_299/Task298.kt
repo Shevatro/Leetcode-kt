@@ -9,10 +9,11 @@ import kotlin.math.max
 //https://leetcode.com/problems/binary-tree-longest-consecutive-sequence/description/
 class Task298 {
     fun longestConsecutive(root: IntTreeNode?): Int {
-        return Solution(root).longestConsecutive()
+//        return SolutionTopDown(root).longestConsecutive()
+        return SolutionBottomUp(root).longestConsecutive()
     }
 
-    class Solution(private val root: IntTreeNode?) {
+    class SolutionTopDown(private val root: IntTreeNode?) {
         private var maxLength = 0
         fun longestConsecutive(): Int {
             longestConsecutive(requireNotNull(root), 1)
@@ -34,6 +35,30 @@ class Task298 {
         }
 
         private fun isDiffEq1(node1: IntTreeNode, node2: IntTreeNode) = node1.`val` - node2.`val` == 1
+    }
+
+    class SolutionBottomUp(private val root: IntTreeNode?) {
+        private var maxLength = 0
+        fun longestConsecutive(): Int {
+            longestConsecutive(root)
+            return maxLength
+        }
+
+        fun longestConsecutive(node: IntTreeNode?): Int {
+            if (node == null) return 0
+            var leftLength = longestConsecutive(node.left) + 1
+            var rightLength = longestConsecutive(node.right) + 1
+            if (!isDiffEq1(node.left, node)) leftLength = 1
+            if (!isDiffEq1(node.right, node)) rightLength = 1
+            val currentLength = max(leftLength, rightLength)
+            maxLength = max(currentLength, maxLength)
+            return currentLength
+        }
+
+        private fun isDiffEq1(node1: IntTreeNode?, node2: IntTreeNode): Boolean {
+            if (node1 == null) return false
+            return node1.`val` - node2.`val` == 1
+        }
     }
 }
 
