@@ -13,20 +13,24 @@ class Task298 {
     }
 
     class Solution(private val root: IntTreeNode?) {
-        private var max = 0
+        private var maxLength = 0
         fun longestConsecutive(): Int {
-            longestConsecutive(root, 1)
-            return max
+            longestConsecutive(requireNotNull(root), 1)
+            return maxLength
         }
 
-        private fun longestConsecutive(node: IntTreeNode?, cnt: Int) {
-            if (node == null) return
-            max = max(max, cnt)
-
-            val newLeftCnt = if ((node.left?.`val` ?: 0) - node.`val` == 1) cnt + 1 else 1
-            longestConsecutive(node.left, newLeftCnt)
-            val newRightCnt = if ((node.right?.`val` ?: 0) - node.`val` == 1) cnt + 1 else 1
-            longestConsecutive(node.right, newRightCnt)
+        private fun longestConsecutive(node: IntTreeNode, length: Int) {
+            maxLength = max(maxLength, length)
+            if (node.left != null) {
+                val leftNode = requireNotNull(node.left)
+                val newLeftCnt = if (leftNode.`val` - node.`val` == 1) length + 1 else 1
+                longestConsecutive(leftNode, newLeftCnt)
+            }
+            if (node.right != null) {
+                val rightNode = requireNotNull(node.right)
+                val newRightCnt = if (rightNode.`val` - node.`val` == 1) length + 1 else 1
+                longestConsecutive(rightNode, newRightCnt)
+            }
         }
     }
 }
