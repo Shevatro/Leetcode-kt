@@ -23,15 +23,17 @@ class Task298 {
             maxLength = max(maxLength, length)
             if (node.left != null) {
                 val leftNode = requireNotNull(node.left)
-                val newLeftCnt = if (leftNode.`val` - node.`val` == 1) length + 1 else 1
+                val newLeftCnt = if (isDiffEq1(leftNode, node)) length + 1 else 1
                 longestConsecutive(leftNode, newLeftCnt)
             }
             if (node.right != null) {
                 val rightNode = requireNotNull(node.right)
-                val newRightCnt = if (rightNode.`val` - node.`val` == 1) length + 1 else 1
+                val newRightCnt = if (isDiffEq1(rightNode, node)) length + 1 else 1
                 longestConsecutive(rightNode, newRightCnt)
             }
         }
+
+        private fun isDiffEq1(node1: IntTreeNode, node2: IntTreeNode) = node1.`val` - node2.`val` == 1
     }
 }
 
