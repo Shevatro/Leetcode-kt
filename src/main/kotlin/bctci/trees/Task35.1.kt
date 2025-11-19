@@ -7,7 +7,8 @@ import kotlin.math.max
 
 class Task35_1() {
     fun getAlignedChainSize(root: IntTreeNode?): Int {
-        return Solution().getAlignedChainSize(root)
+//        return Solution().getAlignedChainSize(root)
+        return Solution2().getAlignedChainSize(root)
     }
 
     class Solution() {
@@ -24,6 +25,24 @@ class Task35_1() {
             val newLength = if (isAligned) length + 1 else 1
             goDown(node.left, level + 1, newLength)
             goDown(node.right, level + 1, newLength)
+        }
+    }
+
+    class Solution2() {
+        private var maxLength = 0
+        fun getAlignedChainSize(root: IntTreeNode?): Int {
+            goDown(root, 0)
+            return maxLength
+        }
+
+        private fun goDown(node: IntTreeNode?, level: Int): Int {
+            if (node == null) return 0
+            val leftLength = goDown(node.left, level + 1)
+            val rightLength = goDown(node.right, level + 1)
+            if (node.`val` != level) return 0
+            val curLength = max(leftLength, rightLength) + 1
+            maxLength = max(maxLength, curLength)
+            return curLength
         }
     }
 }
