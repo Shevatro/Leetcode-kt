@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-class Task32_7() {
+class Task32_7 {
 
     fun isValidCustomBrackets(s: String, brackets: Array<String>): Boolean {
         val openToCloseMap = brackets.associateBy({ it[0] }, { it[1] })

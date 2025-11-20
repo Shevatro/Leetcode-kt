@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-class Task32_8() {
+class Task32_8 {
 
     fun longestBalancedSubsequence(s: String): String {
         return Solution(s).longestBalancedSubsequence()

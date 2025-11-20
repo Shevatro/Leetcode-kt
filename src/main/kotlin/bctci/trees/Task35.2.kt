@@ -4,7 +4,7 @@ import common.TreeNode
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-class Task35_2() {
+class Task35_2 {
     fun decodeHiddenMsg(root: TreeNode<String>?): String {
         return Solution(root).decodeHiddenMsg()
     }

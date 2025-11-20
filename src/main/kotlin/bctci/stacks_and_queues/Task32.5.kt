@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import kotlin.math.min
 
-class Task32_5() {
+class Task32_5 {
     fun performActions(actions: Array<Action>): String {
         return Solution(actions).performActions()
     }

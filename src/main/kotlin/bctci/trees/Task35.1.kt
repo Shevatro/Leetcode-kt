@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import kotlin.math.max
 
-class Task35_1() {
+class Task35_1 {
     fun getAlignedChainSize(root: IntTreeNode?): Int {
 //        return Solution().getAlignedChainSize(root)
         return Solution2().getAlignedChainSize(root)

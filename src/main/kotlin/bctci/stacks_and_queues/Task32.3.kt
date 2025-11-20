@@ -3,7 +3,7 @@ package bctci.stacks_and_queues
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-class Task32_3() {
+class Task32_3 {
     class ViewerCounter(private val window: Int) {
         private val viewers = mutableMapOf(
             "subscriber" to Data(),

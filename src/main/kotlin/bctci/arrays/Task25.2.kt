@@ -3,7 +3,7 @@ package bctci.arrays
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-class DynamicArrayExtras() {
+class DynamicArrayExtras {
     private var arr = IntArray(10)
     private var curInd = 0
     fun append(item: Int) {

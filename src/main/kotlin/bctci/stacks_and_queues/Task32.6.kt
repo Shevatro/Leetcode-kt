@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 import kotlin.text.iterator
 
-class Task32_6() {
+class Task32_6 {
 
     fun countBalancedPartitions(s: String): Int {
         var count = 0

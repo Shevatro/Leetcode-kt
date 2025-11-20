@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-class Task32_2() {
+class Task32_2 {
     fun compressArray(arr: IntArray, k: Int): IntArray {
         return Solution(arr, k).compressArray()
     }
