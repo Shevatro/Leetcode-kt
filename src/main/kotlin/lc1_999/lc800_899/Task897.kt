@@ -28,7 +28,8 @@ class Task897 {
         }
 
         private fun addNode(node: IntTreeNode) {
-            p?.right = IntTreeNode(node.`val`)
+            node.left = null
+            p?.right = node
             p = p?.right
         }
     }
