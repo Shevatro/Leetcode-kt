@@ -25,9 +25,9 @@ class Task35_3 {
             if (node.`val` != level) {
                 return 0
             } else {
-                val curLength = leftLength + rightLength+1
+                val curLength = leftLength + rightLength + 1
                 maxLength = max(maxLength, curLength)
-                return max(leftLength, rightLength)+1
+                return max(leftLength, rightLength) + 1
             }
         }
     }
