@@ -3,6 +3,8 @@ package lc1_999.lc900_999
 import common.IntTreeNode
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import kotlin.math.max
+import kotlin.math.min
 
 //Similar to Beyond Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/description/
@@ -12,20 +14,34 @@ class Task987 {
     }
 
     class Solution(private val root: IntTreeNode?) {
+        private var minInd = Int.MAX_VALUE
+        private var maxInd = Int.MIN_VALUE
         private val cache = Array<MutableList<Item>?>(1001) { null }
         fun verticalTraversal(): List<List<Int>> {
             dfs(root, 500, 0)
-            return cache.filterNotNull().toList().map { list ->
-                list.sortedWith(compareBy<Item> { it.level }.thenBy { it.value }).map { it.value }
-            }
+            return toResult()
         }
 
-        private fun dfs(node: IntTreeNode?, amount: Int, level: Int) {
+        private fun dfs(node: IntTreeNode?, offset: Int, level: Int) {
             if (node == null) return
-            if (cache[amount] == null) cache[amount] = mutableListOf()
-            cache[amount]?.add(Item(level, node.`val`))
-            dfs(node.left, amount - 1, level + 1)
-            dfs(node.right, amount + 1, level + 1)
+            if (cache[offset] == null) cache[offset] = mutableListOf()
+            cache[offset]?.add(Item(level, node.`val`))
+            minInd = min(minInd, offset)
+            maxInd = max(maxInd, offset)
+            dfs(node.left, offset - 1, level + 1)
+            dfs(node.right, offset + 1, level + 1)
+        }
+
+        private fun toResult(): List<List<Int>> {
+            val result = mutableListOf<List<Int>>()
+            for (i in minInd..maxInd) {
+                val item = cache[i]
+                    ?.asSequence()
+                    ?.sortedWith(compareBy<Item> { it.level }.thenBy { it.value })?.map { it.value }
+                    ?.toList() ?: emptyList()
+                result.add(item)
+            }
+            return result
         }
 
         private data class Item(
