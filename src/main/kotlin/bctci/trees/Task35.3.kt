@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import kotlin.math.max
 
+//Tricky, repeat
 class Task35_3 {
     fun getAlignedPathSize(root: IntTreeNode?): Int {
         return Solution().getAlignedPathSize(root)
@@ -22,13 +23,11 @@ class Task35_3 {
             val leftLength = dfs(node.left, level + 1)
             val rightLength = dfs(node.right, level + 1)
 
-            if (node.`val` != level) {
-                return 0
-            } else {
-                val curLength = leftLength + rightLength + 1
-                maxLength = max(maxLength, curLength)
-                return max(leftLength, rightLength) + 1
-            }
+            if (node.`val` != level) return 0
+
+            val curLength = leftLength + rightLength + 1
+            maxLength = max(maxLength, curLength)
+            return max(leftLength, rightLength) + 1
         }
     }
 
