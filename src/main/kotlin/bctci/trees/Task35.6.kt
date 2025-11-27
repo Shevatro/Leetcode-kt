@@ -13,6 +13,15 @@ class Task35_6 {
 
     private fun dfs(node: IntTreeNode?) {
         if (node == null) return
+        dfs(node.left)
+        dfs(node.right)
+        val temp = node.left
+        node.left = node.right
+        node.right = temp
+    }
+
+    private fun dfs2(node: IntTreeNode?) {
+        if (node == null) return
         val temp = node.left
         node.left = node.right
         node.right = temp
