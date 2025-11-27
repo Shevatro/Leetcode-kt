@@ -23,9 +23,11 @@ class Task35_5 {
             val right = dfs(node.right)
             if (node.left != null && node.right != null) {
                 //minimum between left and right path (the leftmost and rightmost)
-                amount += min(left.first, right.second)
+                amount += min(left.first, right.second) + 1
             }
-            return left.first + 1 to right.second + 1
+            val leftMostLength = if (node.left != null) left.first + 1 else 0
+            val rightMostLength = if (node.right != null) right.second + 1 else 0
+            return leftMostLength to rightMostLength
         }
     }
 }
