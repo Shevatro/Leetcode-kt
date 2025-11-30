@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 //https://leetcode.com/problems/binary-tree-right-side-view/
 
 class Task199 {
-
+    //The right view is an array with the value of the FIRST node on EACH layer, ordered from top to bottom.
     fun rightSideView(root: IntTreeNode?): List<Int> {
         return BFSSolution2().rightSideView(root)
     }
