@@ -3,40 +3,38 @@ package lc1_999.lc600_699
 import common.IntTreeNode
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import kotlin.math.max
 
 //Similar to Beyond Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/average-of-levels-in-binary-tree/description/
 class Task637 {
     fun averageOfLevels(root: IntTreeNode?): DoubleArray {
         if (root == null) return doubleArrayOf()
-        var maxLevel = 0
+        var curLevel = 0
+        var sum = 0L
+        var amount = 0
+        val result = mutableListOf<Double>()
         val queue = ArrayDeque<Data>()
-        val averageMap = mutableMapOf<Int, MutableList<Int>>()
         queue.addLast(Data(root, 0))
         while (queue.isNotEmpty()) {
             val item = queue.removeFirst()
-            if (averageMap[item.level] == null) {
-                averageMap[item.level] = mutableListOf()
+            if (curLevel == item.level) {
+                sum += item.node.`val`
+                amount++
+            } else {
+                result.add(sum * 1.0 / amount)
+                sum = item.node.`val`.toLong()
+                amount = 1
+                curLevel++
             }
-            averageMap[item.level]?.add(item.node.`val`)
-            maxLevel = max(maxLevel, item.level)
             if (item.node.left != null) {
-                queue.addLast(Data(item.node.left!!, item.level + 1))
+                queue.addLast(Data(requireNotNull(item.node.left), item.level + 1))
             }
             if (item.node.right != null) {
-                queue.addLast(Data(item.node.right!!, item.level + 1))
+                queue.addLast(Data(requireNotNull(item.node.right), item.level + 1))
             }
         }
-        return mapToArray(averageMap, maxLevel)
-    }
-
-    private fun mapToArray(map: Map<Int, List<Int>>, maxLevel: Int): DoubleArray {
-        val result = DoubleArray(maxLevel + 1)
-        for (i in 0..maxLevel) {
-            result[i] = requireNotNull(map[i]).average()
-        }
-        return result
+        result.add(sum * 1.0 / amount)
+        return result.toDoubleArray()
     }
 
     private data class Data(
