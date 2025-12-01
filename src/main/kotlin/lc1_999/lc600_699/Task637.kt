@@ -9,38 +9,27 @@ import org.junit.jupiter.api.Test
 class Task637 {
     fun averageOfLevels(root: IntTreeNode?): DoubleArray {
         if (root == null) return doubleArrayOf()
-        var curLevel = 0
-        var sum = 0L
-        var amount = 0
         val result = mutableListOf<Double>()
-        val queue = ArrayDeque<Data>()
-        queue.addLast(Data(root, 0))
+        val queue = ArrayDeque<IntTreeNode>()
+        queue.addLast(root)
         while (queue.isNotEmpty()) {
-            val item = queue.removeFirst()
-            if (curLevel == item.level) {
-                sum += item.node.`val`
-                amount++
-            } else {
-                result.add(sum * 1.0 / amount)
-                sum = item.node.`val`.toLong()
-                amount = 1
-                curLevel++
+            val nodesAmount = queue.size
+            var sum = 0L
+            //explore each level
+            repeat(nodesAmount) {
+                val item = queue.removeFirst()
+                sum += item.`val`
+                if (item.left != null) {
+                    queue.addLast(requireNotNull(item.left))
+                }
+                if (item.right != null) {
+                    queue.addLast(requireNotNull(item.right))
+                }
             }
-            if (item.node.left != null) {
-                queue.addLast(Data(requireNotNull(item.node.left), item.level + 1))
-            }
-            if (item.node.right != null) {
-                queue.addLast(Data(requireNotNull(item.node.right), item.level + 1))
-            }
+            result.add(sum.toDouble() / nodesAmount)
         }
-        result.add(sum * 1.0 / amount)
         return result.toDoubleArray()
     }
-
-    private data class Data(
-        val node: IntTreeNode,
-        val level: Int
-    )
 }
 
 private class Task637Test {
