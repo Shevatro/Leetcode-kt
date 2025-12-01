@@ -9,23 +9,23 @@ class Task35_9 {
         if (root == null) return -1
         var maxProlificness = -1.0
         var maxLevel = -1
-        val queue = ArrayDeque<Data>()
-        queue.addLast(Data(root, 0))
+        var curLevel = -1
+        val queue = ArrayDeque<IntTreeNode>()
+        queue.addLast(root)
         while (queue.isNotEmpty()) {
             val nodesAmount = queue.size
-            val curLevel = queue.first().level
+            curLevel++
             var childrenAmount = 0
             //explore each level
             repeat(nodesAmount) {
                 val item = queue.removeFirst()
-
-                if (item.node.left != null) {
+                if (item.left != null) {
                     childrenAmount++
-                    queue.addLast(Data(requireNotNull(item.node.left), curLevel + 1))
+                    queue.addLast(requireNotNull(item.left))
                 }
-                if (item.node.right != null) {
+                if (item.right != null) {
                     childrenAmount++
-                    queue.addLast(Data(requireNotNull(item.node.right), curLevel + 1))
+                    queue.addLast(requireNotNull(item.right))
                 }
             }
             val prolificness = childrenAmount.toDouble() / nodesAmount
@@ -36,11 +36,6 @@ class Task35_9 {
         }
         return maxLevel
     }
-
-    private data class Data(
-        val node: IntTreeNode,
-        val level: Int
-    )
 }
 
 private class Task35_9Test {
