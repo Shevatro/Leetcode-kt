@@ -3,6 +3,7 @@ package bctci.trees
 import common.IntTreeNode
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import java.util.LinkedList
 
 class Task35_10 {
     fun applyZigZagOrder(root: IntTreeNode?): List<Int> {
@@ -13,17 +14,14 @@ class Task35_10 {
         queue.addLast(root)
         while (queue.isNotEmpty()) {
             curLevel++
-            val temp = ArrayDeque<Int>()
+            val temp = LinkedList<Int>()
             repeat(queue.size) {
                 val item = queue.removeFirst()
-                temp.addLast(item.`val`)
+                if (curLevel % 2 == 0) temp.addLast(item.`val`) else temp.addFirst(item.`val`)
                 if (item.left != null) queue.addLast(requireNotNull(item.left))
                 if (item.right != null) queue.addLast(requireNotNull(item.right))
             }
-            val isLeftToRight = curLevel % 2 == 0
-            while (temp.isNotEmpty()) {
-                result.add(if (isLeftToRight) temp.removeFirst() else temp.removeLast())
-            }
+            result.addAll(temp)
         }
         return result
     }

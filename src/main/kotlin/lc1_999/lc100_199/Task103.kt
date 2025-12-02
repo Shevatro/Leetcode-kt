@@ -3,6 +3,7 @@ package lc1_999.lc100_199
 import common.IntTreeNode
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import java.util.LinkedList
 
 //From Beyond Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
@@ -15,18 +16,14 @@ class Task103 {
         queue.addLast(root)
         while (queue.isNotEmpty()) {
             curLevel++
-            val temp = mutableListOf<Int>()
+            val temp = LinkedList<Int>()
             repeat(queue.size) {
                 val item = queue.removeFirst()
-                temp.add(item.`val`)
+                if (curLevel % 2 == 0) temp.addLast(item.`val`) else temp.addFirst(item.`val`)
                 if (item.left != null) queue.addLast(requireNotNull(item.left))
                 if (item.right != null) queue.addLast(requireNotNull(item.right))
             }
-            if (curLevel % 2 == 0) {
-                result.add(temp)
-            } else {
-                result.add(temp.reversed())
-            }
+            result.add(temp)
         }
         return result
     }
