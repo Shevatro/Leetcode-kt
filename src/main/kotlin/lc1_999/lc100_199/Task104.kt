@@ -12,7 +12,7 @@ class Task104 {
         return Solution().maxDepth(root)
     }
 
-    class Solution() {
+    private class Solution() {
         private var maxLevel = 0
         fun maxDepth(root: IntTreeNode?): Int {
             dfs(root, 1)
