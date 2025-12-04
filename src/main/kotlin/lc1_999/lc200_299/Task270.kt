@@ -8,7 +8,7 @@ import kotlin.math.abs
 //From Beyond Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/closest-binary-search-tree-value/
 class Task270 {
-    fun searchBST(root: IntTreeNode?, target: Double): Int {
+    fun closestValue(root: IntTreeNode?, target: Double): Int {
         return Solution(target).closestValue(root)
     }
 
@@ -16,19 +16,16 @@ class Task270 {
         private var closestTarget = -1
         private var minDiff = Double.MAX_VALUE
         fun closestValue(root: IntTreeNode?): Int {
-            dfs(root)
-            return closestTarget
-        }
-
-        private fun dfs(node: IntTreeNode?) {
-            if (node == null) return
-            dfs(node.left)
-            val diff = abs(target - node.`val`)
-            if (diff < minDiff || (diff == minDiff && node.`val` < closestTarget)) {
-                minDiff = diff
-                closestTarget = node.`val`
+            var p = root
+            while (p != null) {
+                val diff = abs(p.`val` - target)
+                if (diff < minDiff || (diff == minDiff && p.`val` < closestTarget)) {
+                    minDiff = diff
+                    closestTarget = p.`val`
+                }
+                p = if (target > p.`val`) p.right else p.left
             }
-            dfs(node.right)
+            return closestTarget
         }
     }
 }
@@ -45,13 +42,13 @@ private class Task270Test {
             }
             right = IntTreeNode(5)
         }
-        Assertions.assertEquals(4, task.searchBST(tree, 3.714286))
+        Assertions.assertEquals(4, task.closestValue(tree, 3.714286))
     }
 
     @Test
     fun test2() {
         val tree = IntTreeNode(1)
-        Assertions.assertEquals(1, task.searchBST(tree, 4.428571))
+        Assertions.assertEquals(1, task.closestValue(tree, 4.428571))
     }
 
     @Test
@@ -59,6 +56,6 @@ private class Task270Test {
         val tree = IntTreeNode(8).apply {
             left = IntTreeNode(1)
         }
-        Assertions.assertEquals(8, task.searchBST(tree, 6.0))
+        Assertions.assertEquals(8, task.closestValue(tree, 6.0))
     }
 }
