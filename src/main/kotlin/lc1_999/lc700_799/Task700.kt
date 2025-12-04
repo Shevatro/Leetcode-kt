@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test
 //https://leetcode.com/problems/search-in-a-binary-search-tree/description/
 class Task700 {
     fun searchBST(root: IntTreeNode?, `val`: Int): IntTreeNode? {
-        return Solution(`val`).searchBST(root)
+        return Solution(`val`).searchBSTIterative(root)
+//        return Solution(`val`).searchBST(root)
     }
 
     private class Solution(private val value: Int) {
@@ -18,6 +19,14 @@ class Task700 {
             if (root.`val` == value) return root
             val nextItem = if (root.`val` < value) root.right else root.left
             return searchBST(nextItem)
+        }
+
+        fun searchBSTIterative(root: IntTreeNode?): IntTreeNode? {
+            var p = root
+            while (p != null && p.`val` != value) {
+                p = if (p.`val` < value) p.right else p.left
+            }
+            return p
         }
     }
 }
