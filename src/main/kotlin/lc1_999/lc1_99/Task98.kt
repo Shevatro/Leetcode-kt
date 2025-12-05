@@ -4,7 +4,7 @@ import common.IntTreeNode
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-//From Cracking The Coding Interview, Not Solved
+//From Cracking The Coding Interview and Beyond Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/validate-binary-search-tree/
 class Task98 {
     fun isValidBST(root: IntTreeNode?): Boolean {
