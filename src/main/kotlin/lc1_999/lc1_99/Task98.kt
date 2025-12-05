@@ -133,4 +133,11 @@ private class Task98Test {
         val result = task.isValidBST(tree)
         Assertions.assertEquals(false, result)
     }
+
+    @Test
+    fun isValidBSTTest6() {
+        val tree = IntTreeNode(-2147483648)
+        val result = task.isValidBST(tree)
+        Assertions.assertEquals(true, result)
+    }
 }
