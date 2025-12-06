@@ -22,7 +22,10 @@ class Task230 {
         private fun dfs(node: IntTreeNode?) {
             if (node == null) return
             dfs(node.left)
-            if (count == k) result = node.`val`
+            if (count == k && result == null) {
+                result = node.`val`
+                return
+            }
             count++
             dfs(node.right)
         }

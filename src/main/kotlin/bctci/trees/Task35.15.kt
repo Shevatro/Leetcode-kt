@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test
 
 class Task35_15 {
     fun detectDuplicatesInBST(root: IntTreeNode?): Boolean {
-        return Solution().validateBST(root)
+        return Solution().detectDuplicatesInBST(root)
     }
 
     private class Solution() {
         private var previous: Int? = null
-        fun validateBST(root: IntTreeNode?): Boolean {
+        fun detectDuplicatesInBST(root: IntTreeNode?): Boolean {
             return dfs(root)
         }
 
