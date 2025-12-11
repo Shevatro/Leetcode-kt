@@ -9,7 +9,7 @@ import kotlin.math.min
 
 //From Beyond Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/minimum-path-sum/description/
-class Task64() {
+class Task64 {
     fun minPathSum(grid: Array<IntArray>): Int {
         return Solution2(grid).minPathSum()
     }
