@@ -20,13 +20,13 @@ class Task64 {
             return dfs(0, 0)
         }
 
-        private fun dfs(c: Int, r: Int): Int {
-            if (c !in 0..<paths.size || r !in 0..<paths[0].size) return Int.MAX_VALUE
-            if (paths[c][r] != -1) return paths[c][r]
-            val min = min(dfs(c, r + 1), dfs(c + 1, r))
-            paths[c][r] = grid[c][r]
-            if (min != Int.MAX_VALUE) paths[c][r] += min
-            return paths[c][r]
+        private fun dfs(r: Int, c: Int): Int {
+            if (r !in 0..<paths.size || c !in 0..<paths[0].size) return Int.MAX_VALUE
+            if (paths[r][c] != -1) return paths[r][c]
+            val min = min(dfs(r, c + 1), dfs(r + 1, c))
+            paths[r][c] = grid[r][c]
+            if (min != Int.MAX_VALUE) paths[r][c] += min
+            return paths[r][c]
         }
     }
 }
