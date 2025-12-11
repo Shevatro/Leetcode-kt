@@ -9,20 +9,18 @@ import kotlin.math.max
 
 class Task39_1 {
     fun maxPathSum(grid: Array<IntArray>): Int {
-        return Solution2(grid).maxPathSum()
+        return Solution(grid).maxPathSum()
     }
 
-    private class Solution2(private val grid: Array<IntArray>) {
+    private class Solution(private val grid: Array<IntArray>) {
         private val paths = Array(grid.size) { IntArray(grid[0].size) }
         fun maxPathSum() = dfs(0, 0)
 
-        private fun dfs(c: Int, r: Int): Int {
-            if (c !in 0..<paths.size || r !in 0..<paths[0].size) return 0
-            if (paths[c][r] != 0) return paths[c][r]
-            val min = max(dfs(c, r + 1), dfs(c + 1, r))
-            paths[c][r] = grid[c][r]
-            if (min != 0) paths[c][r] += min
-            return paths[c][r]
+        private fun dfs(r: Int, c: Int): Int {
+            if (r !in 0..<paths.size || c !in 0..<paths[0].size) return 0
+            if (paths[r][c] != 0) return paths[r][c]
+            paths[r][c] = max(dfs(r, c + 1), dfs(r + 1, c)) + grid[r][c]
+            return paths[r][c]
         }
     }
 }
