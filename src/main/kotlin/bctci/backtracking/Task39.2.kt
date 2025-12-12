@@ -13,20 +13,24 @@ class Task39_2 {
 
     private class Solution(private val s: List<Char>) {
         private val result = mutableSetOf<List<Char>>()
+        private val tempSet = mutableSetOf<Char>()
         fun calcSubsetEnumeration(): Set<List<Char>> {
-            result.add(emptyList())
-            dp(s.toMutableSet())
+            dp(0)
             return result
         }
 
-        private fun dp(s: Set<Char>) {
-            if (s.isEmpty()) return
-            val list = s.toList()
-            if (!result.contains(list)) result.add(list)
-            for (ch in s) {
-                val newSet = s.toMutableSet().apply { remove(ch) }
-                dp(newSet)
+        private fun dp(i: Int) {
+            if (i == s.size) {
+                result.add(tempSet.toList())
+                return
             }
+            //choice1: pick s[i]
+            tempSet.add(s[i])
+            dp(i + 1)
+           //undo
+            tempSet.remove(s[i])
+            //choice2: skip s[i]
+            dp(i + 1)
         }
     }
 }

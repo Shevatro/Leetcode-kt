@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 //https://leetcode.com/problems/subsets/
 class Task78 {
     fun subsets(nums: IntArray): List<List<Int>> {
-        return Solution2(nums).subsets()
+        return Solution(nums).subsets()
     }
 
     private class Solution2(private val nums: IntArray) {
@@ -33,6 +33,28 @@ class Task78 {
                 }
                 subsets(i, newItem)
             }
+        }
+    }
+
+    private class Solution(private val s: IntArray) {
+        private val result = mutableListOf<List<Int>>()
+        private val tempSet = mutableSetOf<Int>()
+        fun subsets(): List<List<Int>> {
+            dp(0)
+            return result
+        }
+
+        private fun dp(i: Int) {
+            if (i == s.size) {
+                result.add(tempSet.toList())
+                return
+            }
+            //choice1: pick s[i]
+            tempSet.add(s[i])
+            dp(i + 1)
+            //choice2: skip s[i]
+            tempSet.remove(s[i])
+            dp(i + 1)
         }
     }
 }
