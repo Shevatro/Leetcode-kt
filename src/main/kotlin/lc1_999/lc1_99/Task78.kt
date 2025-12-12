@@ -38,23 +38,23 @@ class Task78 {
 
     private class Solution(private val s: IntArray) {
         private val result = mutableListOf<List<Int>>()
-        private val tempSet = mutableSetOf<Int>()
+        private val curSubSet = ArrayDeque<Int>()
         fun subsets(): List<List<Int>> {
-            dp(0)
+            dfs(0)
             return result
         }
 
-        private fun dp(i: Int) {
+        private fun dfs(i: Int) {
             if (i == s.size) {
-                result.add(tempSet.toList())
+                result.add(curSubSet.toList())
                 return
             }
             //choice1: pick s[i]
-            tempSet.add(s[i])
-            dp(i + 1)
+            curSubSet.addLast(s[i])
+            dfs(i + 1)
             //choice2: skip s[i]
-            tempSet.remove(s[i])
-            dp(i + 1)
+            curSubSet.removeLast()
+            dfs(i + 1)
         }
     }
 }

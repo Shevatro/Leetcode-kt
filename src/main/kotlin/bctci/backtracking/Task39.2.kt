@@ -13,24 +13,24 @@ class Task39_2 {
 
     private class Solution(private val s: List<Char>) {
         private val result = mutableSetOf<List<Char>>()
-        private val tempSet = mutableSetOf<Char>()
+        private val curSubSet = ArrayDeque<Char>()
         fun calcSubsetEnumeration(): Set<List<Char>> {
-            dp(0)
+            dfs(0)
             return result
         }
 
-        private fun dp(i: Int) {
+        private fun dfs(i: Int) {
             if (i == s.size) {
-                result.add(tempSet.toList())
+                result.add(curSubSet.toList())
                 return
             }
             //choice1: pick s[i]
-            tempSet.add(s[i])
-            dp(i + 1)
+            curSubSet.addLast(s[i])
+            dfs(i + 1)
            //undo
-            tempSet.remove(s[i])
+            curSubSet.removeLast()
             //choice2: skip s[i]
-            dp(i + 1)
+            dfs(i + 1)
         }
     }
 }
