@@ -3,7 +3,7 @@ package lc1_999.lc1_99
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
-//From Cracking The Coding Interview, Not Solved
+//From Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/permutations/
 class Task46 {
     fun permute(nums: IntArray): List<List<Int>> {
