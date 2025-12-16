@@ -15,9 +15,10 @@ class Task39_5 {
         sentence: String,
         private val synonyms: Map<String, List<String>>
     ) {
-        private val keys = synonyms.keys.toList()
+        private val words = sentence.split(" ")
+        private val indices = findAllIndices()
         private val result = mutableSetOf<String>()
-        private val current = sentence.split(" ").toMutableList()
+        private val current = words.toMutableList()
 
         fun getThesaurusly(): Set<String> {
             backtrack(0)
@@ -25,17 +26,25 @@ class Task39_5 {
         }
 
         private fun backtrack(i: Int) {
-            if (i == keys.size) {
+            if (i == indices.size) {
                 result.add(current.joinToString(" "))
                 return
             }
-            val original = keys[i]
-            val index = current.indexOf(original)
+            val wordId = indices[i]
+            val original = current[wordId]
             for (synonym in synonyms[original]!!) {
-                current[index] = synonym
+                current[wordId] = synonym
                 backtrack(i + 1)
-                current[index] = original
+                current[wordId] = original
             }
+        }
+
+        private fun findAllIndices(): List<Int> {
+            val result = mutableListOf<Int>()
+            for (i in words.indices) {
+                if (synonyms.contains(words[i])) result.add(i)
+            }
+            return result
         }
     }
 }
@@ -70,6 +79,7 @@ private class Task39_5Test {
                     )
                 ),
                 Arguments.of("walk", mapOf("walk" to listOf("stroll")), setOf("stroll")),
+                Arguments.of("walk walk", mapOf("walk" to listOf("stroll")), setOf("stroll stroll")),
                 Arguments.of("walk", mapOf("walk" to listOf("stroll", "hike")), setOf("stroll", "hike")),
                 Arguments.of("hello world", emptyMap<String, List<String>>(), setOf("hello world")),
                 Arguments.of(
