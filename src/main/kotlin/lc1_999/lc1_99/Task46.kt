@@ -10,7 +10,7 @@ class Task46 {
         return Solution2(nums).permute()
     }
 
-    private class Solution2(private val nums: IntArray) {
+    private class Solution(private val nums: IntArray) {
         private val result = mutableListOf<List<Int>>()
         private val current = mutableSetOf<Int>()
         fun permute(): List<List<Int>> {
@@ -29,6 +29,33 @@ class Task46 {
                     current.remove(num)
                 }
             }
+        }
+    }
+
+    private class Solution2(private val nums: IntArray) {
+        private val result = mutableListOf<List<Int>>()
+        private val current = nums.clone()
+        fun permute(): List<List<Int>> {
+            backtrack(0)
+            return result
+        }
+
+        private fun backtrack(i: Int) {
+            if (i == nums.size) {
+                result.add(current.toList())
+                return
+            }
+            for (j in i until nums.size) {
+                swap(i, j)
+                backtrack(i + 1)
+                swap(i, j)
+            }
+        }
+
+        private fun swap(i: Int, j: Int) {
+            val temp = current[i]
+            current[i] = current[j]
+            current[j] = temp
         }
     }
 }

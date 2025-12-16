@@ -8,7 +8,8 @@ import java.util.stream.Stream
 
 class Task39_3 {
     fun calcPermutationEnumeration(s: List<Char>): Set<List<Char>> {
-        return Solution(s).calcPermutationEnumeration()
+        return Solution2(s).calcPermutationEnumeration()
+//        return Solution(s).calcPermutationEnumeration()
     }
 
     private class Solution(private val s: List<Char>) {
@@ -31,6 +32,33 @@ class Task39_3 {
                     curSubSet.remove(ch)
                 }
             }
+        }
+    }
+
+    private class Solution2(private val s: List<Char>) {
+        private val result = mutableSetOf<List<Char>>()
+        private val current = s.toCharArray()
+        fun calcPermutationEnumeration(): Set<List<Char>> {
+            backtrack(0)
+            return result
+        }
+
+        private fun backtrack(i: Int) {
+            if (i == s.size) {
+                result.add(current.toList())
+                return
+            }
+            for (j in i until s.size) {
+                swap(i, j)
+                backtrack(i + 1)
+                swap(i, j)
+            }
+        }
+
+        private fun swap(i: Int, j: Int) {
+            val temp = current[i]
+            current[i] = current[j]
+            current[j] = temp
         }
     }
 }
