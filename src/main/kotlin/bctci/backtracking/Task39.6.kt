@@ -8,7 +8,7 @@ import java.util.stream.Stream
 
 class Task39_6 {
     fun getJumpingNumbers(n: Int): List<Int> {
-        return Solution(n).getJumpingNumbers()
+        return Solution2(n).getJumpingNumbers()
     }
 
     private class Solution(private val n: Int) {
@@ -44,6 +44,53 @@ class Task39_6 {
             return queue
         }
     }
+
+    private class Solution2(private val n: Int) {
+        private val digits = convertNToDigits()
+        private val result = mutableListOf<Int>()
+        private var curNumber = 0
+
+        fun getJumpingNumbers(): List<Int> {
+            backtrack(0)
+            return result.sorted()
+        }
+
+        private fun backtrack(i: Int) {
+            if (i != 0) {
+                if (curNumber < n) result.add(curNumber)
+                if (i == digits.size) return
+            }
+            val previousDigit = curNumber % 10
+            val previousNumber = curNumber
+            if (curNumber == 0) {
+                for (num in 1..9) {
+                    curNumber = num
+                    backtrack(i + 1)
+                    curNumber = previousNumber
+                }
+            } else {
+                repeat(2) { times ->
+                    val diff = if (times % 2 == 0) -1 else 1
+                    val num = previousDigit + diff
+                    if (num in 0..9) {
+                        curNumber = curNumber * 10 + num
+                        backtrack(i + 1)
+                        curNumber = previousNumber
+                    }
+                }
+            }
+        }
+
+        private fun convertNToDigits(): List<Int> {
+            val result = mutableListOf<Int>()
+            var num = n
+            while (num >= 1) {
+                result.add(num % 10)
+                num /= 10
+            }
+            return result.reversed()
+        }
+    }
 }
 
 
@@ -53,7 +100,6 @@ private class Task39_6Test {
     @ParameterizedTest
     @MethodSource("inputDataProvider")
     fun test(input: Int, expected: List<Int>) {
-        println(expected.size.toString())
         Assertions.assertEquals(expected, task.getJumpingNumbers(input))
     }
 
