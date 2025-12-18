@@ -46,49 +46,26 @@ class Task39_6 {
     }
 
     private class Solution2(private val n: Int) {
-        private val digits = convertNToDigits()
         private val result = mutableListOf<Int>()
-        private var curNumber = 0
 
         fun getJumpingNumbers(): List<Int> {
-            backtrack(0)
+            for (i in 1..9) {
+                backtrack(i)
+            }
             return result.sorted()
         }
 
-        private fun backtrack(i: Int) {
-            if (i != 0) {
-                if (curNumber < n) result.add(curNumber)
-                if (i == digits.size) return
-            }
-            val previousDigit = curNumber % 10
-            val previousNumber = curNumber
-            if (curNumber == 0) {
-                for (num in 1..9) {
-                    curNumber = num
-                    backtrack(i + 1)
-                    curNumber = previousNumber
-                }
-            } else {
-                repeat(2) { times ->
-                    val diff = if (times % 2 == 0) -1 else 1
-                    val num = previousDigit + diff
-                    if (num in 0..9) {
-                        curNumber = curNumber * 10 + num
-                        backtrack(i + 1)
-                        curNumber = previousNumber
-                    }
+        private fun backtrack(num: Int) {
+            if (num >= n) return
+            result.add(num)
+            val previousDigit = num % 10
+            repeat(2) { isEven ->
+                val diff = if (isEven % 2 == 0) -1 else 1
+                val newDigit = previousDigit + diff
+                if (newDigit in 0..9) {
+                    backtrack(num * 10 + newDigit)
                 }
             }
-        }
-
-        private fun convertNToDigits(): List<Int> {
-            val result = mutableListOf<Int>()
-            var num = n
-            while (num >= 1) {
-                result.add(num % 10)
-                num /= 10
-            }
-            return result.reversed()
         }
     }
 }
