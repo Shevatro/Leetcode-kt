@@ -23,29 +23,36 @@ class Task39_7 {
         private var maxPickedItems = emptyList<Int>()
 
         fun calcStylishIKEAProduct(): List<Int> {
-            backtrack()
+            backtrack(0)
             return maxPickedItems
         }
 
-        private fun backtrack() {
-            if (curBudget > budget) return
-            if (curRating > maxPickedRating) {
-                maxPickedRating = curRating
-                maxPickedItems = pickedItems.toList()
-            }
-            for (i in prices.indices) {
-                if (!pickedItems.contains(i)) {
-                    curBudget += prices[i]
-                    curRating += ratings[i]
-                    pickedItems.add(i)
-
-                    backtrack()
-
-                    curBudget -= prices[i]
-                    curRating -= ratings[i]
-                    pickedItems.remove(i)
+        private fun backtrack(i: Int) {
+            if (i == prices.size) {
+                if (curRating > maxPickedRating) {
+                    maxPickedRating = curRating
+                    maxPickedItems = pickedItems.toList()
                 }
+                return
             }
+
+            val newBudget = curBudget + prices[i]
+            if (newBudget <= budget) {
+                //do
+                curBudget += prices[i]
+                curRating += ratings[i]
+                pickedItems.add(i)
+
+
+                backtrack(i + 1) // pick
+
+                //undo
+                curBudget -= prices[i]
+                curRating -= ratings[i]
+                pickedItems.remove(i)
+            }
+
+            backtrack(i + 1) // skip
         }
     }
 }
