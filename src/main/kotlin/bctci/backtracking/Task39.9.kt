@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import java.util.LinkedList
 import java.util.stream.Stream
 
 class Task39_9 {
@@ -15,26 +14,26 @@ class Task39_9 {
     private class Solution(
         private val multiset: List<Int>
     ) {
-        private var allCombinations = mutableSetOf<List<Int>>()
-        private var curCombination = LinkedList<Int>()
+        private val frequencyMap: Map<Int, Int> by lazy {
+            multiset.groupingBy { it }.eachCount()
+        }
+        private val uniqueItems = frequencyMap.keys.toList()
+        private var count = 0
         fun countUniqueSubmultisetsWithSumZero(): Int {
             backtrack(0, 0)
-            return allCombinations.size
+            return count
         }
 
         private fun backtrack(i: Int, sum: Int) {
-            if (i == multiset.size) {
-                if (sum == 0) {
-                    val sortedCombination = curCombination.sorted()
-                    if (!allCombinations.contains(sortedCombination)) allCombinations.add(sortedCombination)
-                }
+            if (i == uniqueItems.size) {
+                if (sum == 0) count++
                 return
             }
-            curCombination.add(multiset[i]) //do
-            backtrack(i + 1, multiset[i] + sum) //pick
-            curCombination.remove(multiset[i]) //undo
-
-            backtrack(i + 1, sum) //skip
+            val uniqueItem = uniqueItems[i]
+            val frequency = frequencyMap[uniqueItem]!!
+            repeat(frequency + 1) { curRepeat ->
+                backtrack(i + 1, sum + (frequency - curRepeat) * uniqueItem)
+            }
         }
     }
 }
