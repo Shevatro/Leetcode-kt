@@ -31,6 +31,7 @@ class Task39_9 {
             }
             val uniqueItem = uniqueItems[i]
             val frequency = frequencyMap[uniqueItem]!!
+            //if we have item 1 with frequency = 5,we have 6 combinations (11111, 1111, 111, 11, 1, empty)
             repeat(frequency + 1) { curRepeat ->
                 backtrack(i + 1, sum + (frequency - curRepeat) * uniqueItem)
             }
