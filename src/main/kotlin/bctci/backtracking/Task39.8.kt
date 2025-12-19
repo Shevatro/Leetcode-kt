@@ -20,21 +20,20 @@ class Task39_8(private val password: String) {
         private var foundPassword: String? = null
 
         fun findPassword(): String? {
-            backtrack(0)
+            backtrack("")
             return foundPassword
         }
 
-        private fun backtrack(length: Int) {
-            if (foundPassword != null || length == MAX_SIZE + 1) return
-            val str = curPath.joinToString("")
-            if (str.isNotEmpty() && checkPassword(str)) {
-                foundPassword = str
+        private fun backtrack(curPassword: String) {
+            if (foundPassword != null || curPassword.length == MAX_SIZE + 1) return
+            if (curPassword.isNotEmpty() && checkPassword(curPassword)) {
+                foundPassword = curPassword
                 return
             }
             for (ch in 'a'..'z') {
                 if (curPath.contains(ch)) continue
                 curPath.add(ch)
-                backtrack(length + 1)
+                backtrack(curPassword + ch)
                 curPath.remove(ch)
             }
         }
