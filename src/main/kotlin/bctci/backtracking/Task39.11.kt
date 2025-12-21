@@ -17,7 +17,6 @@ class Task39_11 {
         private val cluesAmount = findCluesAmount()
         private var curPath = ArrayDeque<Pair<Int, Int>>()
         private var shortestPath = mutableListOf<Pair<Int, Int>>()
-        private val visited = Array(grid.size) { BooleanArray(grid[0].size) }
         private var directions = listOf(
             Pair(1, 0), //down
             Pair(-1, 0), //up
@@ -27,7 +26,7 @@ class Task39_11 {
 
         fun getShortestEscapePathWithAllClues(): List<Pair<Int, Int>> {
             curPath.addLast(0 to 0)
-            visited[0][0] = true
+            grid[0][0] = 1
             backtrack(0, 0, 0)
             return shortestPath
         }
@@ -43,24 +42,25 @@ class Task39_11 {
         }
 
         private fun backtrack(r: Int, c: Int, curCluesAmount: Int) {
+            //if path that we found before is shorter, stop exploring the current
+            if (shortestPath.isNotEmpty() && curPath.size >= shortestPath.size) return
             if (curCluesAmount == cluesAmount) {
-                if (shortestPath.isEmpty() || curPath.size < shortestPath.size) {
-                    shortestPath = curPath.toMutableList()
-                }
+                shortestPath = curPath.toMutableList()
                 return
             }
             repeat(4) { i ->
                 val newR = r + directions[i].first
                 val newC = c + directions[i].second
 
-                if (isInRange(newR, newC) && !visited[newR][newC] && grid[newR][newC] != 1) {
-                    visited[newR][newC] = true
+                if (isInRange(newR, newC) && grid[newR][newC] != 1) {
+                    val backupValue = grid[newR][newC]
+                    grid[newR][newC] = 1
                     curPath.addLast(newR to newC)
 
-                    val clueIndicator = if (grid[newR][newC] == 2) 1 else 0
+                    val clueIndicator = if (backupValue == 2) 1 else 0
                     backtrack(newR, newC, curCluesAmount + clueIndicator)
 
-                    visited[newR][newC] = false
+                    grid[newR][newC] = backupValue
                     curPath.removeLast()
                 }
             }
