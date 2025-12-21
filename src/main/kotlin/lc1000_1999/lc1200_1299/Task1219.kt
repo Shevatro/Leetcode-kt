@@ -16,15 +16,15 @@ class Task1219 {
 
     private class Solution(private val grid: Array<IntArray>) {
         private var maxGold = 0
-        private val visited = Array(grid.size) { BooleanArray(grid[0].size) }
         private val directions = arrayOf(0 to -1, 0 to 1, -1 to 0, 1 to 0)
         fun getMaximumGold(): Int {
             for (r in grid.indices) {
                 for (c in grid[0].indices) {
                     if (grid[r][c] != 0) {
-                        visited[r][c] = true
-                        backtrack(r, c, grid[r][c])
-                        visited[r][c] = false
+                        val backup = grid[r][c]
+                        grid[r][c] = 0
+                        backtrack(r, c, backup)
+                        grid[r][c] = backup
                     }
                 }
             }
@@ -37,11 +37,12 @@ class Task1219 {
                 val newR = r + directions[i].first
                 val newC = c + directions[i].second
                 if (newR in 0..grid.lastIndex && newC in 0..grid[0].lastIndex
-                    && !visited[newR][newC] && grid[newR][newC] != 0
+                    && grid[newR][newC] != 0
                 ) {
-                    visited[newR][newC] = true
-                    backtrack(newR, newC, gold + grid[newR][newC])
-                    visited[newR][newC] = false
+                    val backup = grid[newR][newC]
+                    grid[newR][newC] = 0
+                    backtrack(newR, newC, gold + backup)
+                    grid[newR][newC] = backup
                 }
             }
         }
