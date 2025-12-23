@@ -14,7 +14,7 @@ class Task40_1 {
     private class SolutionForwardRecursion(
         private val detours: IntArray
     ) {
-        private val memo = IntArray(detours.size) { Int.MIN_VALUE }
+        private val memo = IntArray(detours.size)
 
         fun calRoadTrip(): Int {
             if (detours.size <= 2) return 0
@@ -22,7 +22,7 @@ class Task40_1 {
         }
 
         private fun dp(i: Int): Int {
-            if (memo[i] != Int.MIN_VALUE) return memo[i]
+            if (memo[i] != 0) return memo[i]
             if (i in memo.lastIndex - 2..memo.lastIndex) return detours[i]
             memo[i] = detours[i] + minOf(dp(i + 1), dp(i + 2), dp(i + 3))
             return memo[i]
@@ -32,7 +32,7 @@ class Task40_1 {
     private class SolutionBackwardRecursion(
         private val detours: IntArray
     ) {
-        private val memo = IntArray(detours.size) { Int.MIN_VALUE }
+        private val memo = IntArray(detours.size)
 
         fun calRoadTrip(): Int {
             if (detours.size <= 2) return 0
@@ -40,7 +40,7 @@ class Task40_1 {
         }
 
         private fun dp(i: Int): Int {
-            if (memo[i] != Int.MIN_VALUE) return memo[i]
+            if (memo[i] != 0) return memo[i]
             if (i in 0..2) return detours[i]
             memo[i] = detours[i] + minOf(dp(i - 1), dp(i - 2), dp(i - 3))
             return memo[i]
