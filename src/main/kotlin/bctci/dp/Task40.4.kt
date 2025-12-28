@@ -14,10 +14,10 @@ class Task40_4 {
     private class Solution(
         private val grid: Array<IntArray>
     ) {
-        private val memo = Array(grid.size) { Array(grid[0].size) { mutableMapOf<Int, Int>() } }
+        private val memo = Array(grid.size) { IntArray(grid[0].size) { -1 } }
         private val directions = listOf(
-            0 to 1, // down
-            1 to 0, //right
+            1 to 0, //down
+            0 to 1, // right
             1 to 1 //diagonal down-right
         )
 
@@ -26,10 +26,11 @@ class Task40_4 {
         }
 
         private fun dp(r: Int, c: Int, sum: Int): Int {
+            if (sum > 0) return 0
             if (r == grid.lastIndex && c == grid[0].lastIndex) {
                 return if (sum == 0) 1 else 0
             }
-            if (memo[r][c][sum] != null) return requireNotNull(memo[r][c][sum])
+            if (memo[r][c] != -1) return memo[r][c]
             var amount0Paths = 0
             repeat(3) { i ->
                 val newR = r + directions[i].first
@@ -38,7 +39,7 @@ class Task40_4 {
                     amount0Paths += dp(newR, newC, sum + grid[newR][newC])
                 }
             }
-            memo[r][c][sum] = amount0Paths
+            memo[r][c] = amount0Paths
             return amount0Paths
         }
 
