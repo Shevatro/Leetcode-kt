@@ -22,15 +22,20 @@ class Task397 {
         }
 
         private fun dp(num: Long): Int {
-            if (num == 1L || num > n + 1L) return 0
-            if (memo[num] != null) return memo[num]!!
+            if (num == 1L) return 0
+            memo[num]?.let { return it }
             val steps = if (num % 2L == 0L) {
                 dp(num / 2)
             } else {
-                min(dp(num - 1), dp(num + 1))
+                //prefer the number with more trailing zeros in binary, except 3
+                if (num == 3L || (num and 2L) == 0L) {
+                    dp(num - 1)
+                } else {
+                    dp(num + 1)
+                }
             }
             memo[num] = steps + 1
-            return memo[num]!!
+            return requireNotNull(memo[num])
         }
     }
 }
