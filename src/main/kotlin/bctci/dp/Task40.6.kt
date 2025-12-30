@@ -24,11 +24,10 @@ class Task40_6 {
         private fun dp(num: Int): Int {
             if (num == 1) return 0
             if (memo[num] != -1) return memo[num]
-            var min = Int.MAX_VALUE
-            if (num % 3 == 0) min = min(dp(num / 3) + 1, min)
-            if (num % 2 == 0) min = min(dp(num / 2) + 1, min)
-            if (num - 1 >= 1) min = min(dp(num - 1) + 1, min)
-            memo[num] = min
+            var min = dp(num - 1)
+            if (num % 3 == 0) min = min(dp(num / 3), min)
+            if (num % 2 == 0) min = min(dp(num / 2), min)
+            memo[num] = min + 1
             return memo[num]
         }
     }
