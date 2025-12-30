@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-//From Beyond Cracking The Coding Interview, Solved
+//Similar to Beyond Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/combination-sum-iv
 class Task377 {
     fun combinationSum4(nums: IntArray, target: Int): Int {

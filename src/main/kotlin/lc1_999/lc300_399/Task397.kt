@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 import kotlin.math.min
 
-//From Beyond Cracking The Coding Interview, Solved
+//Similar to Beyond Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/integer-replacement/
 class Task397 {
     fun integerReplacement(n: Int): Int {
