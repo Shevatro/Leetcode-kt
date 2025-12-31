@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 import kotlin.math.max
 
-//Similar to Beyond Cracking The Coding Interview, Not Solved
+//From Beyond Cracking The Coding Interview, Not Solved
 //https://leetcode.com/problems/longest-common-subsequence/description/
 class Task1143 {
     fun longestCommonSubsequence(text1: String, text2: String): Int {

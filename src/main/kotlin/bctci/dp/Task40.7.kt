@@ -8,8 +8,8 @@ import java.util.stream.Stream
 import kotlin.math.max
 
 class Task40_7 {
-    fun longestCommonSubsequence(text1: String, text2: String): Int {
-        return Solution(text1, text2).longestCommonSubsequence()
+    fun longestCommonSubsequence(s1: String, s2: String): Int {
+        return Solution(s1, s2).longestCommonSubsequence()
     }
 
     private class Solution(
