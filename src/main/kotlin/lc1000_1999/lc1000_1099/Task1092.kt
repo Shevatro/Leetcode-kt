@@ -53,19 +53,8 @@ class Task1092 {
                 }
             }
             //Copying the remaining suffix of the non-exhausted string
-            if (str1.length != i1) {
-                sb.append(copyRestOfString(str1, i1, str1.length - i1))
-            } else {
-                sb.append(copyRestOfString(str2, i2, str2.length - i2))
-            }
-            return sb.toString()
-        }
-
-        private fun copyRestOfString(str: String, ind: Int, times: Int): String {
-            val sb = StringBuilder()
-            repeat(times) { i ->
-                sb.append(str[ind + i])
-            }
+            if (i1 < str1.length) sb.append(str1.substring(i1))
+            if (i2 < str2.length) sb.append(str2.substring(i2))
             return sb.toString()
         }
     }
