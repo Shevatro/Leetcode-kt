@@ -8,25 +8,18 @@ import java.util.stream.Stream
 
 class Task41_1 {
     fun findMostNonOverlappingIntervals(intervals: Array<IntArray>): Int {
-        return Solution(intervals).findMostNonOverlappingIntervals()
-    }
-
-    private class Solution(private val intervals: Array<IntArray>) {
-
-        fun findMostNonOverlappingIntervals(): Int {
-            intervals.sortBy { it[1] }
-            var count = 0
-            var previousEnd = Int.MIN_VALUE
-            for (interval in intervals) {
-                val curStart = interval[0]
-                val curEnd = interval[1]
-                if (curStart > previousEnd) {
-                    count++
-                    previousEnd = curEnd
-                }
+        intervals.sortBy { it[1] }
+        var count = 0
+        var previousEnd = Int.MIN_VALUE
+        for (interval in intervals) {
+            val curStart = interval[0]
+            val curEnd = interval[1]
+            if (curStart > previousEnd) {
+                count++
+                previousEnd = curEnd
             }
-            return count
         }
+        return count
     }
 }
 
