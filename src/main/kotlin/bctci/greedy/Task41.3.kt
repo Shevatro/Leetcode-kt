@@ -5,25 +5,27 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
-import kotlin.math.pow
 import kotlin.math.sqrt
 
 class Task41_3 {
 
     fun minDistanceToCenters(points: Array<DoubleArray>, center1: DoubleArray, center2: DoubleArray): Double {
         // Sort by how much better center1 is than center2 (squared distances)
+        //Note: we don't need a square root in sorting (it's possible but redundant)
         points.sortBy { dist(it, center1) - dist(it, center2) }
         val half = points.size / 2
         var totalDistance = 0.0
         for (i in 0 until half) {
-            totalDistance += dist(points[i], center1)
-            totalDistance += dist(points[i + half], center2)
+            totalDistance += sqrt(dist(points[i], center1))
+            totalDistance += sqrt(dist(points[i + half], center2))
         }
         return totalDistance
     }
 
-    private fun dist(point1: DoubleArray, point2: DoubleArray): Double {
-        return sqrt((point1[0] - point2[0]).pow(2) + (point1[1] - point2[1]).pow(2))
+    private fun dist(p1: DoubleArray, p2: DoubleArray): Double {
+        val dx = p1[0] - p2[0]
+        val dy = p1[1] - p2[1]
+        return dx * dx + dy * dy
     }
 }
 
