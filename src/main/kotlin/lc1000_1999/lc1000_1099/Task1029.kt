@@ -5,25 +5,18 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
-import kotlin.math.abs
 
 //Similar to Beyond Cracking The Coding Interview, Solved but with a hint
 //https://leetcode.com/problems/two-city-scheduling/
 class Task1029 {
     fun twoCitySchedCost(costs: Array<IntArray>): Int {
-        //sorted by the highest loss
-        costs.sortByDescending { abs(it[0] - it[1]) }
-        var aCount = costs.size / 2
-        var bCount = aCount
+        //sorted by the highest loss if the person goes to city B
+        costs.sortBy { it[0] - it[1] }
         var totalCost = 0
-        for (cost in costs) {
-            if (bCount == 0 || aCount > 0 && cost[0] < cost[1]) {
-                totalCost += cost[0]
-                aCount--
-            } else {
-                totalCost += cost[1]
-                bCount--
-            }
+        val half = costs.size / 2
+        for (i in 0 until half) {
+            //send first half people to city A and the rest to city B
+            totalCost += (costs[i][0] + costs[half + i][1])
         }
         return totalCost
     }
@@ -47,7 +40,7 @@ private class Task1029Test {
                     arrayOf(
                         intArrayOf(259, 770), intArrayOf(448, 54), intArrayOf(926, 667), intArrayOf(184, 139), intArrayOf(840, 118),
                         intArrayOf(577, 469)
-                    ), 1159
+                    ), 1859
                 ),
                 Arguments.of(
                     arrayOf(
