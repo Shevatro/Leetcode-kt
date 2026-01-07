@@ -10,11 +10,11 @@ class Task41_4 {
 
     fun findMinimumTripletMedians(arr: IntArray): Int {
         arr.sort()
-        var startP = 0
+        var startP = 1
         var endP = arr.lastIndex
         var sum = 0
         while (startP < endP) {
-            sum += arr[startP + 1]
+            sum += arr[startP]
             endP--
             startP += 2
         }
