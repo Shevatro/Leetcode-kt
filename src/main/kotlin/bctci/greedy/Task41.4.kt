@@ -10,13 +10,11 @@ class Task41_4 {
 
     fun findMinimumTripletMedians(arr: IntArray): Int {
         arr.sort()
-        var startP = 1
-        var endP = arr.lastIndex
         var sum = 0
-        while (startP < endP) {
-            sum += arr[startP]
-            endP--
-            startP += 2
+        val stopInd = arr.size - arr.size / 3
+        //every other item, pattern: [startPos, starPos+1, endPos]
+        for (i in 1 until stopInd step 2) {
+            sum += arr[i]
         }
         return sum
     }
