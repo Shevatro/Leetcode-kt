@@ -67,7 +67,7 @@ private class Task41_3Test {
                     arrayOf(doubleArrayOf(0.0, 0.0), doubleArrayOf(0.0, 0.0), doubleArrayOf(0.0, 0.0), doubleArrayOf(0.0, 0.0)),
                     doubleArrayOf(0.0, 0.0), doubleArrayOf(0.0, 0.0),
                     0.0
-                ),
+                )
             )
         }
     }
