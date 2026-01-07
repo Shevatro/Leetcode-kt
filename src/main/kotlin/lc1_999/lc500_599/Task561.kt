@@ -5,7 +5,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
-import kotlin.math.min
 
 //Similar to Beyond Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/array-partition/description/
@@ -14,7 +13,8 @@ class Task561 {
         nums.sort()
         var sum = 0
         for (i in 0 until nums.size step 2) {
-            sum += min(nums[i], nums[i + 1])
+            //the smallest of 2 items (i, i+1) is always smaller
+            sum += nums[i]
         }
         return sum
     }
