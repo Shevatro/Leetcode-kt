@@ -19,7 +19,7 @@ class Task452 {
         var count = 1
         for (i in 1 until points.size) {
             val curInt = points[i][0]..points[i][1]
-            if (endPos in curInt || curInt.first in prevInt) {
+            if (curInt.first in prevInt) {
                 startPos = max(startPos, curInt.first)
                 endPos = min(endPos, curInt.last)
             } else {
