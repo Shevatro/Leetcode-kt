@@ -15,7 +15,9 @@ class Task452 {
         var endPos = points[0][1]
         var count = 1
         for (i in 1 until points.size) {
+            //if a new interval overlaps the previous one
             if (points[i][0] <= endPos) {
+                //narrow down the current interval, ex. [1, 5], [2, 6] -> [2, 5]
                 endPos = min(endPos, points[i][1])
             } else {
                 count++
