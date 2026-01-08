@@ -5,7 +5,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
-import kotlin.math.max
 import kotlin.math.min
 
 //Similar to Beyond Cracking The Coding Interview, Solved
@@ -13,18 +12,14 @@ import kotlin.math.min
 class Task452 {
     fun findMinArrowShots(points: Array<IntArray>): Int {
         points.sortBy { it[0] }
-        var startPos = points[0][0]
         var endPos = points[0][1]
         var count = 1
         for (i in 1 until points.size) {
-            val curInt = points[i][0]..points[i][1]
-            if (curInt.first in startPos..endPos) {
-                startPos = max(startPos, curInt.first)
-                endPos = min(endPos, curInt.last)
+            if (points[i][0] <= endPos) {
+                endPos = min(endPos, points[i][1])
             } else {
                 count++
-                startPos = curInt.first
-                endPos = curInt.last
+                endPos = points[i][1]
             }
         }
         return count
@@ -55,6 +50,12 @@ private class Task452Test {
                     arrayOf(
                         intArrayOf(3, 9), intArrayOf(7, 12), intArrayOf(3, 8), intArrayOf(6, 8), intArrayOf(9, 10), intArrayOf(2, 9),
                         intArrayOf(0, 9), intArrayOf(3, 9), intArrayOf(0, 6), intArrayOf(2, 8)
+                    ), 2
+                ),
+                Arguments.of(
+                    arrayOf(
+                        intArrayOf(9, 12), intArrayOf(1, 10), intArrayOf(4, 11), intArrayOf(8, 12), intArrayOf(3, 9), intArrayOf(6, 9),
+                        intArrayOf(6, 7)
                     ), 2
                 )
             )
