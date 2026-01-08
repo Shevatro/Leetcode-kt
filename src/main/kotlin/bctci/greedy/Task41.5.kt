@@ -5,23 +5,19 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
-import kotlin.math.min
 
 class Task41_5 {
 
     fun minScriptRuns(meetings: Array<IntArray>): Int {
         if (meetings.isEmpty()) return 0
-        meetings.sortBy { it[0] }
-        var endPos = meetings[0][1]
-        var count = 1
-        for (i in 1 until meetings.size) {
-            //if a new interval overlaps the previous one
-            if (meetings[i][0] <= endPos) {
-                //narrow down the current interval, ex. [1, 5], [2, 6] -> [2, 5]
-                endPos = min(endPos, meetings[i][1])
-            } else {
+        meetings.sortBy { it[1] }
+        var endPos = Int.MIN_VALUE
+        var count = 0
+        for (meeting in meetings) {
+            // run the script at the end time of the meeting that ends the earliest
+            if (meeting[0] > endPos) {
                 count++
-                endPos = meetings[i][1]
+                endPos = meeting[1]
             }
         }
         return count
