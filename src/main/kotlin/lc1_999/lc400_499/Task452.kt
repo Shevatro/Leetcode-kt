@@ -12,14 +12,13 @@ import kotlin.math.min
 //https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/
 class Task452 {
     fun findMinArrowShots(points: Array<IntArray>): Int {
-        points.sortWith(compareBy<IntArray> { it[0] }.thenBy { it[1] })
+        points.sortBy { it[0] }
         var startPos = points[0][0]
         var endPos = points[0][1]
-        var prevInt = startPos..endPos
         var count = 1
         for (i in 1 until points.size) {
             val curInt = points[i][0]..points[i][1]
-            if (curInt.first in prevInt) {
+            if (curInt.first in startPos..endPos) {
                 startPos = max(startPos, curInt.first)
                 endPos = min(endPos, curInt.last)
             } else {
@@ -27,7 +26,6 @@ class Task452 {
                 startPos = curInt.first
                 endPos = curInt.last
             }
-            prevInt = startPos..endPos
         }
         return count
     }
