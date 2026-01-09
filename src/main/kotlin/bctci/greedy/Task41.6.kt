@@ -10,23 +10,19 @@ import java.util.stream.Stream
 class Task41_6 {
 
     fun maxTimeWhereTimeTravelerCanGo(jumpingPoints: IntArray, k: Int, maxAging: Int): Int {
-        val maxNaturalYear = jumpingPoints.first() + maxAging
-        val queue = PriorityQueue<Int>(Comparator.reverseOrder())
+        val queue = PriorityQueue<Int>()
+        var ageLeft = maxAging
         for (i in 1..jumpingPoints.lastIndex) {
             val diff = jumpingPoints[i] - jumpingPoints[i - 1]
             queue.add(diff)
-            val sumInQueue = sum(queue, k)
-            if (jumpingPoints[i] - sumInQueue > maxNaturalYear) {
-                //undo if exceeded
-                queue.poll()
-                break
+            //if we reach max jumps -> we have to pass the smallest year's gap naturally
+            if (queue.size > k) {
+                val smallestItem = queue.poll()
+                ageLeft -= smallestItem
+                if (ageLeft < 0) return jumpingPoints[i - 1] + ageLeft + smallestItem
             }
         }
-        return maxNaturalYear + sum(queue, k)
-    }
-
-    private fun sum(queue: PriorityQueue<Int>, limit: Int): Int {
-        return queue.take(limit).sum()
+        return jumpingPoints.last() + ageLeft
     }
 
 }
@@ -50,7 +46,7 @@ private class Task41_6Test {
                 Arguments.of(intArrayOf(1803, 1861, 1863, 1865, 1920, 1929, 1941, 1964, 2001, 2021), 4, 45, 2021),
                 Arguments.of(intArrayOf(1, 10, 30), 1, 5, 15),
                 Arguments.of(intArrayOf(1, 3, 6, 7, 11, 16, 17, 19), 2, 4, 12),
-                Arguments.of(intArrayOf(1803, 1861, 1863, 1865, 1920, 1929, 1941, 1962, 2000, 2021), 4, 45, 1983),
+                Arguments.of(intArrayOf(1803, 1861, 1863, 1865, 1920, 1929, 1941, 1962, 2000, 2021), 4, 45, 2020),
                 Arguments.of(intArrayOf(2000, 2001, 2002), 0, 2, 2002),
                 Arguments.of(intArrayOf(2000, 2005, 2010), 0, 4, 2004)
             )
