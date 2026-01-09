@@ -10,16 +10,20 @@ import java.util.stream.Stream
 class Task41_6 {
 
     fun maxTimeWhereTimeTravelerCanGo(jumpingPoints: IntArray, k: Int, maxAging: Int): Int {
-        val queue = PriorityQueue<Int>()
+        val minHeap = PriorityQueue<Int>()
         var ageLeft = maxAging
         for (i in 1..jumpingPoints.lastIndex) {
             val diff = jumpingPoints[i] - jumpingPoints[i - 1]
-            queue.add(diff)
+            minHeap.add(diff)
             //if we reach max jumps -> we have to pass the smallest year's gap naturally
-            if (queue.size > k) {
-                val smallestItem = queue.poll()
-                ageLeft -= smallestItem
-                if (ageLeft < 0) return jumpingPoints[i - 1] + ageLeft + smallestItem
+            if (minHeap.size > k) {
+                val smallestItem = minHeap.poll()
+                if (ageLeft - smallestItem < 0) {
+                    //we need to restore i-1 state, basically year + ageLeft at the previous step
+                    return jumpingPoints[i - 1] + ageLeft
+                } else {
+                    ageLeft -= smallestItem
+                }
             }
         }
         return jumpingPoints.last() + ageLeft
