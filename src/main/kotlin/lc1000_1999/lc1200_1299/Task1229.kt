@@ -5,6 +5,8 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
+import kotlin.math.max
+import kotlin.math.min
 
 //Solved
 //https://leetcode.com/problems/meeting-scheduler/
@@ -15,37 +17,19 @@ class Task1229 {
         var p1 = 0
         var p2 = 0
         while (p1 < slots1.size && p2 < slots2.size) {
-            val int1 = slots1[p1][0]..slots1[p1][1]
-            val int2 = slots2[p2][0]..slots2[p2][1]
-            //skip invalid intervals
-            if (int1.last - int1.first < duration) {
-                p1++
-                continue
+            val intersectStart = max(slots1[p1][0], slots2[p2][0])
+            val intersectEnd = min(slots1[p1][1], slots2[p2][1])
+            if (intersectEnd - intersectStart >= duration) {
+                return listOf(intersectStart, intersectStart + duration)
             }
-            if (int2.last - int2.first < duration) {
-                p2++
-                continue
-            }
-
-            if (int1.start in int2) {
-                val diff = int2.last - int1.start
-                if (diff >= duration) {
-                    return listOf(int1.start, int1.start + duration)
-                }
-                p2++
-            } else if (int2.start in int1) {
-                val diff = int1.last - int2.start
-                if (diff >= duration) {
-                    return listOf(int2.start, int2.start + duration)
-                }
-                p1++
-            } else if (int2.start > int1.start) {
+            //move who finishes earlier
+            if (slots2[p2][1] > slots1[p1][1]) {
                 p1++
             } else {
                 p2++
             }
         }
-        return emptyList<Int>()
+        return emptyList()
     }
 }
 
