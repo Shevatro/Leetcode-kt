@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import java.util.PriorityQueue
 import java.util.stream.Stream
 import kotlin.math.max
 import kotlin.math.min
@@ -31,6 +32,23 @@ class Task1229 {
         }
         return emptyList()
     }
+
+    fun minAvailableDurationHeap(slots1: Array<IntArray>, slots2: Array<IntArray>, duration: Int): List<Int> {
+        val minStartTimeHeap = PriorityQueue<IntArray>(compareBy { it[0] })
+
+        slots1.filter { it[1] - it[0] >= duration }.forEach { minStartTimeHeap.add(it) }
+        slots2.filter { it[1] - it[0] >= duration }.forEach { minStartTimeHeap.add(it) }
+
+        while (minStartTimeHeap.size > 1) {
+            val slot1 = minStartTimeHeap.poll()
+            val slot2 = minStartTimeHeap.peek()
+            if (slot1[1] - slot2[0] >= duration) {
+                return listOf(slot2[0], slot2[0] + duration)
+            }
+        }
+        return emptyList()
+    }
+
 }
 
 private class Task1229Test {
