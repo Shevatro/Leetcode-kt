@@ -12,26 +12,34 @@ import kotlin.math.max
 //https://leetcode.com/problems/count-days-spent-together/description/
 class Task2409 {
     private val monthLength = intArrayOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-    private val daysInMonth = IntArray(12) { -1 }
+
+    //[0] January = 31, [1] Feb = 31+28=59 and so on
+    private val daysInMonthCache = IntArray(12) { -1 }
     fun countDaysTogether(arriveAlice: String, leaveAlice: String, arriveBob: String, leaveBob: String): Int {
-        val aliceStart = convertDateStrToInt(arriveAlice)
-        val aliceEnd = convertDateStrToInt(leaveAlice)
-        val bobStart = convertDateStrToInt(arriveBob)
-        val bobEnd = convertDateStrToInt(leaveBob)
-        val diff = min(aliceEnd, bobEnd) - max(aliceStart, bobStart)
-        return if (diff < 0) 0 else diff + 1
+        val aliceStart = getDaysFromJanuary1(arriveAlice)
+        val aliceEnd = getDaysFromJanuary1(leaveAlice)
+        val bobStart = getDaysFromJanuary1(arriveBob)
+        val bobEnd = getDaysFromJanuary1(leaveBob)
+        val daysTogether = min(aliceEnd, bobEnd) - max(aliceStart, bobStart)
+        //interval is  inclusive, so +1
+        return max(0, daysTogether + 1)
     }
 
-    private fun convertDateStrToInt(date: String): Int {
+    private fun getDaysFromJanuary1(date: String): Int {
+        //months start from 1
         val month = date.substring(0, 2).toInt() - 1
         val day = date.substring(3).toInt()
-        if (daysInMonth[month] != -1) return daysInMonth[month] + day
+        return getDaysFromJanuary1(month) + day
+    }
+
+    private fun getDaysFromJanuary1(month: Int): Int {
+        if (daysInMonthCache[month] != -1) return daysInMonthCache[month]
         var sum = 0
         for (i in 0 until month) {
             sum += monthLength[i]
         }
-        daysInMonth[month] = sum
-        return sum + day
+        daysInMonthCache[month] = sum
+        return sum
     }
 }
 
