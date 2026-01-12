@@ -11,37 +11,28 @@ import kotlin.math.max
 // Solved
 //https://leetcode.com/problems/count-days-spent-together/description/
 class Task2409 {
+    private val monthLength = intArrayOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+    private val daysInMonth = IntArray(12) { -1 }
     fun countDaysTogether(arriveAlice: String, leaveAlice: String, arriveBob: String, leaveBob: String): Int {
-        return Solution(arriveAlice, leaveAlice, arriveBob, leaveBob).countDaysTogether()
+        val aliceStart = convertDateStrToInt(arriveAlice)
+        val aliceEnd = convertDateStrToInt(leaveAlice)
+        val bobStart = convertDateStrToInt(arriveBob)
+        val bobEnd = convertDateStrToInt(leaveBob)
+        val diff = min(aliceEnd, bobEnd) - max(aliceStart, bobStart)
+        return if (diff < 0) 0 else diff + 1
     }
 
-    private class Solution(
-        private val arriveAlice: String,
-        private val leaveAlice: String,
-        private val arriveBob: String,
-        private val leaveBob: String
-    ) {
-        private val monthLength = intArrayOf(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
-        fun countDaysTogether(): Int {
-            val aliceStart = convertDateStrToInt(arriveAlice)
-            val aliceEnd = convertDateStrToInt(leaveAlice)
-            val bobStart = convertDateStrToInt(arriveBob)
-            val bobEnd = convertDateStrToInt(leaveBob)
-            val diff = min(aliceEnd, bobEnd) - max(aliceStart, bobStart)
-            return if (diff < 0) 0 else diff + 1
+    private fun convertDateStrToInt(date: String): Int {
+        val month = date.substring(0, 2).toInt() - 1
+        val day = date.substring(3).toInt()
+        if (daysInMonth[month] != -1) return daysInMonth[month] + day
+        var sum = 0
+        for (i in 0 until month) {
+            sum += monthLength[i]
         }
-
-        private fun convertDateStrToInt(date: String): Int {
-            val month = date.substring(0, 2).toInt() - 1
-            val day = date.substring(3).toInt()
-            var sum = 0
-            for (i in 0 until month) {
-                sum += monthLength[i]
-            }
-            return sum + day
-        }
+        daysInMonth[month] = sum
+        return sum + day
     }
-
 }
 
 private class Task2409Test {
