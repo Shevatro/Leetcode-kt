@@ -10,54 +10,104 @@ import java.util.stream.Stream
 //https://leetcode.com/problems/basic-calculator-ii/
 class Task227 {
     fun calculate(s: String): Int {
-        if (s.length == 1) return s[0].digitToInt()
-        val topPriorityOperations = charArrayOf('*', '/')
-        val stack = ArrayDeque<Any>()
-        var number = 0
-        for (i in s.indices) {
-            val ch = s[i]
-            if (ch == ' ') continue
-            if (ch.isDigit()) {
-                number = number * 10 + ch.digitToInt()
-                val nextPos = i + 1
-                if (nextPos >= s.length || !s[nextPos].isDigit()) {
-                    val prev = stack.firstOrNull()
-                    if (prev is Char && (prev in topPriorityOperations)) {
-                        //remove this operation
-                        stack.removeFirst()
-                        //apply this operation:
-                        val previousNumber = stack.removeFirst() as Int
-                        val newNumber = if (prev == '*') {
-                            previousNumber * number
-                        } else {
-                            previousNumber / number
-                        }
-                        stack.addFirst(newNumber)
-                    } else {
-                        stack.addFirst(number)
-                    }
-                    number = 0
-                }
-            } else {
-                //if just operations
-                stack.addFirst(ch)
-            }
-        }
-        return calculateBackward(stack)
+        return Solution(s).calculate()
     }
 
-    private fun calculateBackward(stack: ArrayDeque<Any>): Int {
-        var num = stack.removeLast() as Int
-        while (stack.isNotEmpty()) {
-            val oper = stack.removeLast()
-            val next = stack.removeLast()
-            if (oper == '+') {
-                num += next as Int
-            } else {
-                num -= next as Int
+    private class Solution(val s: String) {
+        private val operations = charArrayOf('+', '-', '*', '/')
+
+        fun calculate(): Int {
+            if (s.length == 1) return s[0].digitToInt()
+            var sum = 0
+            var lastNum = 0
+            var curNum = 0
+            var operation = '+'
+            for (i in s.indices) {
+                val ch = s[i]
+                if (ch.isDigit()) {
+                    curNum = curNum * 10 + ch.digitToInt()
+                }
+                //last index can be a digit
+                if (ch in operations || i == s.lastIndex) {
+                    when (operation) {
+                        '+' -> {
+                            sum += lastNum
+                            lastNum = curNum
+                        }
+
+                        '-' -> {
+                            sum += lastNum
+                            lastNum = -curNum
+                        }
+
+                        '*' -> {
+                            lastNum *= curNum
+                        }
+
+                        '/' -> {
+                            lastNum /= curNum
+                        }
+                    }
+                    operation = ch
+                    curNum = 0
+                }
             }
+            //we need to add the last one
+            return sum + lastNum
         }
-        return num
+    }
+
+    private class SolutionUsingStack(private val s: String) {
+        private val stack = ArrayDeque<Any>()
+        fun calculate(): Int {
+            if (s.length == 1) return s[0].digitToInt()
+            val topPriorityOperations = charArrayOf('*', '/')
+            var number = 0
+            for (i in s.indices) {
+                val ch = s[i]
+                if (ch == ' ') continue
+                if (ch.isDigit()) {
+                    number = number * 10 + ch.digitToInt()
+                    val nextPos = i + 1
+                    if (nextPos >= s.length || !s[nextPos].isDigit()) {
+                        val prev = stack.firstOrNull()
+                        if (prev is Char && (prev in topPriorityOperations)) {
+                            //remove this operation
+                            stack.removeFirst()
+                            //apply this operation:
+                            val previousNumber = stack.removeFirst() as Int
+                            val newNumber = if (prev == '*') {
+                                previousNumber * number
+                            } else {
+                                previousNumber / number
+                            }
+                            stack.addFirst(newNumber)
+                        } else {
+                            stack.addFirst(number)
+                        }
+                        number = 0
+                    }
+                } else {
+                    //if just operations
+                    stack.addFirst(ch)
+                }
+            }
+            return calculateBackward()
+        }
+
+        private fun calculateBackward(): Int {
+            var num = stack.removeLast() as Int
+            while (stack.isNotEmpty()) {
+                val oper = stack.removeLast()
+                val next = stack.removeLast()
+                if (oper == '+') {
+                    num += next as Int
+                } else {
+                    num -= next as Int
+                }
+            }
+            return num
+        }
     }
 }
 
