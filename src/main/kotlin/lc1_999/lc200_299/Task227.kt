@@ -23,11 +23,14 @@ class Task227 {
                 if (nextPos >= s.length || !s[nextPos].isDigit()) {
                     val prev = stack.firstOrNull()
                     if (prev is Char && (prev in topPriorityOperations)) {
+                        //remove this operation
                         stack.removeFirst()
+                        //apply this operation:
+                        val previousNumber = stack.removeFirst() as Int
                         val newNumber = if (prev == '*') {
-                            (stack.removeFirst() as Int) * number
+                            previousNumber * number
                         } else {
-                            (stack.removeFirst() as Int) / number
+                            previousNumber / number
                         }
                         stack.addFirst(newNumber)
                     } else {
