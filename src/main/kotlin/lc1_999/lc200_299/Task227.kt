@@ -15,13 +15,13 @@ class Task227 {
         val stack = ArrayDeque<Any>()
         var number = 0
         for (i in s.indices) {
-            val prev = stack.firstOrNull()
             val ch = s[i]
             if (ch == ' ') continue
             if (ch.isDigit()) {
                 number = number * 10 + ch.digitToInt()
                 val nextPos = i + 1
                 if (nextPos >= s.length || !s[nextPos].isDigit()) {
+                    val prev = stack.firstOrNull()
                     if (prev is Char && (prev in topPriorityOperations)) {
                         stack.removeFirst()
                         val newNumber = if (prev == '*') {
