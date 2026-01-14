@@ -16,7 +16,7 @@ class Task224 {
     private class Solution(private val s: String) {
 
         fun calculate(): Int {
-            val stack = ArrayDeque<Any>()
+            val stack = ArrayDeque<Item>()
             var num = 0
             var negativeFlag = 1
             for (i in s.indices) {
@@ -25,14 +25,14 @@ class Task224 {
                 if (ch.isDigit()) {
                     num = num * 10 + ch.digitToInt()
                     if (!s[i + 1].isDigit()) {
-                        stack.addFirst(num * negativeFlag)
+                        stack.addFirst(Item.Num(num * negativeFlag))
                         num = 0
                     }
                 } else if (ch == '(') {
                     if (negativeFlag == 1) {
-                        stack.addFirst('+')
+                        stack.addFirst(Item.Op('+'))
                     } else {
-                        stack.addFirst('-')
+                        stack.addFirst(Item.Op('-'))
                     }
                     //reset flag, we don't want to influence the num yet
                     negativeFlag = 1
@@ -43,17 +43,22 @@ class Task224 {
                     //if ')'
                 } else {
                     var sum = 0
-                    while (stack.first() != '-' && stack.first() != '+') {
-                        sum += stack.removeFirst() as Int
+                    while (stack.first() is Item.Num) {
+                        sum += (stack.removeFirst() as Item.Num).value
                     }
                     //remove '(' too
-                    val op = stack.removeFirst()
-                    if (op == '-') sum *= -1
-                    stack.addFirst(sum)
+                    val op = stack.removeFirst() as Item.Op
+                    if (op.value == '-') sum *= -1
+                    stack.addFirst(Item.Num(sum))
                 }
             }
-            return stack.removeFirst() as Int
+            return (stack.removeFirst() as Item.Num).value
         }
+    }
+
+    private sealed class Item {
+        data class Op(val value: Char) : Item()
+        data class Num(val value: Int) : Item()
     }
 
 }
