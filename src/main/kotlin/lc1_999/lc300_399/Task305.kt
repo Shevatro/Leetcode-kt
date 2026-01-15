@@ -11,10 +11,10 @@ import java.util.stream.Stream
 //https://leetcode.com/problems/number-of-islands-ii/
 class Task305 {
     fun numIslands2(m: Int, n: Int, positions: Array<IntArray>): List<Int> {
-        return Solution2(m, n, positions).numIslands2()
+        return Solution(m, n, positions).numIslands2()
     }
 
-    private class Solution2(
+    private class Solution(
         private val m: Int,
         private val n: Int,
         private val positions: Array<IntArray>
@@ -80,14 +80,14 @@ class Task305 {
         private fun unionIslands(islands: Set<MutableSet<String>>) {
             val first = islands.first()
             //copy them over to the first one
-            for (set in islands) {
-                if (set == first) continue
-                first.addAll(set)
+            for (island in islands) {
+                if (island == first) continue
+                first.addAll(island)
             }
             //clean up
-            for (set in islands) {
-                if (set == first) continue
-                cache.remove(set)
+            for (island in islands) {
+                if (island == first) continue
+                cache.remove(island)
             }
         }
 
