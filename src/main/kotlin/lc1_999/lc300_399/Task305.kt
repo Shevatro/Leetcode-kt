@@ -24,58 +24,71 @@ class Task305 {
         fun numIslands2(): List<Int> {
             val result = mutableListOf<Int>()
             for (position in positions) {
-                // //isDuplicate - add previous one
-                if (findInCache(position) != null) {
+                val r = position[0]
+                val c = position[1]
+                // isDuplicate - add previous one
+                if (findInCache(r, c) != null) {
                     result.add(cache.size)
                     continue
                 }
-                val r = position[0]
-                val c = position[1]
-                val strPosition = positionToStr(position)
-                val sets = mutableSetOf<MutableSet<String>>()
-                for (direction in directions) {
-                    val newR = r + direction.first
-                    val newC = c + direction.second
-                    if (isInRange(newR, newC)) {
-                        findInCache(intArrayOf(newR, newC))?.let { sets.add(it) }
-                    }
-                }
-                //new island
-                if (sets.isEmpty()) {
-                    cache.add(mutableSetOf(strPosition))
-                    // only one island just connect a new land to it
-                } else if (sets.size == 1) {
-                    sets.first().add(strPosition)
-                    //we need to merge islands
-                } else {
-                    val first = sets.first()
-                    //copy them over
-                    for (set in sets) {
-                        if (set == first) continue
-                        first.addAll(set)
-                    }
-                    first.add(strPosition)
-                    //clean up
-                    for (set in sets) {
-                        if (set == first) continue
-                        cache.remove(set)
-                    }
-                }
+                analyzeNeighbors(r, c)
                 result.add(cache.size)
             }
             return result
         }
 
-        private fun positionToStr(pos: IntArray): String {
-            return "${pos[0]},${pos[1]}"
-        }
+        private fun positionToStr(r: Int, c: Int) = "$r,$c"
 
-        private fun findInCache(pos: IntArray): MutableSet<String>? {
-            val posStr = positionToStr(pos)
+        private fun findInCache(r: Int, c: Int): MutableSet<String>? {
+            val posStr = positionToStr(r, c)
             for (set in cache) {
                 if (set.contains(posStr)) return set
             }
             return null
+        }
+
+        private fun findAdjacentIslands(r: Int, c: Int): Set<MutableSet<String>> {
+            //we use set to prevent duplicated, we should ignore the same neighbors
+            val adjacentIslands = mutableSetOf<MutableSet<String>>()
+            for (direction in directions) {
+                val newR = r + direction.first
+                val newC = c + direction.second
+                if (isInRange(newR, newC)) {
+                    findInCache(newR, newC)?.let { adjacentIslands.add(it) }
+                }
+            }
+            return adjacentIslands
+        }
+
+        private fun analyzeNeighbors(r: Int, c: Int) {
+            val strPosition = positionToStr(r, c)
+            val adjacentIslands = findAdjacentIslands(r, c)
+
+            when {
+                //no neighbors, so it's a new island
+                adjacentIslands.isEmpty() -> cache.add(mutableSetOf(strPosition))
+                // only one island, so just connect a new land to it
+                adjacentIslands.size == 1 -> adjacentIslands.first().add(strPosition)
+                else -> {
+                    unionIslands(adjacentIslands)
+                    //add a new land
+                    adjacentIslands.first().add(strPosition)
+                }
+            }
+        }
+
+        private fun unionIslands(islands: Set<MutableSet<String>>) {
+            val first = islands.first()
+            //copy them over to the first one
+            for (set in islands) {
+                if (set == first) continue
+                first.addAll(set)
+            }
+            //clean up
+            for (set in islands) {
+                if (set == first) continue
+                cache.remove(set)
+            }
         }
 
         private fun isInRange(r: Int, c: Int): Boolean {
