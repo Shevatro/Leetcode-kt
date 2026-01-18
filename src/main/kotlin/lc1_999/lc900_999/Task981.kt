@@ -21,7 +21,6 @@ class Task981 {
             val predictedInd = -index - 2
             //if it's index= 0, it means it should be less than our smallest value
             if (predictedInd < 0) return ""
-            if (map[key]!![predictedInd].first > timestamp) return "" //20 > 15
             return map[key]!![predictedInd].second
         }
     }
