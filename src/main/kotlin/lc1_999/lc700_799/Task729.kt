@@ -24,6 +24,16 @@ class Task729 {
             return true
         }
     }
+
+    class MyCalendarNotOptimal {
+        private val list = ArrayList<Pair<Int, Int>>()
+        fun book(startTime: Int, endTime: Int): Boolean {
+            //if overlaps
+            if (list.any { startTime < it.second && endTime > it.first }) return false
+            list.add(startTime to endTime)
+            return true
+        }
+    }
 }
 
 private class Task729Test {
