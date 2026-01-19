@@ -12,14 +12,16 @@ class Task729 {
     class MyCalendar {
         private val myCal = TreeSet<Pair<Int, Int>>(compareBy { it.first })
         fun book(startTime: Int, endTime: Int): Boolean {
-            val list = myCal.toList()
-            var index = list.binarySearch(startTime to 0, compareBy { it.first })
-            if (index < 0) index = -index - 1
-            if ((index == 0 || startTime >= list[index - 1].second) && (index == list.size || endTime <= list[index].first)) {
-                myCal.add(startTime to endTime)
-                return true
-            }
-            return false
+            val curr = startTime to endTime
+
+            val prev = myCal.floor(curr)
+            if (prev != null && prev.second > startTime) return false
+
+            val next = myCal.ceiling(curr)
+            if (next != null && next.first < endTime) return false
+
+            myCal.add(curr)
+            return true
         }
     }
 }
