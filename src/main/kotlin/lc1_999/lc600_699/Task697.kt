@@ -40,20 +40,21 @@ class Task697 {
         private fun calculateMinLength(): Int {
             var minLength = Int.MAX_VALUE
             for (item in maxItems) {
-                var startPos = -1
-                var endPos = -1
-                for (i in nums.indices) {
-                    val num = nums[i]
-                    if (item == num) {
-                        if (startPos == -1) {
-                            startPos = i
-                        }
-                        endPos = i
-                    }
-                }
-                minLength = min(minLength, endPos - startPos + 1)
+                minLength = min(minLength, calcLength(item))
             }
             return minLength
+        }
+
+        private fun calcLength(item: Int): Int {
+            var startPos = 0
+            var endPos = nums.lastIndex
+            while (startPos < endPos) {
+                if (nums[startPos] == item && nums[endPos] == item) break
+                if (nums[startPos] != item) startPos++
+                if (nums[endPos] != item) endPos--
+
+            }
+            return endPos - startPos + 1
         }
     }
 }
