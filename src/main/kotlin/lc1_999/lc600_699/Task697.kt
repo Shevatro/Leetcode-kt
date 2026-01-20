@@ -23,7 +23,7 @@ class Task697 {
         }
 
         private fun fillOutMaxItems() {
-            val frequency = IntArray(50000)
+            val frequency = IntArray(nums.max() + 1)
             var maxFrequency = 0
             for (num in nums) {
                 frequency[num]++
