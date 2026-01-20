@@ -9,7 +9,7 @@ import java.util.*
 //Solved using a hint
 //https://leetcode.com/problems/my-calendar-i/
 class Task729 {
-    class MyCalendar {
+    class MyCalendar2 {
         private val myCal = TreeSet<Pair<Int, Int>>(compareBy { it.first })
         fun book(startTime: Int, endTime: Int): Boolean {
             val curr = startTime to endTime
@@ -21,6 +21,20 @@ class Task729 {
             if (next != null && next.first < endTime) return false
 
             myCal.add(curr)
+            return true
+        }
+    }
+
+    class MyCalendar {
+        //key = endTime, value = startTime
+        private val myCal = TreeMap<Int, Int>()
+        fun book(startTime: Int, endTime: Int): Boolean {
+            //we use startTime + 1 to exclude intervals that end exactly at the start time
+            val potentialOverlap = myCal.ceilingEntry(startTime + 1)
+            //if overlaps
+            if (potentialOverlap != null && potentialOverlap.value < endTime) return false
+
+            myCal[endTime] = startTime
             return true
         }
     }
