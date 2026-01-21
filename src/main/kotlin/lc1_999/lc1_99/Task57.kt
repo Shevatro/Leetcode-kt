@@ -11,11 +11,22 @@ import kotlin.math.max
 //https://leetcode.com/problems/insert-interval/description/
 class Task57 {
     fun insert(intervals: Array<IntArray>, newInterval: IntArray): Array<IntArray> {
-        val allIntervals = intervals.toMutableList().apply {
-            add(newInterval)
-            sortBy { it[0] }
-        }
+        val allIntervals = insertInterval(intervals, newInterval)
         return mergeOverlaps(allIntervals)
+    }
+
+    private fun insertInterval(intervals: Array<IntArray>, newInterval: IntArray): List<IntArray> {
+        val allIntervals = intervals.toMutableList()
+        for (i in allIntervals.indices) {
+            if (allIntervals[i][0] >= newInterval[0]) {
+                allIntervals.add(i, newInterval)
+                break
+            }
+        }
+        if (allIntervals.size != intervals.size + 1) {
+            allIntervals.add(newInterval)
+        }
+        return allIntervals
     }
 
     private fun mergeOverlaps(intervals: List<IntArray>): Array<IntArray> {
