@@ -1,7 +1,10 @@
 package lc1_999.lc1_99
 
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 import kotlin.math.max
 
 //Solved
@@ -32,40 +35,28 @@ class Task56 {
 private class Task56Test {
     private val task = Task56()
 
-    @Test
-    fun test1() {
-        val input = arrayOf(intArrayOf(1, 3), intArrayOf(2, 6), intArrayOf(8, 10), intArrayOf(15, 18))
-        val expectedResult = arrayOf(intArrayOf(1, 6), intArrayOf(8, 10), intArrayOf(15, 18))
-        Assertions.assertArrayEquals(expectedResult, task.merge(input))
+    @ParameterizedTest
+    @MethodSource("inputDataProvider")
+    fun test(input: Array<IntArray>, expected: Array<IntArray>) {
+        Assertions.assertArrayEquals(expected, task.merge(input))
     }
 
-    @Test
-    fun test2() {
-        val input = arrayOf(intArrayOf(1, 4), intArrayOf(4, 5))
-        val expectedResult = arrayOf(intArrayOf(1, 5))
-        Assertions.assertArrayEquals(expectedResult, task.merge(input))
-    }
-
-    @Test
-    fun test3() {
-        val input = arrayOf(
-            intArrayOf(15, 18), intArrayOf(1, 3), intArrayOf(2, 6), intArrayOf(8, 10), intArrayOf(15, 18)
-        )
-        val expectedResult = arrayOf(intArrayOf(1, 6), intArrayOf(8, 10), intArrayOf(15, 18))
-        Assertions.assertArrayEquals(expectedResult, task.merge(input))
-    }
-
-    @Test
-    fun test4() {
-        val input = arrayOf(intArrayOf(15, 18))
-        val expectedResult = arrayOf(intArrayOf(15, 18))
-        Assertions.assertArrayEquals(expectedResult, task.merge(input))
-    }
-
-    @Test
-    fun test5() {
-        val input = arrayOf(intArrayOf(1, 4), intArrayOf(2, 3))
-        val expectedResult = arrayOf(intArrayOf(1, 4))
-        Assertions.assertArrayEquals(expectedResult, task.merge(input))
+    companion object {
+        @JvmStatic
+        private fun inputDataProvider(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(
+                    arrayOf(intArrayOf(1, 3), intArrayOf(2, 6), intArrayOf(8, 10), intArrayOf(15, 18)),
+                    arrayOf(intArrayOf(1, 6), intArrayOf(8, 10), intArrayOf(15, 18))
+                ),
+                Arguments.of(arrayOf(intArrayOf(1, 4), intArrayOf(4, 5)), arrayOf(intArrayOf(1, 5))),
+                Arguments.of(
+                    arrayOf(intArrayOf(15, 18), intArrayOf(1, 3), intArrayOf(2, 6), intArrayOf(8, 10), intArrayOf(15, 18)),
+                    arrayOf(intArrayOf(1, 6), intArrayOf(8, 10), intArrayOf(15, 18))
+                ),
+                Arguments.of(arrayOf(intArrayOf(15, 18)), arrayOf(intArrayOf(15, 18))),
+                Arguments.of(arrayOf(intArrayOf(1, 4), intArrayOf(2, 3)), arrayOf(intArrayOf(1, 4)))
+            )
+        }
     }
 }
