@@ -8,6 +8,7 @@ import java.util.stream.Stream
 import kotlin.math.max
 
 //Solved
+//Note: This is a suboptimal solution, we can improve it to use a binary search and inset a newInterval and fix overlaps at the same time
 //https://leetcode.com/problems/insert-interval/description/
 class Task57 {
     fun insert(intervals: Array<IntArray>, newInterval: IntArray): Array<IntArray> {
@@ -72,6 +73,16 @@ private class Task57Test {
                 Arguments.of(
                     arrayOf(intArrayOf(1, 5)), intArrayOf(6, 8),
                     arrayOf(intArrayOf(1, 5), intArrayOf(6, 8))
+                ),
+                Arguments.of(
+                    arrayOf(intArrayOf(1, 3), intArrayOf(8, 9)), intArrayOf(5, 6),
+                    arrayOf(intArrayOf(1, 3), intArrayOf(5, 6), intArrayOf(8, 9))
+                ),
+                Arguments.of(arrayOf(intArrayOf(1, 5)), intArrayOf(2, 3), arrayOf(intArrayOf(1, 5))),
+                Arguments.of(arrayOf(intArrayOf(1, 5)), intArrayOf(0, 0), arrayOf(intArrayOf(0, 0), intArrayOf(1, 5))),
+                Arguments.of(
+                    arrayOf(intArrayOf(0, 2), intArrayOf(3, 9)), intArrayOf(6, 8),
+                    arrayOf(intArrayOf(0, 2), intArrayOf(3, 9))
                 )
             )
         }
