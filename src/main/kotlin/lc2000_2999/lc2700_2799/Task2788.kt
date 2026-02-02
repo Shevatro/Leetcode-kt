@@ -13,6 +13,8 @@ class Task2788 {
         val result = mutableListOf<String>()
         for (word in words) {
             val curList = split(word, separator)
+            //or just this one:
+            // val curList = word.split(separator).filter { it.isNotEmpty() }
             if (curList.isNotEmpty()) result.addAll(curList)
         }
         return result
