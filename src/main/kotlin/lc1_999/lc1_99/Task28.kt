@@ -18,10 +18,13 @@ class Task28 {
         private val haystack: String,
         private val needle: String
     ) {
+        private val needleLength = needle.length
+        private val haystackSize = haystack.length
+        private val needleLastInd = needleLength - 1
         fun strStr(): Int {
-            for (i in haystack.indices) {
-                val straw = haystack[i]
-                if (straw == needle[0]) {
+            if (needleLength > haystackSize) return -1
+            for (i in 0 until haystackSize - needleLastInd) {
+                if (haystack[i] == needle[0] && haystack[i + needleLastInd] == needle[needleLastInd]) {
                     if (matches(i)) return i
                 }
             }
@@ -29,7 +32,7 @@ class Task28 {
         }
 
         private fun matches(startPos: Int): Boolean {
-            if (startPos + needle.length > haystack.length) return false
+            if (startPos + needleLength > haystackSize) return false
             var curNeedleInd = startPos
             for (needlePart in needle) {
                 if (needlePart != haystack[curNeedleInd]) return false
