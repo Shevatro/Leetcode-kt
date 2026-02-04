@@ -24,6 +24,7 @@ class Task28 {
         fun strStr(): Int {
             if (needleLength > haystackSize) return -1
             for (i in 0 until haystackSize - needleLastInd) {
+                //check the first and last straw
                 if (haystack[i] == needle[0] && haystack[i + needleLastInd] == needle[needleLastInd]) {
                     if (matches(i)) return i
                 }
