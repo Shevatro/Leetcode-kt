@@ -34,7 +34,6 @@ private class Task27_1Test {
         @JvmStatic
         private fun inputDataProvider(): Stream<Arguments> {
             return Stream.of(
-                // Basic cases
                 Arguments.of("level", true),
                 Arguments.of("naan", true),
                 Arguments.of("", true),
