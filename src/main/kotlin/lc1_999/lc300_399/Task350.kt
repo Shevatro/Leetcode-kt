@@ -10,23 +10,65 @@ import java.util.stream.Stream
 //https://leetcode.com/problems/intersection-of-two-arrays-ii/
 class Task350 {
     fun intersect(nums1: IntArray, nums2: IntArray): IntArray {
-        nums1.sort()
-        nums2.sort()
-        val result = mutableListOf<Int>()
-        var nums1P = 0
-        var nums2P = 0
-        while (nums1P < nums1.size && nums2P < nums2.size) {
-            if (nums1[nums1P] == nums2[nums2P]) {
-                result.add(nums1[nums1P])
-                nums1P++
-                nums2P++
-            } else if (nums1[nums1P] < nums2[nums2P]) {
-                nums1P++
-            } else {
-                nums2P++
+        return SolutionUsingMaps(nums1, nums2).intersect()
+    }
+
+    private class SolutionUsingSorting(
+        private val nums1: IntArray,
+        private val nums2: IntArray
+    ) {
+        fun intersect(): IntArray {
+            nums1.sort()
+            nums2.sort()
+            val result = mutableListOf<Int>()
+            var nums1P = 0
+            var nums2P = 0
+            while (nums1P < nums1.size && nums2P < nums2.size) {
+                if (nums1[nums1P] == nums2[nums2P]) {
+                    result.add(nums1[nums1P])
+                    nums1P++
+                    nums2P++
+                } else if (nums1[nums1P] < nums2[nums2P]) {
+                    nums1P++
+                } else {
+                    nums2P++
+                }
+            }
+            return result.toIntArray()
+        }
+    }
+
+    private class SolutionUsingMaps(
+        private val nums1: IntArray,
+        private val nums2: IntArray
+    ) {
+        private val frequency = mutableMapOf<Int, Int>()
+        private val shortestNums = if (nums1.size > nums2.size) nums2 else nums1
+        fun intersect(): IntArray {
+            fillOutFrequency()
+            return findResult()
+        }
+
+        private fun fillOutFrequency() {
+            for (num in shortestNums) {
+                if (frequency[num] == null) {
+                    frequency[num] = 0
+                }
+                frequency[num] = frequency[num]!! + 1
             }
         }
-        return result.toIntArray()
+
+        private fun findResult(): IntArray {
+            val result = mutableListOf<Int>()
+            val longestNums = if (nums1 == shortestNums) nums2 else nums1
+            for (num in longestNums) {
+                if (frequency[num] != null && frequency[num]!! > 0) {
+                    frequency[num] = frequency[num]!! - 1
+                    result.add(num)
+                }
+            }
+            return result.toIntArray()
+        }
     }
 }
 
@@ -36,7 +78,11 @@ private class Task350Test {
     @ParameterizedTest
     @MethodSource("inputDataProvider")
     fun test(input1: IntArray, input2: IntArray, expected: IntArray) {
-        Assertions.assertArrayEquals(expected, task.intersect(input1, input2))
+        val actual = task.intersect(input1, input2)
+        //sort them to keep the order
+        expected.sort()
+        actual.sort()
+        Assertions.assertArrayEquals(expected, actual)
     }
 
     companion object {
