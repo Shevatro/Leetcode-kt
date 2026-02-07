@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
 //From Beyond Cracking The Coding Interview, Solved
+//From an interview
 //https://leetcode.com/problems/intersection-of-two-arrays-ii/
 class Task350 {
     fun intersect(nums1: IntArray, nums2: IntArray): IntArray {
