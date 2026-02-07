@@ -8,6 +8,24 @@ import java.util.stream.Stream
 
 class Task27_4 {
     fun isSentencePalindromic(s: String): Boolean {
+        var startPos = 0
+        var endPos = s.lastIndex
+        while (startPos < endPos) {
+            if (!s[startPos].isLetter() || !s[endPos].isLetter()) {
+                if (!s[startPos].isLetter()) startPos++
+                if (!s[endPos].isLetter()) endPos--
+                continue
+            }
+            if (s[startPos].lowercaseChar() != s[endPos].lowercaseChar()) {
+                return false
+            }
+            startPos++
+            endPos--
+        }
+        return true
+    }
+
+    fun isSentencePalindromicSimplified(s: String): Boolean {
         val prunedStr = prune(s)
         return isPalindrome(prunedStr)
     }
