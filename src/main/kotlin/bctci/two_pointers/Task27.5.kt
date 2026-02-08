@@ -8,6 +8,25 @@ import java.util.stream.Stream
 
 class Task27_5 {
     fun mathReverseCase(s: String): Boolean {
+        var lowerCasePos = 0
+        var upperCasePos = s.lastIndex
+        while (upperCasePos >= 0 && lowerCasePos <= s.lastIndex) {
+            if (!s[lowerCasePos].isLowerCase()) {
+                lowerCasePos++
+                continue
+            }
+            if (!s[upperCasePos].isUpperCase()) {
+                upperCasePos--
+                continue
+            }
+            if (s[lowerCasePos] != s[upperCasePos].lowercaseChar()) return false
+            lowerCasePos++
+            upperCasePos--
+        }
+        return true
+    }
+
+    fun mathReverseCaseSimplified(s: String): Boolean {
         val lowerCasePart = s.filter { it.isLowerCase() }
         val upperCasePart = s.filter { it.isUpperCase() }
         if (lowerCasePart.length != upperCasePart.length) return false
