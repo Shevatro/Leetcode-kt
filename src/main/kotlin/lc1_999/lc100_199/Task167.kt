@@ -15,11 +15,7 @@ class Task167 {
         while (startPos < endPos) {
             val sum = numbers[startPos] + numbers[endPos]
             if (sum == target) return intArrayOf(startPos + 1, endPos + 1)
-            if (sum > target) {
-                endPos--
-            } else {
-                startPos++
-            }
+            if (sum > target) endPos-- else startPos++
         }
         throw IllegalArgumentException("Invalid test case")
     }
