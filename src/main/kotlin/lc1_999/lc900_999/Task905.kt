@@ -1,10 +1,12 @@
 package lc1_999.lc900_999
 
-import org.junit.jupiter.api.Assertions.assertArrayEquals
-import org.junit.jupiter.api.Test
-import toString2
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
-//From a learning section, Solved
+//From Beyond Cracking The Coding Interview, From a learning section, Solved
 //https://leetcode.com/problems/sort-array-by-parity/
 class Task905 {
     fun sortArrayByParity(nums: IntArray): IntArray {
@@ -23,7 +25,6 @@ class Task905 {
                 if (!isStarOdd) startPos++
                 if (!isEndEven) endPos--
             }
-
         }
         return nums
     }
@@ -32,20 +33,23 @@ class Task905 {
 private class Task905Test {
     private val task = Task905()
 
-    @Test
-    fun sortArrayByParity() {
-        sortArrayByParity(intArrayOf(3, 1, 2, 4), intArrayOf(4, 2, 1, 3))
-        sortArrayByParity(intArrayOf(0), intArrayOf(0))
-        sortArrayByParity(intArrayOf(3, 1, 5, 7), intArrayOf(3, 1, 5, 7))
-        sortArrayByParity(intArrayOf(2, 4, 8, 10), intArrayOf(2, 4, 8, 10))
-        sortArrayByParity(intArrayOf(7, 4, 5, 7), intArrayOf(4, 7, 5, 7))
-        sortArrayByParity(intArrayOf(7, 6, 4), intArrayOf(4, 6, 7))
+    @ParameterizedTest
+    @MethodSource("inputDataProvider")
+    fun test(input: IntArray, expected: IntArray) {
+        Assertions.assertArrayEquals(expected, task.sortArrayByParity(input))
     }
 
-    private fun sortArrayByParity(actualInp: IntArray, expected: IntArray) {
-        val actual = task.sortArrayByParity(actualInp)
-        println(actual.toString2())
-        assertArrayEquals(expected, actual)
+    companion object {
+        @JvmStatic
+        private fun inputDataProvider(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(intArrayOf(0), intArrayOf(0)),
+                Arguments.of(intArrayOf(3, 1, 5, 7), intArrayOf(3, 1, 5, 7)),
+                Arguments.of(intArrayOf(2, 4, 8, 10), intArrayOf(2, 4, 8, 10)),
+                Arguments.of(intArrayOf(7, 4, 5, 7), intArrayOf(4, 7, 5, 7)),
+                Arguments.of(intArrayOf(7, 6, 4), intArrayOf(4, 6, 7))
+            )
+        }
     }
 }
 
