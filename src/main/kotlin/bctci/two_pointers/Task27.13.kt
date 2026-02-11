@@ -22,9 +22,7 @@ class Task27_13 {
                 endPos--
                 continue
             }
-            val temp = arr[startPos]
-            arr[startPos] = arr[endPos]
-            arr[endPos] = temp
+            arr[startPos] = arr[endPos].also { arr[endPos] = arr[startPos] }
             startPos++
             endPos--
         }
