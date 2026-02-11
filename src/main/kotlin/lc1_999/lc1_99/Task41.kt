@@ -10,23 +10,19 @@ import java.util.stream.Stream
 //https://leetcode.com/problems/first-missing-positive/description/
 class Task41 {
     fun firstMissingPositive(nums: IntArray): Int {
-        var k = 1
-        while (k <= nums.size) {
-            val index = nums[k - 1]
-            //check if we didn't process it before and it's in a range [1, size]
-            if (index != k && index > 0 && index <= nums.size) {
-                val temp = nums[index - 1]
-                nums[index - 1] = index
-                //do not swap if the next one is incorrect
-                if (temp != index && temp > 0 && temp <= nums.size) {
-                    nums[k - 1] = temp
-                } else {
-                    k++
-                }
+        var k = 0
+        while (k < nums.size) {
+            val index = nums[k] - 1
+            //check if it's in a range [1, size] and we didn't process it before
+            if (nums[k] in 1..nums.size && nums[k] != nums[index]) {
+                val temp = nums[k]
+                nums[k] = nums[index]
+                nums[index] = temp
             } else {
                 k++
             }
         }
+        //find the first mismatch
         for (i in nums.indices) {
             if (i + 1 != nums[i]) return i + 1
         }
