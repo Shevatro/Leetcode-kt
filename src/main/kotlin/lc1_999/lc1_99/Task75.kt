@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
 //Solved
-//Note: The solution is not optimal, ref: This is a Dutch National Flag problem
+//This is a Dutch National Flag problem, so it has a one-path solution
 //https://leetcode.com/problems/remove-duplicates-from-sorted-array/
 class Task75 {
     fun sortColors(nums: IntArray): Unit {
