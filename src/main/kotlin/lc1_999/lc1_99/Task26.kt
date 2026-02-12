@@ -1,8 +1,12 @@
 package lc1_999.lc1_99
 
-import toString2
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
-//From a learning section, Solved
+//From Beyond Cracking The Coding Interview, From a learning section, Solved
 //https://leetcode.com/problems/remove-duplicates-from-sorted-array/
 class Task26 {
     fun removeDuplicates(nums: IntArray): Int {
@@ -14,18 +18,30 @@ class Task26 {
 
             }
         }
-        println(nums.toString2())
         return fillPos + 1
     }
 }
 
+private class Task26Test {
+    private val task = Task26()
 
-fun main() {
-    val obj = Task26()
-    println(obj.removeDuplicates(intArrayOf(1, 1, 2)))
-    println(obj.removeDuplicates(intArrayOf(0, 0, 1, 1, 1, 2, 2, 3, 3, 4)))
-    println(obj.removeDuplicates(intArrayOf(1)))
-    println(obj.removeDuplicates(intArrayOf(1, 1, 1, 1)))
-    println(obj.removeDuplicates(intArrayOf(1, 2, 3, 4)))
+    @ParameterizedTest
+    @MethodSource("inputDataProvider")
+    fun test(input: IntArray, expected: Int) {
+        Assertions.assertEquals(expected, task.removeDuplicates(input))
+    }
+
+    companion object {
+        @JvmStatic
+        private fun inputDataProvider(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(intArrayOf(1, 1, 2), 2),
+                Arguments.of(intArrayOf(0, 0, 1, 1, 1, 2, 2, 3, 3, 4), 5),
+                Arguments.of(intArrayOf(1), 1),
+                Arguments.of(intArrayOf(1, 1, 1, 1), 1),
+                Arguments.of(intArrayOf(1, 2, 3, 4), 4)
+            )
+        }
+    }
 }
 
