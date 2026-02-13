@@ -10,9 +10,10 @@ import java.util.stream.Stream
 //https://leetcode.com/problems/rotate-array/
 class Task189 {
     fun rotate(nums: IntArray, k: Int): Unit {
-        val repeatTime = if (k <= nums.size) k else k % nums.size
+        //k maybe more than size, so we need to remove exceed repetition
+        val repeatTimes = k % nums.size
         val numsCopy = nums.clone()
-        var readPos = nums.size - repeatTime
+        var readPos = nums.size - repeatTimes
         for (writePos in nums.indices) {
             if (readPos == nums.size) readPos = 0
             nums[writePos] = numsCopy[readPos]
