@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-//Solved
+//Similar to Beyond Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/rotate-array/
 class Task189 {
     fun rotate(nums: IntArray, k: Int): Unit {
