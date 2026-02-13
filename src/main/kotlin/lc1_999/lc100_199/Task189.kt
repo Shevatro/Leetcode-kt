@@ -10,6 +10,37 @@ import java.util.stream.Stream
 //https://leetcode.com/problems/rotate-array/
 class Task189 {
     fun rotate(nums: IntArray, k: Int): Unit {
+        return Solution(nums, k).rotate()
+    }
+
+    //Note: the same idea as for 8. Rotate Image
+    private class Solution(
+        private val nums: IntArray,
+        private val k: Int
+    ) {
+        fun rotate() {
+            val repeatTime = k % nums.size
+            val turningPoint = nums.size - repeatTime
+            //1,2,3,4, 5,6,7 -> 4,3,2,1, 5,6,7
+            rotate(0, turningPoint - 1)
+            //4,3,2,1, 5,6,7 -> 4,3,2,1, 7,6,5
+            rotate(turningPoint, nums.lastIndex)
+            //4,3,2,1, 7,6,5 -> 5,6,7,1, 2,3,4
+            rotate(0, nums.lastIndex)
+        }
+
+        private fun rotate(startPos_: Int, endPos_: Int) {
+            var startPos = startPos_
+            var endPos = endPos_
+            while (startPos < endPos) {
+                nums[startPos] = nums[endPos].also { nums[endPos] = nums[startPos] }
+                startPos++
+                endPos--
+            }
+        }
+    }
+
+    fun rotateSimplified(nums: IntArray, k: Int): Unit {
         //k maybe more than size, so we need to remove exceed repetition
         val repeatTimes = k % nums.size
         val numsCopy = nums.clone()
