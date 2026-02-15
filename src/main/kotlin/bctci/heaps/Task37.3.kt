@@ -7,15 +7,15 @@ import java.util.PriorityQueue
 class Task37_3 {
 
     class TopSongs(private val k: Int) {
-        private val queue = PriorityQueue<Pair<String, Int>>(compareBy { it.second })
+        private val minHeap = PriorityQueue<Pair<String, Int>>(compareBy { it.second })
         fun registerPlays(title: String, plays: Int) {
-            queue.add(title to plays)
-            if (queue.size > k) queue.poll()
+            minHeap.add(title to plays)
+            if (minHeap.size > k) minHeap.poll()
         }
 
         fun topK(): List<String> {
             val result = mutableListOf<String>()
-            while (queue.isNotEmpty()) result.add(queue.poll().first)
+            while (minHeap.isNotEmpty()) result.add(minHeap.poll().first)
             return result
         }
     }

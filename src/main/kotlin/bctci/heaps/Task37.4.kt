@@ -7,17 +7,17 @@ import java.util.PriorityQueue
 class Task37_4 {
 
     class TopSongs(private val k: Int) {
-        private val queue = PriorityQueue<Pair<String, Int>>(compareByDescending { it.second })
+        private val maxHeap = PriorityQueue<Pair<String, Int>>(compareByDescending { it.second })
         private val map = mutableMapOf<String, Int>()
         fun registerPlays(title: String, plays: Int) {
             map[title] = (map[title] ?: 0) + plays
-            queue.add(title to requireNotNull(map[title]))
+            maxHeap.add(title to requireNotNull(map[title]))
         }
 
         fun topK(): List<String> {
             val result = mutableListOf<String>()
-            while (queue.isNotEmpty() && result.size < k) {
-                val item = queue.poll()
+            while (maxHeap.isNotEmpty() && result.size < k) {
+                val item = maxHeap.poll()
                 if (isValid(item)) result.add(item.first)
             }
             return result

@@ -17,7 +17,7 @@ class Task37_2 {
         private val songs: List<Pair<String, Int>>,
         private val k: Int
     ) {
-        private val heap = PriorityQueue<Pair<String, Int>>(compareBy { it.second })
+        private val minHeap = PriorityQueue<Pair<String, Int>>(compareBy { it.second })
         fun findKMostPlayed(): List<String> {
             fillHeap()
             return generateResult()
@@ -25,17 +25,17 @@ class Task37_2 {
 
         private fun fillHeap() {
             for (song in songs) {
-                heap.add(song)
+                minHeap.add(song)
                 //keep only K items in a heap, so we don't care about the smallest (top)
-                if (heap.size > k) heap.poll()
+                if (minHeap.size > k) minHeap.poll()
             }
         }
 
         private fun generateResult(): List<String> {
             val result = mutableListOf<String>()
             var limit = k
-            while (heap.isNotEmpty() && limit > 0) {
-                result.add(heap.poll().first)
+            while (minHeap.isNotEmpty() && limit > 0) {
+                result.add(minHeap.poll().first)
                 limit--
             }
             return result
