@@ -19,7 +19,7 @@ class Task347 {
         private val k: Int
     ) {
         private val freqMap = mutableMapOf<Int, Int>()
-        private val heap = PriorityQueue<Pair<Int, Int>>(compareByDescending { it.second })
+        private val heap = PriorityQueue<Pair<Int, Int>>(compareBy { it.second })
         fun topKFrequent(): IntArray {
             fillFreqMap()
             fillHeap()
@@ -35,15 +35,17 @@ class Task347 {
         private fun fillHeap() {
             for ((key, value) in freqMap) {
                 heap.add(key to value)
+                //keep only K items in a heap, so we don't care about the smallest (top)
+                if (heap.size > k) heap.poll()
             }
         }
 
         private fun generateResult(): IntArray {
             val result = IntArray(k)
-            var i = 0
-            while (heap.isNotEmpty() && i < result.size) {
+            //note: it's not mandatory to go backward because the order doesn't matter
+            for (i in k - 1 downTo 0) {
+                if (heap.isEmpty()) break
                 result[i] = heap.poll().first
-                i++
             }
             return result
         }
@@ -56,7 +58,7 @@ private class Task347Test {
     @ParameterizedTest
     @MethodSource("inputDataProvider")
     fun test(input1: IntArray, input2: Int, expected: IntArray) {
-        Assertions.assertArrayEquals(expected, task.topKFrequent(input1, input2))
+        Assertions.assertEquals(expected.sorted(), task.topKFrequent(input1, input2).sorted())
     }
 
     companion object {
