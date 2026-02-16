@@ -4,51 +4,42 @@ import lc1_999.lc200_299.Task295.MedianFinder
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.util.*
-import kotlin.math.abs
 
 
 //Similar to Beyond Cracking The Coding Interview, Solved
 //https://leetcode.com/problems/find-median-from-data-stream/description/
 class Task295 {
-    class MedianFinder() {
-        private val minHeap = PriorityQueue<Int>(compareBy { it })
-        private val maxHeap = PriorityQueue<Int>(compareByDescending { it })
+    class MedianFinder {
+        private val minHeap = PriorityQueue<Int>()
+        private val maxHeap = PriorityQueue<Int>(Collections.reverseOrder())
+
+        /*ex. add(193): maxHeap[193] minHeap[]
+              add(140): maxHeap[140] minHeap[193]
+              add(132): maxHeap[140, 132] minHeap[193] -> 140
+              add(291): maxHeap[140, 132] minHeap[193, 291]
+              add(274): maxHeap[193, 140, 132] minHeap[274, 291]
+              add(223): maxHeap[193, 140, 132] minHeap[223, 274, 291] -> (193+223)/2 = 208
+        */
 
         fun addNum(num: Int) {
-            if (minHeap.isEmpty() && maxHeap.isEmpty()) {
-                minHeap.add(num)
-            } else if (minHeap.isNotEmpty() && num <= minHeap.first()) {
-                maxHeap.add(num)
-            } else if (maxHeap.isNotEmpty() && num > maxHeap.first()) {
-                minHeap.add(num)
-            } else {
-                maxHeap.add(num)
-            }
+            //add to a maxHeap by default
+            maxHeap.add(num)
+            //copy the biggest value to minHeap
+            minHeap.add(maxHeap.poll())
 
-            //violates rules, swap
-            if (minHeap.isNotEmpty() && maxHeap.isNotEmpty() && minHeap.first() < maxHeap.first()) {
-                val maxInMinHeap = minHeap.poll()
-                val minInMaxHeap = maxHeap.poll()
-                maxHeap.add(maxInMinHeap)
-                minHeap.add(minInMaxHeap)
-            }
-            //rebalance
-            if (abs(minHeap.size - maxHeap.size) > 1) {
-                if (minHeap.size > maxHeap.size) {
-                    maxHeap.add(minHeap.poll())
-                } else {
-                    minHeap.add(maxHeap.poll())
-                }
+            //if minHeap is overloaded, copy the smallest value to maxHeap
+            if (minHeap.size > maxHeap.size) {
+                maxHeap.add(minHeap.poll())
             }
         }
 
         fun findMedian(): Double {
             return if ((minHeap.size + maxHeap.size) % 2 == 0) {
-                (minHeap.first() + maxHeap.first()) / 2.0
+                (minHeap.peek() + maxHeap.peek()) / 2.0
             } else if (minHeap.size > maxHeap.size) {
-                minHeap.first().toDouble()
+                minHeap.peek().toDouble()
             } else {
-                maxHeap.first().toDouble()
+                maxHeap.peek().toDouble()
             }
         }
     }
