@@ -19,12 +19,43 @@ class Task37_6 {
         private val genres: List<List<Pair<String, Int>>>,
         private val k: Int
     ) {
+        //pair = genresId to songId (keep parallel pointers for each genre)
+        private val maxHeap = PriorityQueue<Pair<Int, Int>>(compareByDescending { genres[it.first][it.second].second })
+        fun findMostListenedAcrossGenres(): List<String> {
+            setPointersAtStartPos()
+
+            return findKMostListenedAcrossGenres()
+        }
+
+        private fun setPointersAtStartPos() {
+            for (i in genres.indices) {
+                maxHeap.add(i to 0)
+            }
+        }
+
+        private fun findKMostListenedAcrossGenres(): List<String> {
+            val result = mutableListOf<String>()
+            while (maxHeap.isNotEmpty() && result.size < k) {
+                val maxItem = maxHeap.poll()
+                result.add(genres[maxItem.first][maxItem.second].first)
+                val nextSongPos = maxItem.second + 1
+                if (nextSongPos <= genres[maxItem.first].lastIndex) {
+                    maxHeap.add(maxItem.first to nextSongPos)
+                }
+            }
+            return result
+        }
+    }
+
+    private class SolutionFirst(
+        private val genres: List<List<Pair<String, Int>>>,
+        private val k: Int
+    ) {
         private val minHeap = PriorityQueue<Pair<String, Int>>(compareBy { it.second })
         fun findMostListenedAcrossGenres(): List<String> {
             for (genre in genres) {
                 for (i in 0 until min(k, genre.size)) {
                     minHeap.add(genre[i])
-                    println("i $i maxHeap: $minHeap")
                     if (minHeap.size > k) {
                         minHeap.poll()
                     }
@@ -33,7 +64,7 @@ class Task37_6 {
             return heapToList()
         }
 
-        fun heapToList(): List<String> {
+        private fun heapToList(): List<String> {
             val result = mutableListOf<String>()
             while (minHeap.isNotEmpty() && result.size < k) {
                 result.add(minHeap.poll().first)
