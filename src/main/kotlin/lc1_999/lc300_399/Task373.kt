@@ -7,29 +7,30 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.PriorityQueue
 import java.util.stream.Stream
 
-//Similar to Beyond Cracking The Coding Interview, Solved
+//Solved
 //https://leetcode.com/problems/find-k-pairs-with-smallest-sums/
 class Task373 {
     fun kSmallestPairs(nums1: IntArray, nums2: IntArray, k: Int): List<List<Int>> {
-        val duplicates = mutableSetOf<Pair<Int, Int>>()
-        val maxHeap = PriorityQueue<Pair<Int, Int>>(compareBy { nums1[it.first] + nums2[it.second] })
-        maxHeap.add(0 to 0)
+        val visited = mutableSetOf<Pair<Int, Int>>()
+        val minHeap = PriorityQueue<Pair<Int, Int>>(compareBy { nums1[it.first] + nums2[it.second] })
+        minHeap.add(0 to 0)
+        visited.add(0 to 0)
 
         val result = mutableListOf<List<Int>>()
-        while (maxHeap.isNotEmpty() && result.size < k) {
-            val item = maxHeap.poll()
-            result.add(listOf(nums1[item.first], nums2[item.second]))
-            val nextFirstPos = item.first + 1
-            val newFirstPair = nextFirstPos to item.second
-            if (nextFirstPos <= nums1.lastIndex && !duplicates.contains(newFirstPair)) {
-                maxHeap.add(newFirstPair)
-                duplicates.add(newFirstPair)
+        while (minHeap.isNotEmpty() && result.size < k) {
+            val topItem = minHeap.poll()
+            result.add(listOf(nums1[topItem.first], nums2[topItem.second]))
+            val nextFirstPos = topItem.first + 1
+            val newFirstPair = nextFirstPos to topItem.second
+            if (nextFirstPos <= nums1.lastIndex && !visited.contains(newFirstPair)) {
+                minHeap.add(newFirstPair)
+                visited.add(newFirstPair)
             }
-            val nextSecondPos = item.second + 1
-            val newSecondPair = item.first to nextSecondPos
-            if (nextSecondPos <= nums2.lastIndex && !duplicates.contains(newSecondPair)) {
-                maxHeap.add(newSecondPair)
-                duplicates.add(newSecondPair)
+            val nextSecondPos = topItem.second + 1
+            val newSecondPair = topItem.first to nextSecondPos
+            if (nextSecondPos <= nums2.lastIndex && !visited.contains(newSecondPair)) {
+                minHeap.add(newSecondPair)
+                visited.add(newSecondPair)
             }
         }
         return result
