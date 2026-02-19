@@ -21,18 +21,20 @@ class Task767 {
         for (i in freq.indices) {
             if (freq[i] != 0) maxHeap.add(i)
         }
+
         var previous = -1
         val sb = StringBuilder()
         while (maxHeap.isNotEmpty()) {
             val top = maxHeap.poll()
             if (top != previous) {
-                sb.append((top + 'a'.code).toChar())
+                sb.append(intToChar(top))
                 freq[top]--
                 previous = top
                 if (freq[top] != 0) maxHeap.add(top)
             } else if (maxHeap.isNotEmpty()) {
+                //second top
                 val stop = maxHeap.poll()
-                sb.append((stop + 'a'.code).toChar())
+                sb.append(intToChar(stop))
                 freq[stop]--
                 previous = stop
                 if (freq[stop] != 0) maxHeap.add(stop)
@@ -42,6 +44,10 @@ class Task767 {
             }
         }
         return sb.toString()
+    }
+
+    private fun intToChar(value: Int): Char {
+        return (value + 'a'.code).toChar()
     }
 }
 
