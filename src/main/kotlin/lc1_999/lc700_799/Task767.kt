@@ -25,23 +25,19 @@ class Task767 {
         var previous = -1
         val sb = StringBuilder()
         while (maxHeap.isNotEmpty()) {
-            val top = maxHeap.poll()
-            if (top != previous) {
-                sb.append(intToChar(top))
-                freq[top]--
-                previous = top
-                if (freq[top] != 0) maxHeap.add(top)
-            } else if (maxHeap.isNotEmpty()) {
-                //second top
-                val stop = maxHeap.poll()
-                sb.append(intToChar(stop))
-                freq[stop]--
-                previous = stop
-                if (freq[stop] != 0) maxHeap.add(stop)
+            var top = maxHeap.poll()
+            if (top == previous) {
+                //we only have duplicates, no other letters => so exit
+                if (maxHeap.isEmpty()) return ""
+                val secondTop = maxHeap.poll()
                 maxHeap.add(top)
-            } else {
-                return ""
+                top = secondTop
             }
+            sb.append(intToChar(top))
+            freq[top]--
+            previous = top
+            //if we run out of this letter => do not add it back
+            if (freq[top] != 0) maxHeap.add(top)
         }
         return sb.toString()
     }
