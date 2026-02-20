@@ -6,26 +6,24 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.PriorityQueue
 import java.util.stream.Stream
-import kotlin.math.min
 
 class Task37_8 {
 
     fun calcSumOfFirstKPrimePowers(primes: IntArray, k: Int): Int {
-        val primesSorted = primes.sortedArray()
         //primeNum to curSum
         val minHeap = PriorityQueue<Pair<Int, Int>>(compareBy { it.second })
 
-        //we don't want to add more items than k
-        for (i in 0 until min(primes.size, k)) {
-            minHeap.add(primesSorted[i] to primesSorted[i])
+        for (prime in primes) {
+            minHeap.add(prime to prime)
         }
 
         var sum = 0
         var itemsLeft = k
         while (minHeap.isNotEmpty() && itemsLeft > 0) {
-            val top = minHeap.poll()
-            sum = (top.second + sum) % 1_000_000_007
-            minHeap.add(top.first to top.second * top.first)
+            val (base, power) = minHeap.poll()
+            sum = (power + sum) % 1_000_000_007
+            val newPower = (base * power) % 1_000_000_007
+            minHeap.add(base to newPower)
             itemsLeft--
         }
         return sum
