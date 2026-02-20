@@ -118,7 +118,7 @@ private class Task37_7Test {
                     listOf(
                         "Song 1" to "Artist 1", "Song 2" to "Artist 1", "Song 3" to "Artist 1", "Song 4" to "Artist 2", "Song 5" to "Artist 3"
                     ), false
-                ),
+                )
             )
         }
     }
